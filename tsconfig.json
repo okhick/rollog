@@ -5,24 +5,16 @@
         "moduleResolution": "node",
         "strict": true,
         "jsx": "preserve",
+        "allowJs": true,
         "sourceMap": true,
         "resolveJsonModule": true,
         "esModuleInterop": true,
-        "lib": [
-            "esnext",
-            "dom"
-        ],
-        "types": [
-            "vite/client"
-        ],
+        "lib": ["esnext", "dom"],
+        "types": ["vite/client"],
         "baseUrl": ".",
         "paths": {
-            "@/*": [
-                "resources/*"
-            ]
+            "@/*": ["resources/*"]
         }
     },
-    "include": [
-        "resources/**/*"
-    ]
+    "include": ["resources/**/*"]
 }
