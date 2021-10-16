@@ -11,6 +11,11 @@ class Shot extends Model
 
     public function roll()
     {
-        return $this->hasOne(Roll::class);
+        return $this->belongsTo(Roll::class);
+    }
+
+    public function lens()
+    {
+        return $this->belongsTo(Lens::class);
     }
 }

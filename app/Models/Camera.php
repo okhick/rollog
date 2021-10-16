@@ -13,4 +13,9 @@ class Camera extends Model
     {
         return $this->hasOne(User::class);
     }
+
+    public function rolls()
+    {
+        return $this->hasMany(Roll::class);
+    }
 }

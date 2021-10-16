@@ -9,14 +9,14 @@ class Roll extends Model
 {
     use HasFactory;
 
-    public function photographer()
+    public function user()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function camera()
     {
-        return $this->hasOne(Camera::class);
+        return $this->belongsTo(Camera::class);
     }
 
     public function shots()

@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Lens extends Model
 {
     use HasFactory;
+
+    public function shots()
+    {
+        return $this->hasMany(Shot::class);
+    }
 }
