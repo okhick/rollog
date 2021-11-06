@@ -1,7 +1,9 @@
 <template>
-    <h1>DASHBOARD</h1>
+  <div>Hello {{ authStore.user.name }}</div>
 </template>
 
-<!-- <script setup>
+<script setup>
+  import { useAuthStore } from "@/Modules/Auth/store";
 
-</script> -->
+  const authStore = useAuthStore();
+</script>

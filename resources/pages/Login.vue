@@ -17,39 +17,55 @@
   </div>
 </template>
 
-<script setup>
-import { ref } from "vue";
-import axios from "axios";
-import { useRouter } from "vue-router";
+<script setup lang="ts">
+  import { ref } from "vue";
+  import axios from "axios";
+  import { useRouter } from "vue-router";
 
-const credentials = ref({
+  import { useAuthStore } from "@/Modules/Auth/store";
+
+  import { User } from "@/Modules/Auth/@types";
+
+  axios.defaults.withCredentials = true;
+
+  const credentials = ref({
     email: null,
     password: null,
-});
+  });
 
-const router = useRouter();
+  const router = useRouter();
+  const authStore = useAuthStore();
 
-async function signIn() {
+  async function signIn() {
+    try {
+      await axios.get("/sanctum/csrf-cookie");
+      await axios.post("/login", credentials.value);
 
-    await axios.get("/sanctum/csrf-cookie");
-    await axios.post("/login", credentials.value);
+      authStore.isLoggedIn = true;
 
-    router.push("/dashboard");
-}
+      const user = await axios.get<User>(`api/user/`);
+
+      authStore.user = user.data;
+
+      router.push("/dashboard");
+    } catch (e) {
+      console.log(console.log(e));
+    }
+  }
 </script>
 
 <style scoped>
-a {
+  a {
     color: #42b983;
-}
-label {
+  }
+  label {
     margin: 0 0.5em;
     font-weight: bold;
-}
-code {
+  }
+  code {
     background-color: #eee;
     padding: 2px 4px;
     border-radius: 4px;
     color: #304455;
-}
+  }
 </style>
