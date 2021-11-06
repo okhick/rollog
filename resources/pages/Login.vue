@@ -1,15 +1,20 @@
 <template>
-    <div>
-        <label for="email">Email address</label>
-        <input type="text" name="email" id="email" v-model="credentials.email" />
-    </div>
-    <div>
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" v-model="credentials.password" />
-    </div>
-    <div>
-        <button type="submit" @click="signIn">Sign in</button>
-    </div>
+  <div>
+    <label for="email">Email address</label>
+    <input type="text" name="email" id="email" v-model="credentials.email" />
+  </div>
+  <div>
+    <label for="password">Password</label>
+    <input
+      type="password"
+      name="password"
+      id="password"
+      v-model="credentials.password"
+    />
+  </div>
+  <div>
+    <button type="submit" @click="signIn">Sign in</button>
+  </div>
 </template>
 
 <script setup>

@@ -9,7 +9,13 @@
 | -> https://github.com/innocenzi/laravel-vite
 */
 
-import { createApp } from "vue";
-import App from "../views/App.vue";
+import router from "./router";
 
-createApp(App).mount("#app");
+import { createApp } from "vue";
+import App from "../app/Index.vue";
+
+const app = createApp(App);
+
+app.use(router);
+
+app.mount("#app");

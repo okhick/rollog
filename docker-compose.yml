@@ -1,9 +1,9 @@
 version: "3"
 
 services:
-    php:
+    server:
         image: php:8-apache
-        container_name: php
+        container_name: server
         build: .
         volumes:
             - .:/var/www/html
