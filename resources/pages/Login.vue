@@ -1,11 +1,18 @@
 <template>
   <div>
     <label for="email">Email address</label>
-    <input type="text" name="email" id="email" v-model="credentials.email" />
+    <input
+      class="input"
+      type="text"
+      name="email"
+      id="email"
+      v-model="credentials.email"
+    />
   </div>
   <div>
     <label for="password">Password</label>
     <input
+      class="input"
       type="password"
       name="password"
       id="password"
@@ -13,7 +20,9 @@
     />
   </div>
   <div>
-    <button type="submit" @click="handleSignIn">Sign in</button>
+    <button class="button is-primary" type="submit" @click="handleSignIn">
+      Sign in
+    </button>
   </div>
 </template>
 
@@ -70,18 +79,4 @@
   }
 </script>
 
-<style scoped>
-  a {
-    color: #42b983;
-  }
-  label {
-    margin: 0 0.5em;
-    font-weight: bold;
-  }
-  code {
-    background-color: #eee;
-    padding: 2px 4px;
-    border-radius: 4px;
-    color: #304455;
-  }
-</style>
+<style scoped></style>

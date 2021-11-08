@@ -1,0 +1,36 @@
+@import "./colors.scss";
+
+/*
+|--------------------------------------------------------------------------
+| Global Variables
+|--------------------------------------------------------------------------
+*/
+$border: $portra;
+
+/*
+|--------------------------------------------------------------------------
+| Bulma Overrides
+|--------------------------------------------------------------------------
+
+| --------------------
+| Color Overrides
+*/
+$primary: $fuji;
+$info: $portra;
+$link: $fuji-underexposed;
+$success: $fuji-underexposed;
+$text: $black;
+
+$body-background-color: $portra-overexposed;
+
+/* 
+| --------------------
+| Input Styles
+*/
+$input-color: $portra-underexposed;
+$input-border-color: $border;
+$input-focus-border-color: $portra;
+$input-focus-box-shadow-size: 0;
+input:focus {
+  border-width: 2px;
+}
