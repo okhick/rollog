@@ -13,37 +13,53 @@
     />
   </div>
   <div>
-    <button type="submit" @click="signIn">Sign in</button>
+    <button type="submit" @click="handleSignIn">Sign in</button>
   </div>
 </template>
 
 <script setup lang="ts">
+  /*
+  |--------------------------------------------------------------------------
+  | Imports
+  |--------------------------------------------------------------------------
+  */
   import { ref } from "vue";
-  import axios from "axios";
   import { useRouter } from "vue-router";
+
+  import api from "@/Modules/Api/api";
+  import ziggy from "@/Modules/Api/ziggy";
 
   import { useAuthStore } from "@/Modules/Auth/store";
 
   import { User } from "@/Modules/Auth/@types";
 
-  axios.defaults.withCredentials = true;
+  /*
+  |--------------------------------------------------------------------------
+  | Init
+  |--------------------------------------------------------------------------
+  */
+  const router = useRouter();
+  const authStore = useAuthStore();
+  const { route } = ziggy;
 
+  /*
+  |--------------------------------------------------------------------------
+  | Handle Sign In
+  |--------------------------------------------------------------------------
+  */
   const credentials = ref({
     email: null,
     password: null,
   });
 
-  const router = useRouter();
-  const authStore = useAuthStore();
-
-  async function signIn() {
+  async function handleSignIn() {
     try {
-      await axios.get("/sanctum/csrf-cookie");
-      await axios.post("/login", credentials.value);
+      await api.get(route("cookie"));
+      await api.post(route("login"), credentials.value);
 
       authStore.isLoggedIn = true;
 
-      const user = await axios.get<User>(`api/user/`);
+      const user = await api.get<User>(route("user"));
 
       authStore.user = user.data;
 
