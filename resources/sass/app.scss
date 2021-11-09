@@ -1,3 +1,10 @@
+@import "@fontsource/mulish/variable.css";
+
 @import "variables.scss";
 
 @import "bulma/bulma.sass";
+
+.max-width-is-mobile {
+  max-width: $mobile !important;
+}
+//

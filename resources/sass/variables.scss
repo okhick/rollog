@@ -6,6 +6,7 @@
 |--------------------------------------------------------------------------
 */
 $border: $portra;
+$mobile: 414px;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,18 @@ $body-background-color: $portra-overexposed;
 
 /* 
 | --------------------
+| Font Styles
+*/
+$family-primary: "MulishVariable", sans-serif;
+$family-sans-serif: "MulishVariable", sans-serif;
+.logo {
+  font-weight: 1000;
+  font-size: 5rem;
+  letter-spacing: -0.2rem;
+}
+
+/* 
+| --------------------
 | Input Styles
 */
 $input-color: $portra-underexposed;
@@ -34,3 +47,17 @@ $input-focus-box-shadow-size: 0;
 input:focus {
   border-width: 2px;
 }
+
+/* 
+| --------------------
+| Navbar Styles
+*/
+$navbar-background-color: $white;
+$navbar-height: 6rem;
+
+/* 
+| --------------------
+| Footer Styles
+*/
+$footer-background-color: $portra;
+$footer-padding: 1rem 0;
