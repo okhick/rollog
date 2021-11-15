@@ -1,6 +1,8 @@
 <template>
   <header class="has-background-white">
-    <h1 class="logo">ROLLOG</h1>
+    <router-link :to="{ name: 'home' }">
+      <h1 class="logo has-text-black">ROLLOG</h1>
+    </router-link>
   </header>
 </template>
 

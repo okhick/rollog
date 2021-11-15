@@ -1,10 +1,21 @@
 <template>
   <nav id="super-header" class="navbar is-flex is-justify-content-end">
-    <button v-if="!authStore.isLoggedIn" class="button is-primary">
+    <button
+      v-if="$route.name !== 'home'"
+      id="home"
+      class="button"
+      @click="$router.push({ name: 'home' })"
+    >
+      <span class="icon">
+        <ion-icon name="home-outline"></ion-icon>
+      </span>
+    </button>
+    <button v-if="!authStore.isLoggedIn" id="signup" class="button is-primary">
       Sign Up
     </button>
     <button
       v-if="!authStore.isLoggedIn && $route.name !== 'login'"
+      id="login"
       class="button is-secondary"
       @click="$router.push({ name: 'login' })"
     >
@@ -12,6 +23,7 @@
     </button>
     <button
       v-if="authStore.isLoggedIn"
+      id="logout"
       class="button is-secondary"
       @click="handleLogout"
     >
@@ -53,5 +65,9 @@
     background-color: $portra;
     padding: 8px 16px;
     gap: 8px;
+
+    #home {
+      margin-right: auto;
+    }
   }
 </style>

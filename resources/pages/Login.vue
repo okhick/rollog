@@ -18,6 +18,7 @@
         type="text"
         name="email"
         v-model="credentials.email"
+        @keypress.enter="handleSignIn"
       />
     </div>
     <div>
@@ -28,6 +29,7 @@
         type="password"
         name="password"
         v-model="credentials.password"
+        @keypress.enter="handleSignIn"
       />
     </div>
   </section>
