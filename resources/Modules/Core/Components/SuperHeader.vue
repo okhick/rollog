@@ -24,16 +24,17 @@
   import { useRouter } from "vue-router";
   const router = useRouter();
 
-  import { ziggy, api } from "@/modules/Api";
+  import { api, ziggy } from "@/modules/Api";
 
   import { useAuthStore } from "@/modules/Auth/store";
   const authStore = useAuthStore();
 
   /*
   |--------------------------------------------------------------------------
-  | Handle Sign In
+  | Handle Logout
   |--------------------------------------------------------------------------
   */
+
   async function handleLogout() {
     await api.post(ziggy.route("logout"));
 

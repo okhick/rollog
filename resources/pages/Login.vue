@@ -53,7 +53,7 @@
 
   import BigLogo from "@/modules/Core/Components/BigLogo.vue";
 
-  import { api, ziggy } from "@/modules/Api";
+  import { api, progress, ziggy } from "@/modules/Api";
 
   import { useAuthStore } from "@/modules/Auth/store";
 
@@ -90,6 +90,8 @@
     } catch (e) {
       console.log(e);
     }
+
+    progress.done();
   }
 
   async function handleReset() {

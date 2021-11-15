@@ -9,7 +9,6 @@
 </template>
 
 <script setup lang="ts">
-  import { useAuthStore } from "@/modules/Auth/store";
   import SuperHeader from "@/modules/Core/Components/SuperHeader.vue";
 </script>
 

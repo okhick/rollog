@@ -2,6 +2,8 @@ import { createRouter, createWebHashHistory } from "vue-router";
 
 import GeneralLayout from "@/layouts/GeneralLayout.vue";
 
+import { progress } from "@/modules/Api";
+
 import { useAuthStore } from "@/modules/Auth/store";
 
 /*
@@ -82,9 +84,12 @@ router.beforeEach(async (to, _, next) => {
     // If this fails, the API interceptor will set the reroute
     await authStore.fetchUser();
 
+    progress.done();
     next();
   }
 });
+
+router.afterEach(() => progress.done());
 
 /*
 |--------------------------------------------------------------------------

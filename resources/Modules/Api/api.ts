@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 import router from "@/scripts/router";
+import progress from "./progress";
 
 /*
 |--------------------------------------------------------------------------
@@ -25,9 +26,23 @@ const axiosInstance = axios.create(options);
 |--------------------------------------------------------------------------
 */
 
+axiosInstance.interceptors.request.use(
+  function (config) {
+    // Do something before request is sent
+    progress.inc();
+    return config;
+  },
+  function (error) {
+    // Do something with request error
+    progress.done();
+    return Promise.reject(error);
+  }
+);
+
 axiosInstance.interceptors.response.use(
   function (response) {
     // Any status code that lie within the range of 2xx cause this function to trigger
+    progress.inc();
     return response;
   },
   async function (error) {
@@ -51,6 +66,7 @@ axiosInstance.interceptors.response.use(
       // handle other codes
     }
 
+    progress.done();
     return Promise.reject(error);
   }
 );

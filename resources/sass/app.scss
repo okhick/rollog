@@ -1,4 +1,5 @@
 @import "@fontsource/mulish/variable.css";
+@import "nprogress/nprogress.css";
 
 @import "variables.scss";
 
@@ -7,4 +8,12 @@
 .max-width-is-mobile {
   max-width: $mobile !important;
 }
-//
+
+#nprogress .bar {
+  background: $kodak;
+  height: 3px;
+}
+
+#nprogress .peg {
+  box-shadow: none;
+}
