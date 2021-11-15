@@ -21,6 +21,10 @@ export const useApiStore = defineStore("ApiStore", {
         methods: ["GET", "HEAD"],
         uri: "api/user",
       };
+      Ziggy.routes.cookie = {
+        methods: ["POST"],
+        uri: "logout",
+      };
 
       this.ziggyConfig = Ziggy;
     },
