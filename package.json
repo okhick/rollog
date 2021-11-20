@@ -28,6 +28,7 @@
         "pinia": "^2.0.2",
         "vue": "^3.2.6",
         "vue-router": "^4.0.12",
+        "vue3-resize-text": "^0.1.0",
         "ziggy-js": "^1.4.2"
     }
 }

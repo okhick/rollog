@@ -10,9 +10,13 @@
         <ion-icon name="home-outline"></ion-icon>
       </span>
     </button>
+
+    <!--  -->
+
     <button v-if="!authStore.isLoggedIn" id="signup" class="button is-primary">
       Sign Up
     </button>
+
     <button
       v-if="!authStore.isLoggedIn && $route.name !== 'login'"
       id="login"
@@ -21,6 +25,7 @@
     >
       Login
     </button>
+
     <button
       v-if="authStore.isLoggedIn"
       id="logout"

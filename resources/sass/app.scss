@@ -9,6 +9,10 @@
   max-width: $mobile !important;
 }
 
+.max-width-is-tablet {
+  max-width: $tablet !important;
+}
+
 #nprogress .bar {
   background: $kodak;
   height: 3px;

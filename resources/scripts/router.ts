@@ -6,6 +6,8 @@ import { progress } from "@/modules/Api";
 
 import { useAuthStore } from "@/modules/Auth/store";
 
+import AddRoll from "@/pages/Dashboard/Components/AddRoll.vue";
+
 /*
 |--------------------------------------------------------------------------
 | Routes
@@ -31,12 +33,21 @@ const routes = [
   },
   {
     path: "/dashboard",
-    name: "dashboard",
-    component: async () => await import("@/pages/Dashboard.vue"),
+    component: async () => await import("@/pages/Dashboard/index.vue"),
     meta: {
       layout: GeneralLayout,
       requiresAuth: true,
     },
+    children: [
+      {
+        path: "rolls",
+        name: "rolls",
+        components: {
+          default: async () => await import("@/modules/RollTable/index.vue"),
+          footer: AddRoll /* Hot reload won't work on async named routes? */,
+        },
+      },
+    ],
   },
 ];
 
@@ -53,7 +64,7 @@ const router = createRouter({
 
 /*
 |--------------------------------------------------------------------------
-| Middleware
+| Add middleware
 |--------------------------------------------------------------------------
 */
 

@@ -15,8 +15,8 @@ export const useAuthStore = defineStore("AuthStore", {
       try {
         const userRes = await api.get<User>(ziggy.route("user"));
 
-        this.isLoggedIn = true;
         this.user = userRes.data;
+        this.isLoggedIn = true;
       } catch (e) {
         // errors should be handled in the api
       }

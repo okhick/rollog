@@ -88,7 +88,7 @@
       authStore.isLoggedIn = true;
       await authStore.fetchUser();
 
-      router.push({ name: "dashboard" });
+      router.push({ name: "rolls" });
     } catch (e) {
       console.log(e);
     }
@@ -113,16 +113,15 @@
     }
 
     div:last-of-type {
-      margin-bottom: 16px;
+      margin-bottom: 8px;
     }
   }
 
   #login-actions {
-    // margin: 12px auto 0;
     height: 180px;
     width: 100%;
     margin: 0;
-    padding-top: 32px;
+    padding-top: 24px;
 
     button {
       height: 48px;

@@ -17,6 +17,7 @@ import router from "./router";
 
 import { useApiStore } from "@/Modules/Api/store";
 
+import VueResizeText from "vue3-resize-text";
 /*
 |--------------------------------------------------------------------------
 | Init
@@ -34,6 +35,14 @@ app.use(createPinia());
 await useApiStore().initZiggyConfig();
 
 app.use(router);
+
+/* 
+|--------------------------------
+| Import other things down here
+|--------------------------------
+*/
+
+app.directive("ResizeText", VueResizeText.ResizeText);
 
 /*
 |--------------------------------------------------------------------------
