@@ -1,5 +1,5 @@
 <template>
-  <div class="roll-entry is-flex-shrink-0 is-flex">
+  <div v-if="roll" class="roll-entry is-flex-shrink-0 is-flex">
     <label class="is-align-self-flex-end">{{ roll?.film_stock }}</label>
     <div class="roll-details ml-auto mr-2 mt-1 has-text-right">
       <div>
@@ -7,7 +7,7 @@
           >{{ roll?.camera.make }} {{ roll?.camera.model }}</span
         >
         &bull;
-        <span>ISO {{ roll?.film_iso }}</span>
+        <span>ISO {{ roll?.film_iso }} {{ pushPull }}</span>
       </div>
       <div>Aug 13, 2021 – Aug 13, 2021</div>
     </div>
@@ -15,6 +15,7 @@
 </template>
 
 <script lang="ts" setup>
+  import { computed } from "vue";
   import { Roll } from "@/modules/Core/@types";
 
   /*
@@ -27,6 +28,19 @@
     roll: {
       type: Object as () => Roll,
     },
+  });
+
+  const pushPull = computed(() => {
+    // this covers push_pull = 0
+    if (!props.roll?.push_pull) return undefined;
+
+    const sign = props.roll.push_pull < 0;
+
+    const stopSign = sign ? "+" : "-";
+    const stopAbs = Math.abs(props.roll.push_pull);
+    const stopText = stopAbs > 1 ? "stops" : "stop";
+
+    return `${stopSign}${stopAbs} ${stopText}`;
   });
 </script>
 

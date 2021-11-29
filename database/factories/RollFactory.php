@@ -31,10 +31,6 @@ class RollFactory extends Factory
                 'film_iso' => 400,
             ],
             [
-                'film_stock' => 'Kodak Portra',
-                'film_iso' => 800,
-            ],
-            [
                 'film_stock' => 'Kodak UltraMax',
                 'film_iso' => 400,
             ],
@@ -65,6 +61,7 @@ class RollFactory extends Factory
         return [
             'film_stock' => $randomOption['film_stock'],
             'film_iso' => $randomOption['film_iso'],
+            'push_pull' => rand(-5, 5),
             'notes' => $this->faker->sentence()
         ];
     }

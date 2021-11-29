@@ -4,6 +4,7 @@ export interface Roll {
   camera: Camera;
   film_stock: string;
   film_iso: number;
+  push_pull: number;
   notes: string;
   created_at: string;
   updated_at: string;
