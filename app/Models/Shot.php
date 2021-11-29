@@ -9,6 +9,8 @@ class Shot extends Model
 {
     use HasFactory;
 
+    protected $hidden = ['lens_id'];
+
     public function roll()
     {
         return $this->belongsTo(Roll::class);

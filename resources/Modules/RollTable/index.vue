@@ -12,23 +12,47 @@
         is-flex-grow-1 is-align-self-stretch is-flex is-flex-direction-column
       "
     >
-      <roll-entry />
-      <roll-entry />
-      <roll-entry />
-      <roll-entry />
-      <roll-entry />
-      <roll-entry />
-      <roll-entry />
-      <roll-entry />
-      <roll-entry />
-      <roll-entry />
-      <roll-entry />
+      <roll-entry
+        v-for="roll in rollTableStore.rolls"
+        :key="roll.id"
+        :roll="roll"
+      />
     </div>
   </section>
 </template>
 
 <script setup>
+  import { onMounted } from "@vue/runtime-core";
+
+  import { progress } from "../Api";
+
   import RollEntry from "./Components/RollEntry.vue";
+
+  import { useRollTableStore } from "./store";
+
+  /*
+  |--------------------------------------------------------------------------
+  | Init
+  |--------------------------------------------------------------------------
+  */
+
+  const rollTableStore = useRollTableStore();
+
+  /*
+  |--------------------------------------------------------------------------
+  | Hydrate Module
+  |--------------------------------------------------------------------------
+  */
+
+  onMounted(async () => {
+    rollTableStore.markNeedsHydration();
+
+    await rollTableStore.fetchRolls();
+
+    rollTableStore.markFullyHydrated();
+
+    if (rollTableStore.hydrated) progress.done();
+  });
 </script>
 
 <style scoped lang="scss">

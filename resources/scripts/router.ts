@@ -1,12 +1,15 @@
-import { createRouter, createWebHashHistory } from "vue-router";
+import {
+  createRouter,
+  createWebHashHistory,
+  RouteLocationNormalized,
+} from "vue-router";
 
+import AddRoll from "@/pages/Dashboard/Components/AddRoll.vue";
 import GeneralLayout from "@/layouts/GeneralLayout.vue";
 
 import { progress } from "@/modules/Api";
 
 import { useAuthStore } from "@/modules/Auth/store";
-
-import AddRoll from "@/pages/Dashboard/Components/AddRoll.vue";
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +24,7 @@ const routes = [
     component: async () => await import("@/pages/Home.vue"),
     meta: {
       layout: GeneralLayout,
+      requiresHydration: false,
     },
   },
   {
@@ -29,6 +33,7 @@ const routes = [
     component: async () => await import("@/pages/Login.vue"),
     meta: {
       layout: GeneralLayout,
+      requiresHydration: false,
     },
   },
   {
@@ -42,6 +47,9 @@ const routes = [
       {
         path: "rolls",
         name: "rolls",
+        meta: {
+          requiresHydration: true,
+        },
         components: {
           default: async () => await import("@/modules/RollTable/index.vue"),
           footer: AddRoll /* Hot reload won't work on async named routes? */,
@@ -95,12 +103,23 @@ router.beforeEach(async (to, _, next) => {
     // If this fails, the API interceptor will set the reroute
     await authStore.fetchUser();
 
-    progress.done();
+    checkAndFinishProgress(to);
+
     next();
   }
 });
 
-router.afterEach(() => progress.done());
+router.afterEach((to) => checkAndFinishProgress(to));
+
+/**
+ * if there's no hydration needed, quit progress.
+ * if there is hydration, this should be handled in the module
+ *
+ * @param to the next route
+ */
+function checkAndFinishProgress(to: RouteLocationNormalized) {
+  if (to.meta.requiresHydration === false) progress.done();
+}
 
 /*
 |--------------------------------------------------------------------------

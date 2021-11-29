@@ -25,11 +25,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
+
+    Route::get('/rolls', [RollController::class, 'index'])->name('rolls.list');
 });
 
 Route::resource('/cameras', CameraController::class);
 Route::resource('/lenses', LensController::class);
-Route::resource('/rolls', RollController::class);
+// Route::resource('/rolls', RollController::class);
 Route::resource('/shots', ShotController::class);
 
 Route::get('/health', function () {

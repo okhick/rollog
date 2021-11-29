@@ -9,6 +9,8 @@ class Roll extends Model
 {
     use HasFactory;
 
+    protected $hidden = ['camera_id'];
+
     public function user()
     {
         return $this->belongsTo(User::class);

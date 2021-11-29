@@ -1,15 +1,34 @@
 <template>
   <div class="roll-entry is-flex-shrink-0 is-flex">
-    <label class="is-align-self-flex-end">Fujifilm Pro 400 H</label>
+    <label class="is-align-self-flex-end">{{ roll?.film_stock }}</label>
     <div class="roll-details ml-auto mr-2 mt-1 has-text-right">
       <div>
-        <span class="has-text-weight-bold">Canon AE1</span> &bull;
-        <span>ISO 400 + 1 stop</span>
+        <span class="has-text-weight-bold"
+          >{{ roll?.camera.make }} {{ roll?.camera.model }}</span
+        >
+        &bull;
+        <span>ISO {{ roll?.film_iso }}</span>
       </div>
       <div>Aug 13, 2021 – Aug 13, 2021</div>
     </div>
   </div>
 </template>
+
+<script lang="ts" setup>
+  import { Roll } from "@/modules/Core/@types";
+
+  /*
+  |--------------------------------------------------------------------------
+  | Init
+  |--------------------------------------------------------------------------
+  */
+
+  const props = defineProps({
+    roll: {
+      type: Object as () => Roll,
+    },
+  });
+</script>
 
 <style scoped lang="scss">
   @import "@/sass/colors.scss";

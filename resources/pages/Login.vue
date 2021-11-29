@@ -93,7 +93,7 @@
       console.log(e);
     }
 
-    progress.done();
+    // progress.done() is called after the redirect hydration
   }
 
   async function handleReset() {

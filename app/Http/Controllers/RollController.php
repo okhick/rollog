@@ -12,13 +12,16 @@ class RollController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Roll::where('user_id', 1)
+        $user = $request->user();
+
+        $roll = Roll::where('user_id', $user->id)
             ->with('shots')
-            ->with('shots.lens')
             ->with('camera')
             ->get();
+
+        return $roll;
     }
 
     /**
