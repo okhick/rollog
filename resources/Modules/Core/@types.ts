@@ -5,6 +5,7 @@ export interface Roll {
   film_stock: string;
   film_iso: number;
   push_pull: number;
+  completed: boolean;
   notes: string;
   created_at: string;
   updated_at: string;

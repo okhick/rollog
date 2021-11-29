@@ -11,6 +11,10 @@ class Roll extends Model
 
     protected $hidden = ['camera_id'];
 
+    protected $casts = [
+        'completed' => 'boolean'
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);

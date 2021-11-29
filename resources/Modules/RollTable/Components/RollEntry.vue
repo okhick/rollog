@@ -1,21 +1,24 @@
 <template>
   <div v-if="roll" class="roll-entry is-flex-shrink-0 is-flex">
-    <label class="is-align-self-flex-end">{{ roll?.film_stock }}</label>
+    <label class="is-align-self-flex-end"
+      >{{ roll.film_stock }}<span v-if="roll.completed">&check;</span></label
+    >
     <div class="roll-details ml-auto mr-2 mt-1 has-text-right">
       <div>
         <span class="has-text-weight-bold"
-          >{{ roll?.camera.make }} {{ roll?.camera.model }}</span
+          >{{ roll.camera.make }} {{ roll.camera.model }}</span
         >
         &bull;
-        <span>ISO {{ roll?.film_iso }} {{ pushPull }}</span>
+        <span>ISO {{ roll.film_iso }} {{ pushPull }}</span>
       </div>
-      <div>Aug 13, 2021 – Aug 13, 2021</div>
+      <div>{{ timeStamps.createdAt }} &ndash; {{ timeStamps.updatedAt }}</div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
   import { computed } from "vue";
+  import { DateTime } from "luxon";
   import { Roll } from "@/modules/Core/@types";
 
   /*
@@ -27,6 +30,7 @@
   const props = defineProps({
     roll: {
       type: Object as () => Roll,
+      required: true,
     },
   });
 
@@ -41,6 +45,17 @@
     const stopText = stopAbs > 1 ? "stops" : "stop";
 
     return `${stopSign}${stopAbs} ${stopText}`;
+  });
+
+  const timeStamps = computed(() => {
+    return {
+      createdAt: DateTime.fromISO(props.roll.created_at).toLocaleString(
+        DateTime.DATETIME_MED
+      ),
+      updatedAt: DateTime.fromISO(props.roll.updated_at).toLocaleString(
+        DateTime.DATETIME_MED
+      ),
+    };
   });
 </script>
 

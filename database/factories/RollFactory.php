@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Roll;
+use DateInterval;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class RollFactory extends Factory
@@ -56,13 +57,20 @@ class RollFactory extends Factory
             ]
         ];
 
+        // Seed the film stock and iso
         $randomOption = $stockOptions[array_rand($stockOptions)];
+
+        // Seed the created date
+        $createdAt = $this->faker->dateTimeThisDecade();
 
         return [
             'film_stock' => $randomOption['film_stock'],
             'film_iso' => $randomOption['film_iso'],
-            'push_pull' => rand(-5, 5),
-            'notes' => $this->faker->sentence()
+            'push_pull' => random_int(-5, 5),
+            'completed' => random_int(0, 1),
+            'notes' => $this->faker->sentence(),
+            'created_at' => $createdAt,
+            'updated_at' => (clone $createdAt)->modify('+'.random_int(2, 120).' days')
         ];
     }
 }

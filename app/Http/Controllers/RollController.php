@@ -19,6 +19,8 @@ class RollController extends Controller
         $roll = Roll::where('user_id', $user->id)
             ->with('shots')
             ->with('camera')
+            ->orderBy('completed', 'asc')
+            ->orderBy('updated_at', 'desc')
             ->get();
 
         return $roll;
