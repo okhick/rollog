@@ -17,6 +17,7 @@ class CameraSeeder extends Seeder
     {
         User::all()->each(function ($user) {
             $cameras = Camera::factory(2)->make();
+
             $user->cameras()->saveMany($cameras);
         });
     }

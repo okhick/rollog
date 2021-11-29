@@ -17,7 +17,7 @@ class RollSeeder extends Seeder
     public function run()
     {
         User::all()->each(function ($user) {
-            $rolls = Roll::factory(2)->make();
+            $rolls = Roll::factory(rand(2, 20))->make();
 
             // add a random camera that is assigned to this user
             $rolls->each(function ($roll) use ($user) {

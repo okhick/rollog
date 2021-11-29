@@ -21,9 +21,42 @@ class CameraFactory extends Factory
      */
     public function definition()
     {
+        $cameraOptions = [
+            [
+                'make' => 'Canon',
+                'model' => 'AE 1'
+            ],
+            [
+                'make' => 'Mamiya',
+                'model' => '7'
+            ],
+            [
+                'make' => 'Mamiya',
+                'model' => 'RZ67'
+            ],
+            [
+                'make' => 'Contax',
+                'model' => 'T2'
+            ],
+            [
+                'make' => 'Leica',
+                'model' => 'M5'
+            ],
+            [
+                'make' => 'Pentax',
+                'model' => '67'
+            ],
+            [
+                'make' => 'Hasselblad',
+                'model' => 'XPan'
+            ],
+        ];
+
+        $randomCamera = $cameraOptions[array_rand($cameraOptions)];
+
         return [
-            'make' => $this->faker->company(),
-            'model' => $this->faker->word(),
+            'make' => $randomCamera['make'],
+            'model' => $randomCamera['model'],
             'notes' => $this->faker->sentence()
         ];
     }
