@@ -55,6 +55,18 @@ const routes = [
           footer: AddRoll /* Hot reload won't work on async named routes? */,
         },
       },
+      {
+        path: "roll/:id",
+        name: "shots",
+        props: true,
+        meta: {
+          requiresHydration: true,
+        },
+        components: {
+          default: async () => await import("@/modules/ShotTable/index.vue"),
+          footer: AddRoll /* Hot reload won't work on async named routes? */,
+        },
+      },
     ],
   },
 ];

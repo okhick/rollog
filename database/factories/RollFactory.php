@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Roll;
-use DateInterval;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class RollFactory extends Factory

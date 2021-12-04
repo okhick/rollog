@@ -1,8 +1,17 @@
 <template>
-  <div v-if="roll" class="roll-entry is-flex-shrink-0 is-flex">
-    <label class="is-align-self-flex-end"
-      >{{ roll.film_stock }}<span v-if="roll.completed">&check;</span></label
-    >
+  <router-link
+    v-if="roll"
+    class="roll-entry is-flex-shrink-0 is-flex"
+    :to="{ name: 'shots', params: { id: roll.id } }"
+  >
+    <label class="is-align-self-flex-end is-flex"
+      >{{ roll.film_stock
+      }}<ion-icon
+        v-if="roll.completed"
+        name="checkmark-circle-outline"
+        class="is-align-self-center ml-1 roll-complete"
+      ></ion-icon
+    ></label>
     <div class="roll-details ml-auto mr-2 mt-1 has-text-right">
       <div>
         <span class="has-text-weight-bold"
@@ -11,9 +20,14 @@
         &bull;
         <span>ISO {{ roll.film_iso }} {{ pushPull }}</span>
       </div>
-      <div>{{ timeStamps.createdAt }} &ndash; {{ timeStamps.updatedAt }}</div>
+      <div class="is-hidden-mobile">
+        {{ timeStamps.createdAt }} &ndash; {{ timeStamps.updatedAt }}
+      </div>
+      <div class="is-hidden-tablet">
+        {{ timeStamps.createdAtShort }} &ndash; {{ timeStamps.updatedAtShort }}
+      </div>
     </div>
-  </div>
+  </router-link>
 </template>
 
 <script lang="ts" setup>
@@ -34,6 +48,12 @@
     },
   });
 
+  /*
+  |--------------------------------------------------------------------------
+  | Format for Display
+  |--------------------------------------------------------------------------
+  */
+
   const pushPull = computed(() => {
     // this covers push_pull = 0
     if (!props.roll?.push_pull) return undefined;
@@ -52,8 +72,14 @@
       createdAt: DateTime.fromISO(props.roll.created_at).toLocaleString(
         DateTime.DATETIME_MED
       ),
+      createdAtShort: DateTime.fromISO(props.roll.created_at).toLocaleString(
+        DateTime.DATE_MED
+      ),
       updatedAt: DateTime.fromISO(props.roll.updated_at).toLocaleString(
         DateTime.DATETIME_MED
+      ),
+      updatedAtShort: DateTime.fromISO(props.roll.updated_at).toLocaleString(
+        DateTime.DATE_MED
       ),
     };
   });
@@ -68,12 +94,19 @@
     border-bottom: $border;
     margin: -1px 0 4px 0;
     background: $portra-slightly-overexposed;
+    color: $black;
 
     &:first-child {
       border-radius: 4px 4px 0 0;
     }
 
+    &:hover {
+      background: $portra;
+      cursor: pointer;
+    }
+
     label {
+      cursor: pointer;
       font-size: 1.4rem;
       font-weight: bold;
       margin: 0 4px 0 12px;
@@ -82,6 +115,10 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+
+      .roll-complete {
+        color: $portra-underexposed;
+      }
     }
 
     .roll-details {
