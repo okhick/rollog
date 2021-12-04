@@ -12,9 +12,14 @@ class ShotController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Shot::whereRelation('roll', 'user_id', 1)->with('lens')->get();
+        $user = $request->user();
+
+        return Shot::whereRelation('roll', 'user_id', $user->id)
+            ->whereRelation('roll', 'id', $request->rollId)
+            ->with('lens')
+            ->get();
     }
 
     /**

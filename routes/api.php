@@ -26,13 +26,17 @@ Route::middleware('auth:sanctum')->group(function () {
         return $request->user();
     });
 
+    // Get a list or user rolls. Not shots.
     Route::get('/rolls', [RollController::class, 'index'])->name('rolls.list');
+
+    // Get data for a single roll. Includes shots.
+    Route::get('/roll/{id}', [RollController::class, 'show'])->name('roll.show');
 });
 
 Route::resource('/cameras', CameraController::class);
 Route::resource('/lenses', LensController::class);
 // Route::resource('/rolls', RollController::class);
-Route::resource('/shots', ShotController::class);
+// Route::resource('/shots', ShotController::class);
 
 Route::get('/health', function () {
     return true;

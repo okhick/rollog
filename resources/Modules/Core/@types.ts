@@ -9,7 +9,6 @@ export interface Roll {
   notes: string;
   created_at: string;
   updated_at: string;
-  shots: Shot[];
 }
 
 export interface Shot {

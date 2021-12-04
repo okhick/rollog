@@ -1,9 +1,51 @@
-<template>ROLL {{ id }}</template>
+<template>
+  <pre>ROLL {{ shotTableStore.shots }}</pre>
+</template>
 
 <script setup lang="ts">
-  import { defineProps } from "@vue/runtime-core";
+  import { defineProps, onMounted, onUnmounted } from "@vue/runtime-core";
+  import { progress } from "../Api";
+
+  import { useShotTableStore } from "./store";
+
+  /*
+  |--------------------------------------------------------------------------
+  | Init
+  |--------------------------------------------------------------------------
+  */
 
   const props = defineProps({
-    id: String as () => string,
+    id: {
+      type: String as () => string,
+      required: true,
+    },
   });
+
+  const shotTableStore = useShotTableStore();
+
+  /*
+  |--------------------------------------------------------------------------
+  | Hydrate Module
+  |--------------------------------------------------------------------------
+  */
+
+  onMounted(async () => {
+    shotTableStore.markNeedsHydration();
+
+    const rollId = parseInt(props.id);
+
+    await shotTableStore.fetchRoll(rollId);
+
+    shotTableStore.markFullyHydrated();
+
+    if (shotTableStore.hydrated) progress.done();
+  });
+
+  /*
+  |--------------------------------------------------------------------------
+  | Cleanup
+  |--------------------------------------------------------------------------
+  */
+
+  onUnmounted(() => shotTableStore.$reset());
 </script>

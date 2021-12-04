@@ -63,6 +63,10 @@ axiosInstance.interceptors.response.use(
         router.push({ name: "login" });
         break;
 
+      case 404:
+        router.push({ name: "404" });
+        break;
+
       // handle other codes
     }
 

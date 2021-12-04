@@ -69,6 +69,15 @@ const routes = [
       },
     ],
   },
+  {
+    path: "/404",
+    name: "404",
+    component: async () => await import("@/pages/404.vue"),
+    meta: {
+      layout: GeneralLayout,
+      requiresHydration: false,
+    },
+  },
 ];
 
 /*

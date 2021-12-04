@@ -53,9 +53,14 @@ class RollController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+        $user = $request->user();
+
+        return Roll::where('id', $request->id)
+            ->where('user_id', $user->id)
+            ->with('shots')
+            ->firstOrFail();
     }
 
     /**
