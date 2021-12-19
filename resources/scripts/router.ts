@@ -4,7 +4,6 @@ import {
   RouteLocationNormalized,
 } from "vue-router";
 
-import AddFooter from "@/pages/Dashboard/Components/AddFooter.vue";
 import GeneralLayout from "@/layouts/GeneralLayout.vue";
 
 import { progress } from "@/modules/Api";
@@ -51,8 +50,11 @@ const routes = [
           requiresHydration: true,
         },
         components: {
-          default: async () => await import("@/modules/RollTable/index.vue"),
-          footer: AddFooter /* Hot reload won't work on async named routes? */,
+          header: async () =>
+            await import("@/pages/Dashboard/Components/GreetingHeader.vue"),
+          main: async () => await import("@/modules/RollTable/index.vue"),
+          footer: async () =>
+            await import("@/pages/Dashboard/Components/AddFooter.vue"),
         },
       },
       {
@@ -63,8 +65,11 @@ const routes = [
           requiresHydration: true,
         },
         components: {
-          default: async () => await import("@/modules/ShotTable/index.vue"),
-          footer: AddFooter /* Hot reload won't work on async named routes? */,
+          header: async () =>
+            await import("@/modules/ShotTable/Components/ShotTableHeader.vue"),
+          main: async () => await import("@/modules/ShotTable/index.vue"),
+          footer: async () =>
+            await import("@/pages/Dashboard/Components/AddFooter.vue"),
         },
       },
     ],

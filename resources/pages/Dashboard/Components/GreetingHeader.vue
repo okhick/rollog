@@ -7,7 +7,7 @@
         maxFontSize: '36px',
         delay: 200,
       }"
-      class="has-text-centered has-text-black"
+      class="title has-text-centered has-text-black"
     >
       Hello, {{ authStore.user?.name }}!
     </h1>
@@ -27,8 +27,4 @@
   const authStore = useAuthStore();
 </script>
 
-<style scoped lang="scss">
-  h1 {
-    font-weight: 1000;
-  }
-</style>
+<style scoped lang="scss"></style>
