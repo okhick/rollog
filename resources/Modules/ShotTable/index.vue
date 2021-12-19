@@ -1,5 +1,7 @@
 <template>
-  <pre>ROLL {{ shotTableStore.shots }}</pre>
+  <table-frame title="Shots">
+    <pre>ROLL {{ shotTableStore.shots }}</pre>
+  </table-frame>
 </template>
 
 <script setup lang="ts">
@@ -7,6 +9,8 @@
   import { progress } from "../Api";
 
   import { useShotTableStore } from "./store";
+
+  import TableFrame from "../Core/Components/TableFrame.vue";
 
   /*
   |--------------------------------------------------------------------------
