@@ -1,14 +1,5 @@
 <template>
-  <header
-    class="
-      is-flex
-      is-flex-direction-column
-      is-align-content-center
-      is-justify-content-center
-      has-background-white
-      greeting
-    "
-  >
+  <header-frame>
     <h1
       v-resize-text="{
         ratio: 1.75,
@@ -20,11 +11,12 @@
     >
       Hello, {{ authStore.user?.name }}!
     </h1>
-  </header>
+  </header-frame>
 </template>
 
 <script setup>
   import { useAuthStore } from "@/modules/Auth/store";
+  import HeaderFrame from "@/modules/Core/Components/HeaderFrame.vue";
 
   /*
   |--------------------------------------------------------------------------
@@ -36,11 +28,7 @@
 </script>
 
 <style scoped lang="scss">
-  .greeting {
-    height: 120px;
-
-    h1 {
-      font-weight: 1000;
-    }
+  h1 {
+    font-weight: 1000;
   }
 </style>

@@ -2,7 +2,7 @@
   <router-link
     v-if="roll"
     class="roll-entry is-flex-shrink-0 is-flex"
-    :to="{ name: 'shots', params: { id: roll.id } }"
+    :to="{ name: 'shots', params: { rollId: roll.id } }"
   >
     <label class="is-align-self-flex-end is-flex"
       >{{ roll.film_stock

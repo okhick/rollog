@@ -4,7 +4,7 @@ import {
   RouteLocationNormalized,
 } from "vue-router";
 
-import AddRoll from "@/pages/Dashboard/Components/AddRoll.vue";
+import AddFooter from "@/pages/Dashboard/Components/AddFooter.vue";
 import GeneralLayout from "@/layouts/GeneralLayout.vue";
 
 import { progress } from "@/modules/Api";
@@ -52,11 +52,11 @@ const routes = [
         },
         components: {
           default: async () => await import("@/modules/RollTable/index.vue"),
-          footer: AddRoll /* Hot reload won't work on async named routes? */,
+          footer: AddFooter /* Hot reload won't work on async named routes? */,
         },
       },
       {
-        path: "roll/:id",
+        path: "roll/:rollId",
         name: "shots",
         props: true,
         meta: {
@@ -64,7 +64,7 @@ const routes = [
         },
         components: {
           default: async () => await import("@/modules/ShotTable/index.vue"),
-          footer: AddRoll /* Hot reload won't work on async named routes? */,
+          footer: AddFooter /* Hot reload won't work on async named routes? */,
         },
       },
     ],

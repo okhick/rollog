@@ -19,7 +19,7 @@
   */
 
   const props = defineProps({
-    id: {
+    rollId: {
       type: String as () => string,
       required: true,
     },
@@ -36,7 +36,7 @@
   onMounted(async () => {
     shotTableStore.markNeedsHydration();
 
-    const rollId = parseInt(props.id);
+    const rollId = parseInt(props.rollId);
 
     await shotTableStore.fetchRoll(rollId);
 

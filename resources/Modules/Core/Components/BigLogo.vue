@@ -1,10 +1,14 @@
 <template>
-  <header class="has-background-white">
+  <header-frame>
     <router-link :to="{ name: 'home' }">
       <h1 class="logo has-text-black has-text-centered">ROLLOG</h1>
-    </router-link>
-  </header>
+    </router-link></header-frame
+  >
 </template>
+
+<script setup lang="ts">
+  import HeaderFrame from "@/modules/Core/Components/HeaderFrame.vue";
+</script>
 
 <style>
   .logo {
