@@ -1,7 +1,17 @@
 <template>
-  <table-frame title="Shots">
-    <pre>ROLL {{ shotTableStore.shots }}</pre>
-  </table-frame>
+  <section
+    class="
+      is-flex-grow-1 is-flex is-flex-direction-column is-flex-gap-1
+      px-4
+      py-2
+    "
+  >
+    <roll-info />
+
+    <table-frame title="Shots">
+      <pre>ROLL {{ shotTableStore.shots }}</pre>
+    </table-frame>
+  </section>
 </template>
 
 <script setup lang="ts">
@@ -11,6 +21,7 @@
   import { useShotTableStore } from "./store";
 
   import TableFrame from "../Core/Components/TableFrame.vue";
+  import RollInfo from "./Components/RollInfo.vue";
 
   /*
   |--------------------------------------------------------------------------

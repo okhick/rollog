@@ -69,3 +69,12 @@ $button-text-color: $black;
 button.is-icon-rounded {
   border-radius: 50%;
 }
+
+/* 
+| --------------------
+| Table Styles
+*/
+.table-border {
+  border: solid 1px $portra-underexposed;
+  border-radius: 4px;
+}

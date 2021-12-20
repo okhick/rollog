@@ -1,11 +1,13 @@
 <template>
-  <table-frame title="Rolls">
-    <roll-entry
-      v-for="roll in rollTableStore.rolls"
-      :key="roll.id"
-      :roll="roll"
-    />
-  </table-frame>
+  <section class="is-flex-grow-1 is-flex is-flex-direction-column px-4 py-2">
+    <table-frame title="Rolls">
+      <roll-entry
+        v-for="roll in rollTableStore.rolls"
+        :key="roll.id"
+        :roll="roll"
+      />
+    </table-frame>
+  </section>
 </template>
 
 <script setup>

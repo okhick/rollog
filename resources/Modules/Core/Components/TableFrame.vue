@@ -1,19 +1,17 @@
 <template>
-  <section class="is-flex-grow-1 is-flex is-flex-direction-column px-4 py-2">
-    <div id="table-header">
-      <label id="table-label" class="table-border has-background-white px-2">{{
-        props.title
-      }}</label>
-    </div>
-    <div
-      class="
-        table-border table-overflow
-        is-flex-grow-1 is-align-self-stretch is-flex is-flex-direction-column
-      "
-    >
-      <slot />
-    </div>
-  </section>
+  <div id="table-header">
+    <label id="table-label" class="table-border has-background-white px-2">{{
+      props.title
+    }}</label>
+  </div>
+  <div
+    class="
+      table-border table-overflow
+      is-flex-grow-1 is-align-self-stretch is-flex is-flex-direction-column
+    "
+  >
+    <slot />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -29,11 +27,6 @@
 
 <style scoped lang="scss">
   @import "@/sass/colors.scss";
-
-  .table-border {
-    border: solid 1px $portra-underexposed;
-    border-radius: 4px;
-  }
 
   #table-header {
     margin-bottom: -16px;

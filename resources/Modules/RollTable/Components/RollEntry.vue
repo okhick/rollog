@@ -34,6 +34,7 @@
   import { computed } from "vue";
   import { DateTime } from "luxon";
   import { Roll } from "@/modules/Core/@types";
+  import { useDisplayFormatters } from "@/modules/Core/Composables/DisplayFormatters";
 
   /*
   |--------------------------------------------------------------------------
@@ -53,19 +54,9 @@
   | Format for Display
   |--------------------------------------------------------------------------
   */
+  const { formatPushPull } = useDisplayFormatters();
 
-  const pushPull = computed(() => {
-    // this covers push_pull = 0
-    if (!props.roll?.push_pull) return undefined;
-
-    const sign = props.roll.push_pull < 0;
-
-    const stopSign = sign ? "+" : "-";
-    const stopAbs = Math.abs(props.roll.push_pull);
-    const stopText = stopAbs > 1 ? "stops" : "stop";
-
-    return `${stopSign}${stopAbs} ${stopText}`;
-  });
+  const pushPull = computed(() => formatPushPull(props.roll.push_pull));
 
   const timeStamps = computed(() => {
     return {
