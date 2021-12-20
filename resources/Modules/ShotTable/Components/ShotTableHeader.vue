@@ -1,7 +1,7 @@
 <template>
   <header-frame>
     <h1 class="title has-text-centered has-text-black">
-      {{ shotTableStore.roll?.film_stock }} {{ shotTableStore.roll?.film_iso }}
+      {{ shotTableStore.rollNameString }}
     </h1>
   </header-frame>
 </template>
@@ -16,8 +16,10 @@
 
 <style scoped lang="scss">
   h1 {
-    // font-weight: 1000;
-    font-size: 3rem;
-    letter-spacing: -0.1rem;
+    /**
+    * Josh Comeau trick allows for dynamic font size based on VW.
+    * The '+ 1rem' allows the text resize on zoom in and out for accessibility 
+    */
+    font-size: clamp(2rem, 5vw + 1rem, 4rem);
   }
 </style>

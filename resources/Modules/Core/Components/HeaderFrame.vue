@@ -6,6 +6,7 @@
       is-align-content-center
       is-justify-content-center
       has-background-white
+      px-2
       header
     "
   >
