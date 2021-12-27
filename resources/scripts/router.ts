@@ -9,6 +9,21 @@ import GeneralLayout from "@/layouts/GeneralLayout.vue";
 import { progress } from "@/modules/Api";
 
 import { useAuthStore } from "@/modules/Auth/store";
+import { useShotTableStore } from "@/modules/ShotTable/store";
+
+declare module "vue-router" {
+  interface RouteMeta {
+    layout?: any;
+    requiresHydration?: boolean;
+    requiredAuth?: boolean;
+    breadcrumbs?(): Breadcrumb[];
+  }
+}
+
+interface Breadcrumb {
+  label: string;
+  to?: { name: string };
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +63,11 @@ const routes = [
         name: "rolls",
         meta: {
           requiresHydration: true,
+          breadcrumbs: () => [
+            {
+              label: "Rolls",
+            },
+          ],
         },
         components: {
           header: async () =>
@@ -63,6 +83,12 @@ const routes = [
         props: true,
         meta: {
           requiresHydration: true,
+          breadcrumbs() {
+            return [
+              { to: { name: "rolls" }, label: "Rolls" },
+              { label: getRollName() },
+            ];
+          },
         },
         components: {
           header: async () =>
@@ -145,6 +171,12 @@ router.afterEach((to) => checkAndFinishProgress(to));
  */
 function checkAndFinishProgress(to: RouteLocationNormalized) {
   if (to.meta.requiresHydration === false) progress.done();
+}
+
+function getRollName() {
+  const shotTableStore = useShotTableStore();
+
+  return shotTableStore.roll?.film_stock || "";
 }
 
 /*

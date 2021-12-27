@@ -1,5 +1,5 @@
 <template>
-  <nav id="super-header" class="navbar is-flex is-justify-content-end">
+  <nav id="super-header" class="navbar is-flex">
     <button
       v-if="$route.name !== 'home'"
       id="home"
@@ -11,7 +11,7 @@
       </span>
     </button>
 
-    <!--  -->
+    <breadcrumbs class="mr-auto" />
 
     <button v-if="!authStore.isLoggedIn" id="signup" class="button is-primary">
       Sign Up
@@ -29,7 +29,7 @@
     <button
       v-if="authStore.isLoggedIn"
       id="logout"
-      class="button is-secondary"
+      class="button is-secondary ml-auto"
       @click="handleLogout"
     >
       Logout
@@ -46,11 +46,13 @@
   import { useAuthStore } from "@/modules/Auth/store";
   const authStore = useAuthStore();
 
+  import Breadcrumbs from "./Breadcrumbs.vue";
+
   /*
-  |--------------------------------------------------------------------------
-  | Handle Logout
-  |--------------------------------------------------------------------------
-  */
+    |--------------------------------------------------------------------------
+    | Handle Logout
+    |--------------------------------------------------------------------------
+    */
 
   async function handleLogout() {
     await api.post(ziggy.route("logout"));
@@ -70,9 +72,5 @@
     background-color: $portra;
     padding: 8px 16px;
     gap: 8px;
-
-    #home {
-      margin-right: auto;
-    }
   }
 </style>
