@@ -9,6 +9,7 @@ export const useShotTableStore = defineStore("ShotTableStore", {
   state: (): ShotTableState => {
     return {
       roll: undefined,
+      rollInfoExpanded: false,
       shots: undefined,
       hydrated: false,
     };
@@ -43,6 +44,10 @@ export const useShotTableStore = defineStore("ShotTableStore", {
         this.markFullyHydrated();
         console.log("ERROR GETTING ROLL");
       }
+    },
+
+    toggleRollInfoExpanded() {
+      this.rollInfoExpanded = !this.rollInfoExpanded;
     },
 
     markNeedsHydration() {

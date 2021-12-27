@@ -1,4 +1,12 @@
+import { Camera } from "../@types";
+
 export function useDisplayFormatters() {
+  function formatCamera(camera: Camera | undefined) {
+    if (!camera) return "";
+
+    return `${camera.make} ${camera.model}`;
+  }
+
   function formatPushPull(pushPull: number | undefined) {
     // this covers push_pull = 0
     if (!pushPull) return undefined;
@@ -13,6 +21,7 @@ export function useDisplayFormatters() {
   }
 
   return {
+    formatCamera,
     formatPushPull,
   };
 }

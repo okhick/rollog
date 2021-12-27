@@ -2,6 +2,7 @@ import { Roll, Shot } from "../Core/@types";
 
 export interface ShotTableState {
   roll?: Roll;
+  rollInfoExpanded: boolean;
   shots?: Shot[];
   hydrated: boolean;
 }

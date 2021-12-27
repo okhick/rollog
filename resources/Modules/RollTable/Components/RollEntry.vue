@@ -10,9 +10,7 @@
     ></label>
     <div class="roll-details ml-auto mr-2 mt-1 has-text-right">
       <div>
-        <span class="has-text-weight-bold"
-          >{{ roll.camera.make }} {{ roll.camera.model }}</span
-        >
+        <span class="has-text-weight-bold">{{ camera }}</span>
         &bull;
         <span>ISO {{ roll.film_iso }} {{ pushPull }}</span>
       </div>
@@ -54,9 +52,10 @@
   | Format for Display
   |--------------------------------------------------------------------------
   */
-  const { formatPushPull } = useDisplayFormatters();
+  const { formatCamera, formatPushPull } = useDisplayFormatters();
 
   const pushPull = computed(() => formatPushPull(props.roll.push_pull));
+  const camera = computed(() => formatCamera(props.roll.camera));
 
   const timeStamps = computed(() => {
     return {

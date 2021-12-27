@@ -60,6 +60,7 @@ class RollController extends Controller
         return Roll::where('id', $request->id)
             ->where('user_id', $user->id)
             ->with('shots')
+            ->with('camera')
             ->firstOrFail();
     }
 
