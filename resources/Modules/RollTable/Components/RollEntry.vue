@@ -1,9 +1,5 @@
 <template>
-  <router-link
-    v-if="roll"
-    class="roll-entry is-flex-shrink-0 is-flex"
-    :to="{ name: 'shots', params: { rollId: roll.id } }"
-  >
+  <table-entry-frame :to="{ name: 'shots', params: { rollId: roll.id } }">
     <label class="is-align-self-flex-end is-flex"
       >{{ roll.film_stock
       }}<ion-icon
@@ -21,20 +17,24 @@
         <span>ISO {{ roll.film_iso }} {{ pushPull }}</span>
       </div>
       <div class="is-hidden-mobile">
-        {{ timeStamps.createdAt }} &ndash; {{ timeStamps.updatedAt }}
+        {{ timeStamps.createdAt }} &ndash; {{ timeStamps.updatedAt }}
       </div>
       <div class="is-hidden-tablet">
-        {{ timeStamps.createdAtShort }} &ndash; {{ timeStamps.updatedAtShort }}
+        {{ timeStamps.createdAtShort }} &ndash; {{ timeStamps.updatedAtShort }}
       </div>
     </div>
-  </router-link>
+  </table-entry-frame>
 </template>
 
 <script lang="ts" setup>
   import { computed } from "vue";
   import { DateTime } from "luxon";
-  import { Roll } from "@/modules/Core/@types";
+
   import { useDisplayFormatters } from "@/modules/Core/Composables/DisplayFormatters";
+
+  import TableEntryFrame from "@/modules/Core/Components/TableEntryFrame.vue";
+
+  import { Roll } from "@/modules/Core/@types";
 
   /*
   |--------------------------------------------------------------------------
@@ -78,43 +78,23 @@
 
 <style scoped lang="scss">
   @import "@/sass/colors.scss";
-  $border: solid 1px $portra-underexposed;
-  .roll-entry {
-    height: 60px;
-    border-top: $border;
-    border-bottom: $border;
-    margin: -1px 0 4px 0;
-    background: $portra-slightly-overexposed;
-    color: $black;
 
-    &:first-child {
-      border-radius: 4px 4px 0 0;
-    }
-
-    &:hover {
-      background: $portra;
-      cursor: pointer;
-    }
-
-    label {
-      cursor: pointer;
-      font-size: 1.4rem;
-      font-weight: bold;
-      margin: 0 4px 0 12px;
-      letter-spacing: -1px;
-      align-self: flex-end;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-
-      .roll-complete {
-        color: $portra-underexposed;
-      }
-    }
-
-    .roll-details {
-      font-size: 0.75rem;
-      line-height: 1.2;
-    }
+  label {
+    cursor: pointer;
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin: 0 4px 0 12px;
+    letter-spacing: -1px;
+    align-self: flex-end;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .roll-complete {
+    color: $portra-underexposed;
+  }
+  .roll-details {
+    font-size: 0.75rem;
+    line-height: 1.2;
   }
 </style>

@@ -28,3 +28,9 @@
 .is-flex-gap-2 {
   gap: 0.5rem;
 }
+
+.overflow-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

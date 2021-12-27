@@ -6,10 +6,10 @@
       py-2
     "
   >
-    <roll-info />
+    <roll-info id="roll-info" />
 
     <table-frame title="Shots">
-      <pre>ROLL {{ shotTableStore.shots }}</pre>
+      <shot-entry v-for="shot in shotTableStore.shots" :shot="shot" />
     </table-frame>
   </section>
 </template>
@@ -22,6 +22,7 @@
 
   import TableFrame from "../Core/Components/TableFrame.vue";
   import RollInfo from "./Components/RollInfo.vue";
+  import ShotEntry from "./Components/ShotEntry.vue";
 
   /*
   |--------------------------------------------------------------------------
@@ -64,3 +65,9 @@
 
   onUnmounted(() => shotTableStore.$reset());
 </script>
+
+<style lang="scss">
+  #roll-info {
+    margin-top: -16px;
+  }
+</style>

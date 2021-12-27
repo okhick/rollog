@@ -35,7 +35,7 @@
     #table-label {
       margin-left: 20px;
       font-weight: bold;
-      font-size: 2rem;
+      font-size: clamp(1.6rem, 2vw + 1rem, 2rem);
       letter-spacing: -2px;
     }
   }
