@@ -9,7 +9,11 @@
     <roll-info id="roll-info" />
 
     <table-frame title="Shots">
-      <shot-entry v-for="shot in shotTableStore.shots" :shot="shot" />
+      <shot-entry
+        v-for="(shot, index) in shotTableStore.shots"
+        :number="index + 1"
+        :shot="shot"
+      />
     </table-frame>
   </section>
 </template>

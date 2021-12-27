@@ -2,7 +2,10 @@
   <table-entry-frame class="is-flex-wrap-wrap" :to="{ name: 'rolls' }">
     <div class="is-flex full-width">
       <div class="label-wrapper overflow-ellipsis">
-        <label>{{ shot.title }}</label>
+        <label
+          ><span class="has-text-weight-light">{{ props.number }}.</span>
+          {{ shot.title }}</label
+        >
       </div>
       <div class="shot-info">
         <p class="is-size-6 has-text-right">
@@ -39,6 +42,10 @@
   const props = defineProps({
     shot: {
       type: Object as () => Shot,
+      required: true,
+    },
+    number: {
+      type: Number as () => number,
       required: true,
     },
   });
