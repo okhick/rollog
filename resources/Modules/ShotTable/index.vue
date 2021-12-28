@@ -11,7 +11,7 @@
     <table-frame title="Shots">
       <shot-entry
         v-for="(shot, index) in shotTableStore.shots"
-        :number="index + 1"
+        :number="shotTableStore.shots!.length - index"
         :shot="shot"
       />
     </table-frame>
