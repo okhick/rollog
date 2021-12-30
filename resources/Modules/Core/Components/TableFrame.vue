@@ -4,6 +4,7 @@
       props.title
     }}</label>
     <label
+      v-if="sort"
       @click="$emit('table:sort')"
       class="
         table-label table-border table-sort
@@ -14,11 +15,11 @@
     >
       <ion-icon
         v-show="sort === sortEnum.ASC"
-        name="caret-down-outline"
+        name="caret-up-outline"
       ></ion-icon>
       <ion-icon
         v-show="sort === sortEnum.DESC"
-        name="caret-up-outline"
+        name="caret-down-outline"
       ></ion-icon>
     </label>
   </div>
@@ -45,11 +46,10 @@
     },
     sort: {
       type: String as () => Sort,
-      required: true,
     },
   });
 
-  const emits = defineEmits(["table:sort"]);
+  defineEmits(["table:sort"]);
 
   const sortEnum = computed(() => Sort);
 </script>
