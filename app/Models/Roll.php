@@ -27,6 +27,8 @@ class Roll extends Model
 
     public function shots()
     {
-        return $this->hasMany(Shot::class)->latest();
+        return $this->hasMany(Shot::class)
+            ->with('lens')
+            ->latest();
     }
 }

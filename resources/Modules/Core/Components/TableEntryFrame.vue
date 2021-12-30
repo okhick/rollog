@@ -1,5 +1,5 @@
 <template>
-  <router-link class="roll-entry is-flex-shrink-0 is-flex" :to="to">
+  <router-link class="entry is-flex-shrink-0 is-flex" :to="to">
     <slot />
   </router-link>
 </template>
@@ -19,8 +19,8 @@
 <style scoped lang="scss">
   @import "@/sass/colors.scss";
   $border: solid 1px $portra-underexposed;
-  .roll-entry {
-    height: 60px;
+  .entry {
+    min-height: 60px;
     border-top: $border;
     border-bottom: $border;
     margin: -1px 0 4px 0;

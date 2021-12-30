@@ -27,7 +27,7 @@
         ></ion-icon>
       </span>
     </div>
-    <p v-show="shotTableStore.rollInfoExpanded">
+    <p class="is-italic" v-show="shotTableStore.rollInfoExpanded">
       {{ shotTableStore.roll?.notes }}
     </p>
   </div>

@@ -1,10 +1,16 @@
-import { Camera } from "../@types";
+import { Camera, Lens } from "../@types";
 
 export function useDisplayFormatters() {
   function formatCamera(camera: Camera | undefined) {
     if (!camera) return "";
 
     return `${camera.make} ${camera.model}`;
+  }
+
+  function formatLens(lens: Lens | undefined) {
+    if (!lens) return "";
+
+    return `${lens.make} ${lens.model} \u0192${lens.minimum_aperture}\u2013${lens.maximum_aperture}`;
   }
 
   function formatPushPull(pushPull: number | undefined) {
@@ -22,6 +28,7 @@ export function useDisplayFormatters() {
 
   return {
     formatCamera,
+    formatLens,
     formatPushPull,
   };
 }

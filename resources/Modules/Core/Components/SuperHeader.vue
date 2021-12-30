@@ -11,7 +11,7 @@
       </span>
     </button>
 
-    <breadcrumbs class="mr-auto" />
+    <breadcrumbs />
 
     <button v-if="!authStore.isLoggedIn" id="signup" class="button is-primary">
       Sign Up

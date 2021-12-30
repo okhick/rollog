@@ -12,12 +12,15 @@
           &fnof;{{ shot.aperture }} &bull; 1/{{ shot.exposure }}
           <span class="is-size-7" v-if="pushPull">({{ pushPull }})</span>
         </p>
+        <p class="is-size-7 has-text-right">{{ lens }}</p>
         <p class="is-size-7 has-text-right">
           {{ dateCreated }}
         </p>
       </div>
     </div>
-    <p class="is-size-7 overflow-ellipsis notes">{{ shot.notes }}</p>
+    <p class="is-size-7 is-italic overflow-ellipsis notes">
+      {{ shot.notes }}
+    </p>
   </table-entry-frame>
 </template>
 
@@ -37,7 +40,7 @@
   |--------------------------------------------------------------------------
   */
 
-  const { formatPushPull } = useDisplayFormatters();
+  const { formatLens, formatPushPull } = useDisplayFormatters();
 
   const props = defineProps({
     shot: {
@@ -45,7 +48,7 @@
       required: true,
     },
     number: {
-      type: Number as () => number,
+      type: Number as () => number | undefined,
       required: true,
     },
   });
@@ -63,11 +66,13 @@
   });
 
   const pushPull = computed(() => formatPushPull(props.shot.pushpull));
+
+  const lens = computed(() => formatLens(props.shot.lens));
 </script>
 
 <style lang="scss">
   .label-wrapper {
-    margin: auto 0 4px 8px;
+    margin: auto 0 0 8px;
     line-height: 1.2;
     min-width: 0;
 
@@ -93,7 +98,7 @@
 
   .notes {
     flex-basis: 100%;
-    line-height: 1;
+    line-height: 1.3;
     margin: 0 4px 2px 4px;
   }
 </style>

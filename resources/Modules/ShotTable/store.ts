@@ -4,6 +4,7 @@ import { api, ziggy } from "@/modules/Api";
 import { cloneDeep, omit } from "lodash";
 
 import { HydratedRoll, ShotTableState } from "./@types";
+import { Sort } from "../Core/@types";
 
 export const useShotTableStore = defineStore("ShotTableStore", {
   state: (): ShotTableState => {
@@ -11,6 +12,7 @@ export const useShotTableStore = defineStore("ShotTableStore", {
       roll: undefined,
       rollInfoExpanded: false,
       shots: undefined,
+      sort: Sort.DESC,
       hydrated: false,
     };
   },
@@ -44,6 +46,11 @@ export const useShotTableStore = defineStore("ShotTableStore", {
         this.markFullyHydrated();
         console.log("ERROR GETTING ROLL");
       }
+    },
+
+    reverseSort() {
+      this.sort = this.sort === Sort.DESC ? Sort.ASC : Sort.DESC;
+      this.shots = this.shots?.reverse();
     },
 
     toggleRollInfoExpanded() {

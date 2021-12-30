@@ -45,3 +45,8 @@ export interface Camera {
   created_at: string;
   updated_at: string;
 }
+
+export enum Sort {
+  ASC = "ASC",
+  DESC = "DESC",
+}

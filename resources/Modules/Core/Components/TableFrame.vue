@@ -1,9 +1,28 @@
 <template>
-  <div id="table-header">
-    <label id="table-label" class="table-border has-background-white px-2">{{
+  <div id="table-header" class="is-flex">
+    <label class="table-label table-border has-background-white px-2">{{
       props.title
     }}</label>
+    <label
+      @click="$emit('table:sort')"
+      class="
+        table-label table-border table-sort
+        is-flex is-align-items-center is-size-5 is-clickable
+        ml-2
+        has-background-white
+      "
+    >
+      <ion-icon
+        v-show="sort === sortEnum.ASC"
+        name="caret-down-outline"
+      ></ion-icon>
+      <ion-icon
+        v-show="sort === sortEnum.DESC"
+        name="caret-up-outline"
+      ></ion-icon>
+    </label>
   </div>
+
   <div
     class="
       table-border table-overflow
@@ -16,13 +35,23 @@
 
 <script setup lang="ts">
   import { defineProps } from "@vue/runtime-core";
+  import { computed } from "vue";
+  import { Sort } from "../@types";
 
   const props = defineProps({
     title: {
       type: String as () => string,
       required: true,
     },
+    sort: {
+      type: String as () => Sort,
+      required: true,
+    },
   });
+
+  const emits = defineEmits(["table:sort"]);
+
+  const sortEnum = computed(() => Sort);
 </script>
 
 <style scoped lang="scss">
@@ -31,12 +60,19 @@
   #table-header {
     margin-bottom: -16px;
     isolation: isolate;
+    line-height: initial;
 
-    #table-label {
+    .table-label {
       margin-left: 20px;
       font-weight: bold;
       font-size: clamp(1.6rem, 2vw + 1rem, 2rem);
       letter-spacing: -2px;
+    }
+
+    .table-sort {
+      ion-icon {
+        padding: 0 8px;
+      }
     }
   }
 

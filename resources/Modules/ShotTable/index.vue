@@ -8,10 +8,14 @@
   >
     <roll-info id="roll-info" />
 
-    <table-frame title="Shots">
+    <table-frame
+      title="Shots"
+      :sort="shotTableStore.sort"
+      @table:sort="shotTableStore.reverseSort"
+    >
       <shot-entry
         v-for="(shot, index) in shotTableStore.shots"
-        :number="shotTableStore.shots!.length - index"
+        :number="calculateShotNumber(index)"
         :shot="shot"
       />
     </table-frame>
@@ -27,6 +31,8 @@
   import TableFrame from "../Core/Components/TableFrame.vue";
   import RollInfo from "./Components/RollInfo.vue";
   import ShotEntry from "./Components/ShotEntry.vue";
+
+  import { Sort } from "@/modules/Core/@types";
 
   /*
   |--------------------------------------------------------------------------
@@ -60,6 +66,20 @@
 
     if (shotTableStore.hydrated) progress.done();
   });
+
+  /*
+  |--------------------------------------------------------------------------
+  | Helpers
+  |--------------------------------------------------------------------------
+  */
+
+  function calculateShotNumber(index: number) {
+    if (!shotTableStore.shots) return;
+
+    return shotTableStore.sort === Sort.ASC
+      ? index + 1
+      : shotTableStore.shots.length - index;
+  }
 
   /*
   |--------------------------------------------------------------------------
