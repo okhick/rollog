@@ -3,7 +3,7 @@
     <button
       v-if="$route.name !== 'home'"
       id="home"
-      class="button"
+      class="button mt-5"
       @click="$router.push({ name: 'home' })"
     >
       <span class="icon">
@@ -13,14 +13,18 @@
 
     <breadcrumbs />
 
-    <button v-if="!authStore.isLoggedIn" id="signup" class="button is-primary">
+    <button
+      v-if="!authStore.isLoggedIn"
+      id="signup"
+      class="button is-primary mt-5"
+    >
       Sign Up
     </button>
 
     <button
       v-if="!authStore.isLoggedIn && $route.name !== 'login'"
       id="login"
-      class="button is-secondary"
+      class="button is-secondary mt-5"
       @click="$router.push({ name: 'login' })"
     >
       Login
@@ -29,7 +33,7 @@
     <button
       v-if="authStore.isLoggedIn"
       id="logout"
-      class="button is-secondary ml-auto"
+      class="button is-secondary ml-auto mt-5"
       @click="handleLogout"
     >
       Logout
@@ -70,7 +74,8 @@
     min-height: 2rem;
     height: 40px;
     background-color: $portra;
-    padding: 8px 16px;
+    padding: 0px 16px;
     gap: 8px;
+    align-items: center;
   }
 </style>

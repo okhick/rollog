@@ -18,7 +18,6 @@ class ShotController extends Controller
 
         return Shot::whereRelation('roll', 'user_id', $user->id)
             ->whereRelation('roll', 'id', $request->rollId)
-            ->with('lens')
             ->get();
     }
 
@@ -49,9 +48,14 @@ class ShotController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+        $user = $request->user();
+
+        return Shot::whereRelation('roll', 'user_id', $user->id)
+            ->where('id', $request->shot)
+            ->where('roll_id', $request->roll)
+            ->firstOrFail();
     }
 
     /**

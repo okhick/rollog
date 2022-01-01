@@ -9,15 +9,17 @@ class Shot extends Model
 {
     use HasFactory;
 
-    protected $hidden = ['lens_id'];
+    protected $hidden = ['lens_id', 'roll_id'];
 
-    public function roll()
-    {
-        return $this->belongsTo(Roll::class);
-    }
+    protected $with = ['lens', 'roll'];
 
     public function lens()
     {
         return $this->belongsTo(Lens::class);
+    }
+
+    public function roll()
+    {
+        return $this->belongsTo(Roll::class);
     }
 }

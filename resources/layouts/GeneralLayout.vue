@@ -11,16 +11,3 @@
 <script setup lang="ts">
   import SuperHeader from "@/modules/Core/Components/SuperHeader.vue";
 </script>
-
-<style scoped lang="scss">
-  @import "@/sass/colors.scss";
-
-  #super-header {
-    // Override Bulma's min-height 6rem
-    min-height: 2rem;
-    height: 40px;
-    background-color: $portra;
-    padding: 8px 16px;
-    gap: 8px;
-  }
-</style>

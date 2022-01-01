@@ -37,13 +37,12 @@ export const useShotTableStore = defineStore("ShotTableStore", {
     async fetchRoll(rollId: number) {
       try {
         const rollRes = await api.get<HydratedRoll>(
-          ziggy.route("roll.show", { id: rollId })
+          ziggy.route("roll.show", { roll: rollId })
         );
 
         this.roll = omit(cloneDeep(rollRes.data), "shots");
         this.shots = rollRes.data.shots;
       } catch (error) {
-        this.markFullyHydrated();
         console.log("ERROR GETTING ROLL");
       }
     },

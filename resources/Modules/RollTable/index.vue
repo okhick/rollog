@@ -16,9 +16,9 @@
   import { progress } from "../Api";
 
   import RollEntry from "./Components/RollEntry.vue";
+  import TableFrame from "../Core/Components/TableFrame.vue";
 
   import { useRollTableStore } from "./store";
-  import TableFrame from "../Core/Components/TableFrame.vue";
 
   /*
   |--------------------------------------------------------------------------

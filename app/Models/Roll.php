@@ -9,8 +9,6 @@ class Roll extends Model
 {
     use HasFactory;
 
-    protected $hidden = ['camera_id'];
-
     protected $casts = [
         'completed' => 'boolean'
     ];

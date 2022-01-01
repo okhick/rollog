@@ -10,6 +10,7 @@ import { progress } from "@/modules/Api";
 
 import { useAuthStore } from "@/modules/Auth/store";
 import { useShotTableStore } from "@/modules/ShotTable/store";
+import { useShotEditStore } from "@/modules/ShotEdit/store";
 
 declare module "vue-router" {
   interface RouteMeta {
@@ -86,7 +87,7 @@ const routes = [
           breadcrumbs() {
             return [
               { to: { name: "rolls" }, label: "Rolls" },
-              { label: getRollName() },
+              { label: getRollName() || "" },
             ];
           },
         },
@@ -94,6 +95,28 @@ const routes = [
           header: async () =>
             await import("@/modules/ShotTable/Components/ShotTableHeader.vue"),
           main: async () => await import("@/modules/ShotTable/index.vue"),
+          footer: async () =>
+            await import("@/pages/Dashboard/Components/AddFooter.vue"),
+        },
+      },
+      {
+        path: "roll/:rollId/shot/:shotId",
+        name: "shot",
+        props: true,
+        meta: {
+          requiredHydration: true,
+          breadcrumbs() {
+            return [
+              { to: { name: "rolls" }, label: "Rolls" },
+              { to: { name: "shots" }, label: getRollName() || "" },
+              { label: getShotTitle() || "[No shot title]" },
+            ];
+          },
+        },
+        components: {
+          header: async () =>
+            await import("@/modules/ShotTable/Components/ShotTableHeader.vue"),
+          main: async () => await import("@/modules/ShotEdit/index.vue"),
           footer: async () =>
             await import("@/pages/Dashboard/Components/AddFooter.vue"),
         },
@@ -163,6 +186,12 @@ router.beforeEach(async (to, _, next) => {
 
 router.afterEach((to) => checkAndFinishProgress(to));
 
+/*
+|--------------------------------------------------------------------------
+| Helpers
+|--------------------------------------------------------------------------
+*/
+
 /**
  * if there's no hydration needed, quit progress.
  * if there is hydration, this should be handled in the module
@@ -173,10 +202,35 @@ function checkAndFinishProgress(to: RouteLocationNormalized) {
   if (to.meta.requiresHydration === false) progress.done();
 }
 
+/**
+ * Get the film stock name from current ShotTableStore
+ *
+ * @returns string of film stock
+ */
 function getRollName() {
-  const shotTableStore = useShotTableStore();
+  const roll = getRoll();
+  if (!roll) return;
 
-  return shotTableStore.roll?.film_stock || "";
+  return roll?.film_stock || "";
+}
+
+function getShotTitle() {
+  const shotEditStore = useShotEditStore();
+
+  return shotEditStore.shot?.title;
+}
+
+function getRoll() {
+  const shotTableStore = useShotTableStore();
+  const shotEditStore = useShotEditStore();
+
+  if (shotTableStore.hydrated) {
+    return shotTableStore.roll;
+  }
+
+  if (shotEditStore.hydrated) {
+    return shotEditStore.roll;
+  }
 }
 
 /*

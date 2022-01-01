@@ -58,9 +58,7 @@
   onMounted(async () => {
     shotTableStore.markNeedsHydration();
 
-    const rollId = parseInt(props.rollId);
-
-    await shotTableStore.fetchRoll(rollId);
+    await shotTableStore.fetchRoll(Number(props.rollId));
 
     shotTableStore.markFullyHydrated();
 

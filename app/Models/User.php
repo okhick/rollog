@@ -42,6 +42,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * The attributes that should be included.
+     *
+     * @var array
+     */
+    protected $with = ['cameras', 'lenses'];
+
     public function rolls()
     {
         return $this->hasMany(Roll::class);

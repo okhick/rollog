@@ -15,7 +15,7 @@ export const useRollTableStore = defineStore("RollTableStore", {
   actions: {
     async fetchRolls() {
       try {
-        const rollsRes = await api.get<Roll[]>(ziggy.route("rolls.list"));
+        const rollsRes = await api.get<Roll[]>(ziggy.route("roll.index"));
 
         this.rolls = rollsRes.data;
       } catch {

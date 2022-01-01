@@ -17,8 +17,6 @@ class RollController extends Controller
         $user = $request->user();
 
         $roll = Roll::where('user_id', $user->id)
-            ->with('shots')
-            ->with('camera')
             ->orderBy('completed', 'asc')
             ->orderBy('updated_at', 'desc')
             ->get();
@@ -50,18 +48,22 @@ class RollController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Request $request
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request)
     {
         $user = $request->user();
 
-        return Roll::where('id', $request->id)
-            ->where('user_id', $user->id)
+        $roll = Roll::where('user_id', $user->id)
+            ->where('id', $request->roll)
             ->with('shots')
             ->with('camera')
             ->firstOrFail();
+
+        $roll->makeHidden(['camera_id']);
+
+        return $roll;
     }
 
     /**

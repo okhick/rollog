@@ -1,5 +1,11 @@
 <template>
-  <table-entry-frame class="is-flex-wrap-wrap" :to="{ name: 'rolls' }">
+  <table-entry-frame
+    class="is-flex-wrap-wrap"
+    :to="{
+      name: 'shot',
+      params: { rollId: shotTableStore.roll?.id, shotId: shot.id },
+    }"
+  >
     <div class="is-flex full-width">
       <div class="label-wrapper overflow-ellipsis">
         <label
@@ -33,12 +39,15 @@
   import TableEntryFrame from "@/modules/Core/Components/TableEntryFrame.vue";
 
   import { Shot } from "@/modules/Core/@types";
+  import { useShotTableStore } from "@/modules/ShotTable/store";
 
   /*
   |--------------------------------------------------------------------------
   | Init
   |--------------------------------------------------------------------------
   */
+
+  const shotTableStore = useShotTableStore();
 
   const { formatLens, formatPushPull } = useDisplayFormatters();
 
