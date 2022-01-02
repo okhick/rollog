@@ -19,7 +19,10 @@ class RollController extends Controller
         $roll = Roll::where('user_id', $user->id)
             ->orderBy('completed', 'asc')
             ->orderBy('updated_at', 'desc')
+            ->with('camera')
             ->get();
+
+        $roll->makeHidden(['camera_id']);
 
         return $roll;
     }
