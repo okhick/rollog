@@ -16,7 +16,7 @@
 
 <style scoped lang="scss">
   .header {
-    height: 120px;
+    height: 116px;
 
     h1 {
       font-weight: 1000;

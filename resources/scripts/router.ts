@@ -202,11 +202,6 @@ function checkAndFinishProgress(to: RouteLocationNormalized) {
   if (to.meta.requiresHydration === false) progress.done();
 }
 
-/**
- * Get the film stock name from current ShotTableStore
- *
- * @returns string of film stock
- */
 function getRollName() {
   const roll = getRoll();
   if (!roll) return;
