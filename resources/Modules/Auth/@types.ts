@@ -1,3 +1,5 @@
+import { Camera, Lens } from "../Core/@types";
+
 export interface User {
   id: number;
   name: string;
@@ -7,6 +9,8 @@ export interface User {
   updated_at: string;
   two_factor_recovery_codes: string | null;
   two_factor_secret: string | null;
+  cameras: Camera[];
+  lenses: Lens[];
 }
 
 export interface UserState {

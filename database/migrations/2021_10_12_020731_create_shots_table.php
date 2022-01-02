@@ -19,6 +19,7 @@ class CreateShotsTable extends Migration
             $table->unsignedBigInteger('lens_id');
             $table->float('aperture');
             $table->integer('exposure');
+            $table->boolean('flash');
             $table->float('pushpull');
             $table->string('title');
             $table->string('notes');

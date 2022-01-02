@@ -25,8 +25,6 @@ class ShotSeeder extends Seeder
                 $shot->lens_id = Lens::where('user_id', $roll->user_id)
                     ->inRandomOrder()->first()->id;
 
-                dump($roll->created_at->addDay());
-
                 $shot->created_at = (clone $roll->created_at)->addDays($index);
             });
 

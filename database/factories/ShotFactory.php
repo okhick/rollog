@@ -24,8 +24,9 @@ class ShotFactory extends Factory
         return [
             'aperture' => $this->faker->numberBetween(2, 22),
             'exposure' => $this->faker->numberBetween(1, 1000),
+            'flash' => random_int(0, 1),
             'pushpull' => $this->faker->numberBetween(-5, 5),
-            'title' => $this->faker->word(),
+            'title' => ucwords($this->faker->word()),
             'notes' => $this->faker->sentence()
         ];
     }

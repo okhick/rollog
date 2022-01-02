@@ -17,6 +17,11 @@
         <p class="is-size-6 has-text-right">
           &fnof;{{ shot.aperture }} &bull; 1/{{ shot.exposure }}
           <span class="is-size-7" v-if="pushPull">({{ pushPull }})</span>
+          <ion-icon
+            v-if="shot.flash"
+            class="is-size-7"
+            name="flash-outline"
+          ></ion-icon>
         </p>
         <p class="is-size-7 has-text-right">{{ lens }}</p>
         <p class="is-size-7 has-text-right">

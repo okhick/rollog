@@ -17,6 +17,7 @@ export interface Shot {
   lens: Lens;
   aperture: number;
   exposure: number;
+  flash: boolean;
   pushpull: number;
   title: string;
   notes: string;

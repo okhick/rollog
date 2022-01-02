@@ -9,6 +9,10 @@ class Shot extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'flash' => 'boolean'
+    ];
+
     protected $hidden = ['lens_id', 'roll_id'];
 
     protected $with = ['lens', 'roll'];
