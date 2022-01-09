@@ -13,6 +13,9 @@ export const useShotEditStore = defineStore("ShotEditStore", {
       hydrated: false,
     };
   },
+  getters: {
+    title: (state) => state.shot?.title,
+  },
   actions: {
     async fetchShot(shotId: number, rollId: number) {
       try {

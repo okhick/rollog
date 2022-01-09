@@ -5,6 +5,7 @@
     id="login"
     class="
       container
+      form-section
       is-flex is-flex-direction-column is-justify-content-flex-end
       max-width-is-mobile
       px-4
@@ -102,20 +103,20 @@
 </script>
 
 <style scoped lang="scss">
-  #login {
-    label {
-      margin-left: 4px;
-    }
+  // #login {
+  //   label {
+  //     margin-left: 4px;
+  //   }
 
-    input {
-      height: 48px;
-      margin-bottom: 12px;
-    }
+  //   input {
+  //     height: 48px;
+  //     margin-bottom: 12px;
+  //   }
 
-    div:last-of-type {
-      margin-bottom: 8px;
-    }
-  }
+  //   div:last-of-type {
+  //     margin-bottom: 8px;
+  //   }
+  // }
 
   #login-actions {
     height: 180px;

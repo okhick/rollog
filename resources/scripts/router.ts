@@ -115,7 +115,7 @@ const routes = [
         },
         components: {
           header: async () =>
-            await import("@/modules/ShotTable/Components/ShotTableHeader.vue"),
+            await import("@/modules/ShotEdit/Components/ShotEditHeader.vue"),
           main: async () => await import("@/modules/ShotEdit/index.vue"),
           footer: async () =>
             await import("@/pages/Dashboard/Components/AddFooter.vue"),

@@ -41,9 +41,28 @@ $input-color: $portra-underexposed;
 $input-border-color: $border;
 $input-focus-border-color: $portra;
 $input-focus-box-shadow-size: 0;
+textarea:focus,
 input:focus {
   border-width: 2px;
 }
+label.label {
+  color: $black;
+  margin-left: 0.25rem;
+
+  &:not(:last-child) {
+    margin-bottom: 0;
+  }
+}
+.select:not(.is-multiple):not(.is-loading) {
+  &::after {
+    border-color: $black !important;
+  }
+  &:hover::after {
+    border-color: $fuji-underexposed !important;
+  }
+}
+
+$dropdown-item-hover-background-color: $fuji-overexposed;
 
 /* 
 | --------------------

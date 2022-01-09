@@ -34,3 +34,18 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+section.form-section {
+  label {
+    margin-left: 4px;
+  }
+
+  input {
+    height: 48px;
+    margin-bottom: 12px;
+  }
+
+  div:last-of-type {
+    margin-bottom: 8px;
+  }
+}
