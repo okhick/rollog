@@ -31,12 +31,31 @@
       </div>
     </div>
 
-    <div id="flash" class="field">
-      <div class="control">
-        <label class="checkbox has-text-weight-bold">
-          <input type="checkbox" v-model="shotEditStore.shot.flash" />
-          Flash
-        </label>
+    <div class="is-flex">
+      <div id="exposure" class="field is-flex-grow-1">
+        <label class="label">Exposure Time</label>
+        <div class="control">
+          <!-- <div>
+            <input
+              class="slider is-fullwidth is-circle"
+              type="range"
+              step="1"
+              min="0"
+              :max="EXPOSURE_TIMES.length - 1"
+              v-model="selectedExposure"
+            />
+          </div> -->
+          <range-slider :slider-values="exposureTimeSliderValues" />
+        </div>
+      </div>
+
+      <div id="flash" class="field">
+        <div class="control">
+          <label class="checkbox has-text-weight-bold">
+            <input type="checkbox" v-model="shotEditStore.shot.flash" />
+            Flash
+          </label>
+        </div>
       </div>
     </div>
 
@@ -55,14 +74,15 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, onMounted, onUnmounted } from "vue";
-
-  import { progress } from "@/modules/Api";
+  import { computed, onMounted, onUnmounted, ref } from "vue";
 
   import { useShotEditStore } from "./store";
   import { useAuthStore } from "@/modules/Auth/store";
 
+  import { progress } from "@/modules/Api";
   import { useDisplayFormatters } from "../Core/Composables/DisplayFormatters";
+  import { useExposureTime } from "./Composables/Exposure";
+  import RangeSlider from "../Core/Components/RangeSlider.vue";
 
   /*
   |--------------------------------------------------------------------------
@@ -83,6 +103,8 @@
 
   const shotEditStore = useShotEditStore();
   const authStore = useAuthStore();
+
+  const dope = ref(0);
 
   /*
   |--------------------------------------------------------------------------
@@ -110,6 +132,9 @@
 
   const lenses = computed(() => authStore.user?.lenses);
 
+  const { EXPOSURE_TIMES, selectedExposure, exposureTimeSliderValues } =
+    useExposureTime();
+
   /*
   |--------------------------------------------------------------------------
   | Cleanup
@@ -121,6 +146,7 @@
 
 <style lang="scss" scoped>
   $max-width: 600px;
+
   .max-width-600 {
     max-width: $max-width;
   }
@@ -128,5 +154,10 @@
   #shot-title {
     flex-basis: calc($max-width / 2);
     min-width: 50%;
+  }
+
+  #chart line {
+    stroke: #555555;
+    stroke-width: 3;
   }
 </style>

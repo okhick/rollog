@@ -3,6 +3,9 @@
 
 @import "variables.scss";
 
+@import "bulma-slider";
+
+// Bulma needs to be last!
 @import "bulma/bulma.sass";
 
 .max-width-is-mobile {

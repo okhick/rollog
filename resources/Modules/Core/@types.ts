@@ -51,3 +51,9 @@ export enum Sort {
   ASC = "ASC",
   DESC = "DESC",
 }
+
+export interface RangeSliderValue {
+  value: string;
+  label: string;
+  label_class?: string;
+}
