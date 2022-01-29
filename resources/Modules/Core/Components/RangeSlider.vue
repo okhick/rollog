@@ -22,7 +22,7 @@
         ></span>
 
         <span
-          v-if="selectedValue == index"
+          v-show="selectedValue == index"
           :class="['tick-thumb', { 'active-tick': selectedValue == index }]"
         >
           <svg>
@@ -119,6 +119,7 @@
       }
 
       .active-label {
+        background-color: $white;
         font-weight: 750;
         padding: 0 2px;
         outline: 1px solid $portra-underexposed;

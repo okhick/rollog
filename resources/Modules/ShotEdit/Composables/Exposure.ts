@@ -1,7 +1,7 @@
 import { RangeSliderValue } from "@/modules/Core/@types";
 import { computed, ref } from "vue";
 
-const EXPOSURE_TIMES = ["B", 15, 30, 60, 125, 250, 500, 1000];
+const EXPOSURE_TIMES = [8, 15, 30, 60, 125, 250, 500, 1000];
 
 export function useExposureTime() {
   const selectedExposure = ref(0);

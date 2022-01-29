@@ -8,6 +8,21 @@
 $border: $portra;
 $mobile: 414px;
 
+// Override these to add negative margins
+$spacing-values: (
+  "n3": -0.75rem,
+  "n2": -0.5rem,
+  "n1": -0.25rem,
+  "auto": auto,
+  0: 0,
+  1: 0.25rem,
+  2: 0.5rem,
+  3: 0.75rem,
+  4: 1rem,
+  5: 1.5rem,
+  6: 3rem,
+);
+
 /*
 |--------------------------------------------------------------------------
 | Bulma Overrides

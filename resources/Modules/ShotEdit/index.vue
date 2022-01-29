@@ -4,7 +4,7 @@
     class="container max-width-600 is-flex is-flex-direction-column is-justify-content-flex-end is-align-content-center mx-0 px-4"
   >
     <div class="is-flex is-flex-wrap-wrap is-flex-gap-1 mb-3">
-      <div class="field is-flex-grow-1 mb-0" id="shot-title">
+      <div class="field is-flex-grow-2 mb-0" id="shot-title">
         <label class="label" for="title">Shot Title</label>
         <div class="control">
           <input
@@ -16,7 +16,7 @@
         </div>
       </div>
 
-      <div class="field mb-0" id="lens">
+      <div class="field is-flex-grow-1 mb-0" id="lens">
         <label class="label" for="lens">Lens</label>
         <div class="control">
           <div class="select">
@@ -31,31 +31,27 @@
       </div>
     </div>
 
-    <div class="is-flex">
-      <div id="exposure" class="field is-flex-grow-1">
-        <label class="label">Exposure Time</label>
-        <div class="control">
-          <!-- <div>
-            <input
-              class="slider is-fullwidth is-circle"
-              type="range"
-              step="1"
-              min="0"
-              :max="EXPOSURE_TIMES.length - 1"
-              v-model="selectedExposure"
-            />
-          </div> -->
-          <range-slider :slider-values="exposureTimeSliderValues" />
-        </div>
+    <div id="exposure" class="field">
+      <label class="label">Exposure Time</label>
+      <div class="control">
+        <range-slider :slider-values="exposureTimeSliderValues" />
       </div>
+      <p class="help mx-1 mt-n1 is-flex">
+        <span class="is-flex is-align-items-center"
+          ><ion-icon name="arrow-back-outline"></ion-icon>Enter long exposure
+        </span>
+        <span class="ml-auto is-flex is-align-items-center"
+          >Enter custom time <ion-icon name="arrow-forward-outline"></ion-icon
+        ></span>
+      </p>
+    </div>
 
-      <div id="flash" class="field">
-        <div class="control">
-          <label class="checkbox has-text-weight-bold">
-            <input type="checkbox" v-model="shotEditStore.shot.flash" />
-            Flash
-          </label>
-        </div>
+    <div id="flash" class="field">
+      <div class="control">
+        <label class="checkbox has-text-weight-bold">
+          <input type="checkbox" v-model="shotEditStore.shot.flash" />
+          Flash
+        </label>
       </div>
     </div>
 
@@ -151,13 +147,12 @@
     max-width: $max-width;
   }
 
+  #lens,
   #shot-title {
-    flex-basis: calc($max-width / 2);
-    min-width: 50%;
+    flex-basis: calc($max-width / 3);
   }
 
-  #chart line {
-    stroke: #555555;
-    stroke-width: 3;
+  #lens select {
+    width: 100%;
   }
 </style>
