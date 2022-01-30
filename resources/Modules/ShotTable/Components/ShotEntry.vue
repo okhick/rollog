@@ -15,7 +15,8 @@
       </div>
       <div class="shot-info">
         <p class="is-size-6 has-text-right">
-          &fnof;{{ shot.aperture }} &bull; 1/{{ shot.exposure }}
+          &fnof;{{ shot.aperture }} &bull;
+          <span class="mr-1" v-html="formatExposureTime(shot.exposure)" />
           <span class="is-size-7" v-if="pushPull">({{ pushPull }})</span>
           <ion-icon
             v-if="shot.flash"
@@ -54,7 +55,8 @@
 
   const shotTableStore = useShotTableStore();
 
-  const { formatLens, formatPushPull } = useDisplayFormatters();
+  const { formatLens, formatPushPull, formatExposureTime } =
+    useDisplayFormatters();
 
   const props = defineProps({
     shot: {

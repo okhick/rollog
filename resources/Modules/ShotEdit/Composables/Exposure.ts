@@ -1,12 +1,11 @@
 import { RangeSliderValue } from "@/modules/Core/@types";
 import { computed, ref } from "vue";
+import { useDisplayFormatters } from "@/modules/Core/Composables/DisplayFormatters";
 
 const EXPOSURE_TIMES = [8, 15, 30, 60, 125, 250, 500, 1000];
 
 export function useExposureTime() {
-  function formatExposureHTML(time: number) {
-    return `<sup>1</sup>&frasl;<sub>${time}</sub>`;
-  }
+  const { formatExposureTime } = useDisplayFormatters();
 
   const exposureTimeSliderValues = computed<RangeSliderValue[]>(() => {
     const getMargin = (index: number) => {
@@ -27,7 +26,7 @@ export function useExposureTime() {
     return EXPOSURE_TIMES.map((time, index) => {
       return {
         value: time.toString(),
-        label: typeof time === "string" ? time : formatExposureHTML(time),
+        label: typeof time === "string" ? time : formatExposureTime(time),
         label_class: getMargin(index),
       };
     });

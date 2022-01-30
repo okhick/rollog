@@ -26,9 +26,16 @@ export function useDisplayFormatters() {
     return `${stopSign}${stopAbs} ${stopText}`;
   }
 
+  function formatExposureTime(time: number | string) {
+    if (isNaN(Number(time)) && typeof time === "string") return time;
+
+    return `<sup>1</sup>&frasl;<sub>${time}</sub>`;
+  }
+
   return {
     formatCamera,
     formatLens,
     formatPushPull,
+    formatExposureTime,
   };
 }
