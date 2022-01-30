@@ -4,8 +4,6 @@ import { computed, ref } from "vue";
 const EXPOSURE_TIMES = [8, 15, 30, 60, 125, 250, 500, 1000];
 
 export function useExposureTime() {
-  const selectedExposure = ref(0);
-
   function formatExposureHTML(time: number) {
     return `<sup>1</sup>&frasl;<sub>${time}</sub>`;
   }
@@ -35,5 +33,5 @@ export function useExposureTime() {
     });
   });
 
-  return { EXPOSURE_TIMES, exposureTimeSliderValues, selectedExposure };
+  return { EXPOSURE_TIMES, exposureTimeSliderValues };
 }

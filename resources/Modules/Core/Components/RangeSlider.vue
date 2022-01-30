@@ -1,11 +1,11 @@
 <template>
-  <div class="range-slider-wrapper is-rounded">
+  <div class="range-slider-wrapper is-rounded" :class="{ disabled: disabled }">
     <div class="is-flex is-justify-content-space-between mb-n1">
       <div
         class="slider-value is-flex is-flex-direction-column is-align-items-center"
-        v-for="(value, index) in sliderValues"
+        v-for="(sliderValue, index) in computedSliderValue"
       >
-        <span :class="['tick', { 'active-tick': selectedValue == index }]">
+        <span :class="['tick', { 'active-tick': value === index }]">
           <svg>
             <line x1="0" y1="0" x2="0" y2="5" />
           </svg>
@@ -15,15 +15,15 @@
           :class="[
             'value-label',
             'is-size-7',
-            value.label_class,
-            { 'active-label': selectedValue == index },
+            sliderValue.label_class,
+            { 'active-label': value === index },
           ]"
-          v-html="value.label"
+          v-html="sliderValue.label"
         ></span>
 
         <span
-          v-show="selectedValue == index"
-          :class="['tick-thumb', { 'active-tick': selectedValue == index }]"
+          v-show="value === index"
+          :class="['tick-thumb', { 'active-tick': value === index }]"
         >
           <svg>
             <line x1="0" y1="0" x2="0" y2="8" />
@@ -35,42 +35,73 @@
     <div class="slider-field">
       <input
         class="slider is-fullwidth is-circle"
-        v-model="selectedValue"
         type="range"
+        :disabled="disabled"
         step="1"
         min="0"
-        :max="sliderValues.length - 1"
+        :max="computedSliderValue.length - 1"
+        v-model="value"
+        @input="$emit('update:value', Number(value))"
       />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-  import { ref } from "vue";
+  import { computed } from "vue";
   import { RangeSliderValue } from "../@types";
 
-  const values = defineProps({
+  /*
+  |--------------------------------------------------------------------------
+  | Init
+  |--------------------------------------------------------------------------
+  */
+
+  const props = defineProps({
+    value: {
+      type: Number as () => number,
+    },
     sliderValues: {
       type: Array as () => RangeSliderValue[],
       required: true,
     },
+    disabled: {
+      type: Boolean as () => boolean,
+      default: false,
+    },
   });
 
-  const selectedValue = ref();
+  /*
+  |--------------------------------------------------------------------------
+  | Handle Disable
+  |--------------------------------------------------------------------------
+  */
+
+  // Remove the lable values if disabled
+  const computedSliderValue = computed(() => {
+    if (props.disabled) {
+      return props.sliderValues.map((value) => {
+        const valueClone = { ...value };
+        valueClone.label = "";
+        return valueClone;
+      });
+    }
+
+    return props.sliderValues;
+  });
 </script>
 
 <style lang="scss" scoped>
   @import "@/sass/colors.scss";
-
-  // TODO: make this global
-  .mb-n1 {
-    margin-bottom: -0.25rem;
-  }
   .range-slider-wrapper {
     border: 1px solid $portra;
     background-color: $white;
     border-radius: 4px 4px 0 0;
     margin-bottom: 8px;
+
+    &.disabled {
+      background-color: $portra-blownout;
+    }
 
     .slider-value {
       /*

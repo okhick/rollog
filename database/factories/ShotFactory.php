@@ -23,7 +23,25 @@ class ShotFactory extends Factory
     {
         return [
             'aperture' => $this->faker->numberBetween(2, 22),
-            'exposure' => $this->faker->numberBetween(1, 1000),
+            'exposure' => function () {
+                $EXPOSURE_KIND = ['long', 'defined', 'custom'];
+                $randExposureKind = $EXPOSURE_KIND[array_rand($EXPOSURE_KIND)];
+
+                switch ($randExposureKind) {
+                    case 'custom':
+                        return $this->faker->numberBetween(1, 1000);
+
+                    case 'defined':
+                        $EXPOSURES = [8, 15, 30, 60, 125, 250, 500, 1000];
+
+                        return $EXPOSURES[array_rand($EXPOSURES)];
+
+                    case 'long':
+                        $UNITS = ['min.', 'sec.', 'hrs.'];
+
+                        return $this->faker->numberBetween(1, 100).$UNITS[array_rand($UNITS)];
+                }
+            },
             'flash' => getRandomWeightedElement([0 => 32, 1 => 4]),
             'pushpull' => $this->faker->numberBetween(-5, 5),
             'title' => ucwords($this->faker->word()),

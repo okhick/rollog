@@ -31,20 +31,10 @@
       </div>
     </div>
 
-    <div id="exposure" class="field">
-      <label class="label">Exposure Time</label>
-      <div class="control">
-        <range-slider :slider-values="exposureTimeSliderValues" />
-      </div>
-      <p class="help mx-1 mt-n1 is-flex">
-        <span class="is-flex is-align-items-center"
-          ><ion-icon name="arrow-back-outline"></ion-icon>Enter long exposure
-        </span>
-        <span class="ml-auto is-flex is-align-items-center"
-          >Enter custom time <ion-icon name="arrow-forward-outline"></ion-icon
-        ></span>
-      </p>
-    </div>
+    <shot-exposure
+      :value="shotEditStore.shot?.exposure"
+      @update:exposure="shotEditStore.shot!.exposure = $event"
+    />
 
     <div id="flash" class="field">
       <div class="control">
@@ -70,15 +60,15 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, onMounted, onUnmounted, ref } from "vue";
+  import { computed, onMounted, onUnmounted } from "vue";
 
   import { useShotEditStore } from "./store";
   import { useAuthStore } from "@/modules/Auth/store";
 
+  import ShotExposure from "./Components/ShotExposure.vue";
+
   import { progress } from "@/modules/Api";
   import { useDisplayFormatters } from "../Core/Composables/DisplayFormatters";
-  import { useExposureTime } from "./Composables/Exposure";
-  import RangeSlider from "../Core/Components/RangeSlider.vue";
 
   /*
   |--------------------------------------------------------------------------
@@ -99,8 +89,6 @@
 
   const shotEditStore = useShotEditStore();
   const authStore = useAuthStore();
-
-  const dope = ref(0);
 
   /*
   |--------------------------------------------------------------------------
@@ -128,9 +116,6 @@
 
   const lenses = computed(() => authStore.user?.lenses);
 
-  const { EXPOSURE_TIMES, selectedExposure, exposureTimeSliderValues } =
-    useExposureTime();
-
   /*
   |--------------------------------------------------------------------------
   | Cleanup
@@ -152,7 +137,10 @@
     flex-basis: calc($max-width / 3);
   }
 
-  #lens select {
-    width: 100%;
+  #lens {
+    .select,
+    select {
+      width: 100% !important;
+    }
   }
 </style>
