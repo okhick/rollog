@@ -39,7 +39,7 @@
         :disabled="disabled"
         step="1"
         min="0"
-        :max="computedSliderValue.length - 1"
+        :max="(computedSliderValue?.length || 1) - 1"
         v-model="value"
         @input="$emit('update:value', Number(value))"
       />
@@ -63,7 +63,6 @@
     },
     sliderValues: {
       type: Array as () => RangeSliderValue[],
-      required: true,
     },
     disabled: {
       type: Boolean as () => boolean,
@@ -80,7 +79,7 @@
   // Remove the lable values if disabled
   const computedSliderValue = computed(() => {
     if (props.disabled) {
-      return props.sliderValues.map((value) => {
+      return props.sliderValues?.map((value) => {
         const valueClone = { ...value };
         valueClone.label = "";
         return valueClone;
@@ -98,6 +97,7 @@
     background-color: $white;
     border-radius: 4px 4px 0 0;
     margin-bottom: 8px;
+    text-align: center;
 
     &.disabled {
       background-color: $portra-blownout;

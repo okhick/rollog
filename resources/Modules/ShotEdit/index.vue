@@ -36,6 +36,11 @@
       @update:exposure="shotEditStore.shot!.exposure = $event"
     />
 
+    <shot-aperture
+      :value="shotEditStore.shot.aperture"
+      @update:aperture="shotEditStore.shot!.aperture = $event"
+    />
+
     <div id="flash" class="field">
       <div class="control">
         <label class="checkbox has-text-weight-bold">
@@ -69,6 +74,7 @@
 
   import { progress } from "@/modules/Api";
   import { useDisplayFormatters } from "../Core/Composables/DisplayFormatters";
+  import ShotAperture from "./Components/ShotAperture.vue";
 
   /*
   |--------------------------------------------------------------------------

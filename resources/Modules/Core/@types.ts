@@ -53,7 +53,7 @@ export enum Sort {
 }
 
 export interface RangeSliderValue {
-  value: string;
+  value: number;
   label: string;
   label_class?: string;
 }

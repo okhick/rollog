@@ -25,7 +25,7 @@ export function useExposureTime() {
 
     return EXPOSURE_TIMES.map((time, index) => {
       return {
-        value: time.toString(),
+        value: time,
         label: typeof time === "string" ? time : formatExposureTime(time),
         label_class: getMargin(index),
       };
