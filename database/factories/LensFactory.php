@@ -24,8 +24,8 @@ class LensFactory extends Factory
         return [
             'make' => $this->faker->company(),
             'model' => $this->faker->word(),
-            'minimum_aperture' => $this->faker->numberBetween(1, 16),
-            'maximum_aperture' => $this->faker->numberBetween(16, 100),
+            'minimum_aperture' => Lens::APERTURES[random_int(0, 2)],
+            'maximum_aperture' => Lens::APERTURES[random_int(7, 9)],
             'notes' => $this->faker->sentence()
         ];
     }

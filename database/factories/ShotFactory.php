@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Lens;
 use App\Models\Shot;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -22,7 +23,6 @@ class ShotFactory extends Factory
     public function definition()
     {
         return [
-            'aperture' => $this->faker->numberBetween(2, 22),
             'exposure' => function () {
                 $EXPOSURE_KIND = ['long', 'defined', 'custom'];
                 $randExposureKind = $EXPOSURE_KIND[array_rand($EXPOSURE_KIND)];
@@ -43,10 +43,33 @@ class ShotFactory extends Factory
                 }
             },
             'flash' => getRandomWeightedElement([0 => 32, 1 => 4]),
-            'pushpull' => $this->faker->numberBetween(-5, 5),
+            'pushpull' => $this->faker->numberBetween(-3, 3),
             'title' => ucwords($this->faker->word()),
             'notes' => $this->faker->sentence()
         ];
+    }
+
+    /**
+     * Choose lens from the users inventory and a compatible aperture for that lens.
+     *
+     * @return array
+     */
+    public function withLensAndApertures(int $user_id)
+    {
+        $lens = Lens::where('user_id', $user_id)
+            ->inRandomOrder()->first();
+
+        return $this->state(function (array $attributes) use ($lens) {
+            $minApertureIndex = array_search($lens->minimum_aperture, Lens::APERTURES);
+            $maxApertureIndex = array_search($lens->maximum_aperture, Lens::APERTURES);
+
+            $aperture = Lens::APERTURES[rand($minApertureIndex, $maxApertureIndex)];
+
+            return [
+                'lens_id' => $lens->id,
+                'aperture' => $aperture
+            ];
+        });
     }
 }
 
