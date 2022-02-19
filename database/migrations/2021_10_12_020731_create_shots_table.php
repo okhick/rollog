@@ -22,7 +22,7 @@ class CreateShotsTable extends Migration
             $table->boolean('flash');
             $table->float('pushpull');
             $table->string('title');
-            $table->string('notes');
+            $table->string('notes')->nullable();
             $table->timestamps();
 
             $table->foreign('roll_id')->references('id')->on('rolls');

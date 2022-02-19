@@ -21,7 +21,7 @@ class CreateRollsTable extends Migration
             $table->smallInteger('film_iso');
             $table->tinyInteger('push_pull');
             $table->boolean('completed');
-            $table->string('notes');
+            $table->string('notes')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');

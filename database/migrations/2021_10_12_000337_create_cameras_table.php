@@ -18,7 +18,7 @@ class CreateCamerasTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('make');
             $table->string('model');
-            $table->string('notes');
+            $table->string('notes')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
