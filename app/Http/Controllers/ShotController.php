@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Lens;
 use App\Models\Shot;
 use Illuminate\Http\Request;
 
@@ -50,12 +51,7 @@ class ShotController extends Controller
      */
     public function show(Request $request)
     {
-        $user = $request->user();
-
-        return Shot::whereRelation('roll', 'user_id', $user->id)
-            ->where('id', $request->shot)
-            ->where('roll_id', $request->roll)
-            ->firstOrFail();
+        return Shot::getShot($request->user()->id, $request->roll, $request->shot);
     }
 
     /**
@@ -76,9 +72,20 @@ class ShotController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $shot = Shot::getShot($request->user()->id, $request->roll, $request->shot);
+
+        $fillable = $shot->getFillable();
+        foreach ($fillable as $field) {
+            $shot[$field] = $request[$field];
+        }
+
+        // Not sure which method is better...
+        // $shot->lens_id = $request->lens['id'];
+        $shot->lens()->associate(Lens::find($request->lens['id']));
+
+        return $shot->save();
     }
 
     /**
