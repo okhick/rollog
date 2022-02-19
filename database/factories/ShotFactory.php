@@ -50,11 +50,11 @@ class ShotFactory extends Factory
     }
 
     /**
-     * Choose lens from the users inventory and a compatible aperture for that lens.
+     * Choose lens from the user's inventory and a compatible aperture for that lens.
      *
      * @return array
      */
-    public function withLensAndApertures(int $user_id)
+    public function withLensAndAperture(int $user_id)
     {
         $lens = Lens::where('user_id', $user_id)
             ->inRandomOrder()->first();
