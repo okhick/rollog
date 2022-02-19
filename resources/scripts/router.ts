@@ -75,7 +75,7 @@ const routes = [
             await import("@/pages/Dashboard/Components/GreetingHeader.vue"),
           main: async () => await import("@/modules/RollTable/index.vue"),
           footer: async () =>
-            await import("@/pages/Dashboard/Components/AddFooter.vue"),
+            await import("@/modules/RollTable/Components/AddRollFooter.vue"),
         },
       },
       {
@@ -96,7 +96,7 @@ const routes = [
             await import("@/modules/ShotTable/Components/ShotTableHeader.vue"),
           main: async () => await import("@/modules/ShotTable/index.vue"),
           footer: async () =>
-            await import("@/pages/Dashboard/Components/AddFooter.vue"),
+            await import("@/modules/ShotTable/Components/AddShotFooter.vue"),
         },
       },
       {
@@ -118,7 +118,7 @@ const routes = [
             await import("@/modules/ShotEdit/Components/ShotEditHeader.vue"),
           main: async () => await import("@/modules/ShotEdit/index.vue"),
           footer: async () =>
-            await import("@/pages/Dashboard/Components/AddFooter.vue"),
+            await import("@/modules/ShotEdit/Components/SaveShotFooter.vue"),
         },
       },
     ],
