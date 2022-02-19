@@ -3,14 +3,17 @@ import { cloneDeep, omit } from "lodash";
 
 import { api, ziggy } from "../Api";
 
+import { useShotTableStore } from "../ShotTable/store";
+
 import { HydratedShot, ShotEditState } from "./@types";
+import { Roll } from "../Core/@types";
 
 export const useShotEditStore = defineStore("ShotEditStore", {
   state: (): ShotEditState => {
     return {
       shot: undefined,
       roll: undefined,
-      hydrated: false,
+      hydrated: true,
     };
   },
   getters: {
@@ -24,11 +27,32 @@ export const useShotEditStore = defineStore("ShotEditStore", {
         );
 
         this.shot = omit(cloneDeep(shotRes.data), "roll");
-        this.roll = shotRes.data.roll;
+        this.setRoll(shotRes.data.roll);
       } catch {
         console.log("ERROR GETTING SHOT");
       }
     },
+
+    makeNewShot() {
+      this.shot = {
+        lens: undefined,
+        aperture: undefined,
+        exposure: undefined,
+        flash: undefined,
+        pushpull: undefined,
+        title: undefined,
+        notes: undefined,
+      };
+
+      const shotTableStore = useShotTableStore();
+      this.setRoll(shotTableStore.roll!);
+      console.log(shotTableStore.roll);
+    },
+
+    setRoll(roll: Roll) {
+      this.roll = roll;
+    },
+
     markNeedsHydration() {
       this.hydrated = false;
     },

@@ -12,6 +12,11 @@ export const useRollTableStore = defineStore("RollTableStore", {
       hydrated: false,
     };
   },
+  getters: {
+    getRoll: (state) => {
+      return (rollId: number) => state.rolls?.find(({ id }) => id === rollId);
+    },
+  },
   actions: {
     async fetchRolls() {
       try {

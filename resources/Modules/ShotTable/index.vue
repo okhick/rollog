@@ -1,10 +1,6 @@
 <template>
   <section
-    class="
-      is-flex-grow-1 is-flex is-flex-direction-column is-flex-gap-1
-      px-4
-      py-2
-    "
+    class="is-flex-grow-1 is-flex is-flex-direction-column is-flex-gap-1 px-4 py-2"
   >
     <roll-info id="roll-info" />
 
@@ -85,7 +81,7 @@
   |--------------------------------------------------------------------------
   */
 
-  onUnmounted(() => shotTableStore.$reset());
+  // onUnmounted(() => shotTableStore.$reset());
 </script>
 
 <style lang="scss">

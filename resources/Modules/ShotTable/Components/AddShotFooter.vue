@@ -8,8 +8,15 @@
 
 <script setup lang="ts">
   import ActionFooter from "@/pages/Dashboard/Components/ActionFooter.vue";
+  import router from "@/scripts/router";
+  import { useShotTableStore } from "../store";
+
+  const shotTableStore = useShotTableStore();
 
   function handleClick() {
-    console.log("ADD SHOT");
+    router.push({
+      name: "new-shot",
+      params: { rollId: shotTableStore.roll?.id },
+    });
   }
 </script>

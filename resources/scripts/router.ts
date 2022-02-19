@@ -121,6 +121,28 @@ const routes = [
             await import("@/modules/ShotEdit/Components/SaveShotFooter.vue"),
         },
       },
+      {
+        path: "roll/:rollId/shot/new",
+        name: "new-shot",
+        props: true,
+        meta: {
+          requiredHydration: false,
+          breadcrumbs() {
+            return [
+              { to: { name: "rolls" }, label: "Rolls" },
+              { to: { name: "shots" }, label: getRollName() || "" },
+              { label: getShotTitle() || "[No shot title]" },
+            ];
+          },
+        },
+        components: {
+          header: async () =>
+            await import("@/modules/ShotEdit/Components/ShotEditHeader.vue"),
+          main: async () => await import("@/modules/ShotEdit/index.vue"),
+          footer: async () =>
+            await import("@/modules/ShotEdit/Components/SaveShotFooter.vue"),
+        },
+      },
     ],
   },
   {

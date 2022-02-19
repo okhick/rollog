@@ -81,6 +81,8 @@
   import { useDisplayFormatters } from "../Core/Composables/DisplayFormatters";
   import ShotAperture from "./Components/ShotAperture.vue";
   import ShotPushPull from "./Components/ShotPushPull.vue";
+  import { useShotTableStore } from "../ShotTable/store";
+  import { useRoute } from "vue-router";
 
   /*
   |--------------------------------------------------------------------------
@@ -91,7 +93,6 @@
   const props = defineProps({
     shotId: {
       type: String as () => string,
-      required: true,
     },
     rollId: {
       type: String as () => string,
@@ -107,15 +108,20 @@
   | Hydrate Module
   |--------------------------------------------------------------------------
   */
+  const route = useRoute();
 
   onMounted(async () => {
-    shotEditStore.markNeedsHydration();
+    if (route.meta.requiredHydration) {
+      shotEditStore.markNeedsHydration();
 
-    await shotEditStore.fetchShot(Number(props.shotId), Number(props.rollId));
+      await shotEditStore.fetchShot(Number(props.shotId), Number(props.rollId));
 
-    shotEditStore.markFullyHydrated();
+      shotEditStore.markFullyHydrated();
 
-    if (shotEditStore.hydrated) progress.done();
+      if (shotEditStore.hydrated) progress.done();
+    } else {
+      shotEditStore.makeNewShot();
+    }
   });
 
   /*

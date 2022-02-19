@@ -128,6 +128,8 @@
   */
 
   onMounted(() => {
+    if (!props.value) return;
+
     // Convert to a number if we can
     const initExposure = isNaN(Number(props.value))
       ? props.value

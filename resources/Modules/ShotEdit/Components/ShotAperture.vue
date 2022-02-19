@@ -2,7 +2,7 @@
   <div class="field" id="aperture">
     <label class="label">Aperture</label>
     <range-slider
-      class="is-flex-grow-2"
+      class="slider is-flex-grow-2"
       :slider-values="apertureSliderValues"
       :disabled="!apertureSliderValues"
       :value="apertureSlider"
@@ -72,3 +72,11 @@
 
   watch(apertureToSave, () => emit("update:aperture", apertureToSave.value));
 </script>
+
+<style lang="scss" scoped>
+  // this sets the height of the slider even when there are no value
+  // no values happens when there hasn't been a lens selected
+  .slider > :deep(div:first-child) {
+    height: 36px;
+  }
+</style>
