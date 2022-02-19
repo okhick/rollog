@@ -1,26 +1,26 @@
 version: "3"
 
 services:
-    server:
-        image: php:8-apache
-        container_name: server
-        build: .
-        volumes:
-            - .:/var/www/html
-        ports:
-            - 8080:80
+  server:
+    image: php:8-apache
+    container_name: server
+    build: .
+    volumes:
+      - .:/var/www/html
+    ports:
+      - 8080:80
 
-    mysql:
-        image: mysql
-        container_name: mysql
-        environment:
-            MYSQL_ROOT_PASSWORD: root
-            MYSQL_DATABASE: photolog
-        ports:
-            - 3306:3306
+  mysql:
+    image: mysql
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: photolog
+    ports:
+      - 3306:3306
 
-    composer:
-        image: composer
-        container_name: composer
-        volumes:
-            - ./:/app
+  composer:
+    image: composer
+    container_name: composer
+    volumes:
+      - ./:/app
