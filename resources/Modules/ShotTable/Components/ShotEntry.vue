@@ -14,7 +14,7 @@
         >
       </div>
       <div class="shot-info">
-        <p class="is-size-6 has-text-right">
+        <p class="is-size-6 has-text-right mb-n1">
           &fnof;{{ shot.aperture }} &bull;
           <span class="mr-1" v-html="formatExposureTime(shot.exposure)" />
           <span class="is-size-7" v-if="pushPull">({{ pushPull }})</span>

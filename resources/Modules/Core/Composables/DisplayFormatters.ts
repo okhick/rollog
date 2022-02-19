@@ -17,7 +17,7 @@ export function useDisplayFormatters() {
     // this covers push_pull = 0
     if (!pushPull) return undefined;
 
-    const sign = pushPull < 0;
+    const sign = pushPull > 0;
 
     const stopSign = sign ? "+" : "-";
     const stopAbs = Math.abs(pushPull);

@@ -41,6 +41,11 @@
       @update:aperture="shotEditStore.shot!.aperture = $event"
     />
 
+    <shot-push-pull
+      :value="shotEditStore.shot.pushpull"
+      @update:pushpull="shotEditStore.shot!.pushpull = $event"
+    />
+
     <div id="flash" class="field">
       <div class="control">
         <label class="checkbox has-text-weight-bold">
@@ -75,6 +80,7 @@
   import { progress } from "@/modules/Api";
   import { useDisplayFormatters } from "../Core/Composables/DisplayFormatters";
   import ShotAperture from "./Components/ShotAperture.vue";
+  import ShotPushPull from "./Components/ShotPushPull.vue";
 
   /*
   |--------------------------------------------------------------------------
