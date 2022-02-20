@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Lens;
+use App\Models\Roll;
 use App\Models\Shot;
 use Illuminate\Http\Request;
 
@@ -40,7 +41,19 @@ class ShotController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $shot = new Shot();
+
+        $fillable = $shot->getFillable();
+        foreach ($fillable as $field) {
+            $shot[$field] = $request[$field];
+        }
+
+        // Not sure which method is better...
+        // $shot->lens_id = $request->lens['id'];
+        $shot->lens()->associate(Lens::find($request->lens['id']));
+        $shot->roll()->associate(Roll::getRoll($request->roll, $request->user()->id));
+
+        return tap($shot)->save();
     }
 
     /**
@@ -85,7 +98,7 @@ class ShotController extends Controller
         // $shot->lens_id = $request->lens['id'];
         $shot->lens()->associate(Lens::find($request->lens['id']));
 
-        return $shot->save();
+        return tap($shot)->save();
     }
 
     /**

@@ -1,5 +1,4 @@
 import { Lens, RangeSliderValue } from "@/modules/Core/@types";
-import { useShotEditStore } from "../store";
 
 const APERTURES = (() => {
   const apertureAccum: number[] = [];
@@ -14,6 +13,8 @@ const APERTURES = (() => {
 
   return apertureAccum;
 })();
+
+const DEFAULT_APERTURE = 8;
 
 export function useAperture() {
   function getApertureSliderValues(lens: Lens) {
@@ -57,5 +58,6 @@ export function useAperture() {
 
   return {
     getApertureSliderValues,
+    DEFAULT_APERTURE,
   };
 }

@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, watch } from "vue";
+  import { computed, onMounted, ref, watch } from "vue";
 
   import RangeSlider from "@/modules/Core/Components/RangeSlider.vue";
 
@@ -21,13 +21,12 @@
   |--------------------------------------------------------------------------
   */
 
+  const PUSH_PULL = [-3, -2, -1, 0, 1, 2, 3];
+  const DEFAULT_PUSH_PULL = 0;
+
   const props = defineProps({
     value: { type: Number as () => number },
   });
-
-  const PUSH_PULL = [-3, -2, -1, 0, 1, 2, 3];
-
-  const pushPullSlider = ref(PUSH_PULL.indexOf(props.value ?? 0));
 
   const pushPullSliderValues = PUSH_PULL.map((val, index) => {
     return {
@@ -44,13 +43,29 @@
 
   /*
   |--------------------------------------------------------------------------
+  | Local Data Store
+  |--------------------------------------------------------------------------
+  */
+
+  const pushPullSlider = ref(
+    PUSH_PULL.indexOf(props.value ?? DEFAULT_PUSH_PULL)
+  );
+
+  const pushPullSliderToSave = computed(() => PUSH_PULL[pushPullSlider.value]);
+
+  /*
+  |--------------------------------------------------------------------------
   | Emit data
   |--------------------------------------------------------------------------
   */
 
   const emit = defineEmits(["update:pushpull"]);
 
-  watch(pushPullSlider, () =>
-    emit("update:pushpull", PUSH_PULL[pushPullSlider.value])
-  );
+  function emitPushPull() {
+    emit("update:pushpull", pushPullSliderToSave.value);
+  }
+
+  onMounted(() => emitPushPull());
+
+  watch(pushPullSliderToSave, () => emitPushPull());
 </script>

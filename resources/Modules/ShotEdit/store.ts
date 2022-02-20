@@ -38,7 +38,7 @@ export const useShotEditStore = defineStore("ShotEditStore", {
         lens: undefined,
         aperture: undefined,
         exposure: undefined,
-        flash: undefined,
+        flash: false,
         pushpull: undefined,
         title: undefined,
         notes: undefined,
@@ -46,7 +46,6 @@ export const useShotEditStore = defineStore("ShotEditStore", {
 
       const shotTableStore = useShotTableStore();
       this.setRoll(shotTableStore.roll!);
-      console.log(shotTableStore.roll);
     },
 
     setRoll(roll: Roll) {

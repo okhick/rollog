@@ -92,7 +92,8 @@
   import { useExposureTime } from "../Composables/Exposure";
   import { indexOf } from "lodash";
 
-  const { exposureTimeSliderValues, EXPOSURE_TIMES } = useExposureTime();
+  const { exposureTimeSliderValues, EXPOSURE_TIMES, DEFAULT_EXPOSURE } =
+    useExposureTime();
 
   /*
   |--------------------------------------------------------------------------
@@ -116,7 +117,7 @@
   const longExposureUnit = ref<string | undefined>("sec.");
   const showLongExposure = ref(false);
 
-  const exposureSlider = ref(3);
+  const exposureSlider = ref();
 
   const customExposure = ref<number>();
   const showCustomExposure = ref(false);
@@ -128,7 +129,10 @@
   */
 
   onMounted(() => {
-    if (!props.value) return;
+    if (!props.value) {
+      exposureSlider.value = EXPOSURE_TIMES.indexOf(DEFAULT_EXPOSURE);
+      return;
+    }
 
     // Convert to a number if we can
     const initExposure = isNaN(Number(props.value))

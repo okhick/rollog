@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, onMounted, ref, watch } from "vue";
+  import { computed, nextTick, onMounted, ref, watch } from "vue";
 
   import RangeSlider from "@/modules/Core/Components/RangeSlider.vue";
 
@@ -40,22 +40,25 @@
   | Load Data
   |--------------------------------------------------------------------------
   */
-
   // Load the slider values
-  const { getApertureSliderValues } = useAperture();
+  const { getApertureSliderValues, DEFAULT_APERTURE } = useAperture();
 
   const apertureSliderValues = computed(() => {
     if (shotEditStore.shot?.lens)
       return getApertureSliderValues(shotEditStore.shot.lens);
   });
 
-  onMounted(() => {
+  onMounted(() => setSliderValue());
+  watch(apertureSliderValues, () => setSliderValue());
+
+  function setSliderValue() {
     const sliderValue = apertureSliderValues.value?.findIndex(
-      ({ value }) => value === props.value
+      ({ value }) => value === (props.value || DEFAULT_APERTURE)
     );
 
-    apertureSlider.value = sliderValue && sliderValue > -1 ? sliderValue : 0;
-  });
+    // slider needs to be rendered before we set it. set on next tick
+    nextTick(() => (apertureSlider.value = sliderValue));
+  }
 
   /*
   |--------------------------------------------------------------------------
@@ -66,10 +69,12 @@
   const emit = defineEmits(["update:aperture"]);
 
   const apertureToSave = computed(() => {
-    if (apertureSlider.value)
+    if (apertureSlider.value !== undefined) {
       return apertureSliderValues.value?.[apertureSlider.value].value;
+    }
   });
 
+  onMounted(() => apertureToSave.value);
   watch(apertureToSave, () => emit("update:aperture", apertureToSave.value));
 </script>
 

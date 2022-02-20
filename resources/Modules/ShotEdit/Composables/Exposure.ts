@@ -3,6 +3,7 @@ import { computed, ref } from "vue";
 import { useDisplayFormatters } from "@/modules/Core/Composables/DisplayFormatters";
 
 const EXPOSURE_TIMES = [8, 15, 30, 60, 125, 250, 500, 1000];
+const DEFAULT_EXPOSURE = 60;
 
 export function useExposureTime() {
   const { formatExposureTime } = useDisplayFormatters();
@@ -32,5 +33,5 @@ export function useExposureTime() {
     });
   });
 
-  return { EXPOSURE_TIMES, exposureTimeSliderValues };
+  return { EXPOSURE_TIMES, DEFAULT_EXPOSURE, exposureTimeSliderValues };
 }
