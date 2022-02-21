@@ -8,15 +8,20 @@
 
 <script setup lang="ts">
   import ActionFooter from "@/pages/Dashboard/Components/ActionFooter.vue";
+
   import { useShotEditStore } from "../store";
-  import { api, ziggy } from "@/modules/Api";
   import router from "@/scripts/router";
+
+  import { api, ziggy } from "@/modules/Api";
+
   import { isShot, NewShot } from "../@types";
   import { Shot } from "@/modules/Core/@types";
 
   const shotEditStore = useShotEditStore();
 
   async function handleClick() {
+    if (validateShot()) return;
+
     try {
       if (shotEditStore.shot && isShot(shotEditStore.shot)) {
         await saveShot(shotEditStore.shot);
@@ -28,6 +33,22 @@
     } catch {
       // show error?
     }
+  }
+
+  function validateShot() {
+    if (!shotEditStore.shot?.title) {
+      shotEditStore.markTitleError();
+    } else {
+      shotEditStore.markTitleValid();
+    }
+
+    if (!shotEditStore.shot?.lens) {
+      shotEditStore.markLensError();
+    } else {
+      shotEditStore.markLensValid();
+    }
+
+    return shotEditStore.areErrors;
   }
 
   async function saveShot(shot: Shot) {

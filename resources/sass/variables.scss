@@ -36,6 +36,7 @@ $info: $portra;
 $link: $fuji-underexposed;
 $success: $fuji-underexposed;
 $text: $black;
+$danger: $cinestill;
 
 $body-background-color: $portra-overexposed;
 
@@ -75,6 +76,9 @@ label.label {
   &:hover::after {
     border-color: $fuji-underexposed !important;
   }
+}
+.field p.help {
+  margin-top: 0;
 }
 
 // dropdowns

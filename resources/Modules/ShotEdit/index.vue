@@ -8,18 +8,24 @@
         <label class="label" for="title">Shot Title</label>
         <div class="control">
           <input
-            class="input"
+            :class="['input', { 'is-danger': shotEditStore.titleError }]"
             type="text"
             name="title"
             v-model="shotEditStore.shot.title"
           />
         </div>
+        <p
+          v-show="shotEditStore.titleError"
+          :class="['help', { 'is-danger': shotEditStore.titleError }]"
+        >
+          Title is required
+        </p>
       </div>
 
       <div class="field is-flex-grow-1 mb-0" id="lens">
         <label class="label" for="lens">Lens</label>
         <div class="control">
-          <div class="select">
+          <div :class="['select', { 'is-danger': shotEditStore.lensError }]">
             <select v-model="shotEditStore.shot.lens" name="lens">
               <option value="" disabled selected hidden>Choose lens</option>
               <option v-for="lens in lenses" :value="lens">
@@ -28,17 +34,23 @@
             </select>
           </div>
         </div>
+        <p
+          v-show="shotEditStore.lensError"
+          :class="['help', { 'is-danger': shotEditStore.lensError }]"
+        >
+          Please choose a lens
+        </p>
       </div>
     </div>
-
-    <shot-exposure
-      :value="shotEditStore.shot?.exposure"
-      @update:exposure="shotEditStore.shot!.exposure = $event"
-    />
 
     <shot-aperture
       :value="shotEditStore.shot.aperture"
       @update:aperture="shotEditStore.shot!.aperture = $event"
+    />
+
+    <shot-exposure
+      :value="shotEditStore.shot?.exposure"
+      @update:exposure="shotEditStore.shot!.exposure = $event"
     />
 
     <shot-push-pull
@@ -70,7 +82,7 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, onMounted, onUnmounted } from "vue";
+  import { computed, onMounted, onUnmounted, reactive } from "vue";
 
   import { useShotEditStore } from "./store";
   import { useAuthStore } from "@/modules/Auth/store";

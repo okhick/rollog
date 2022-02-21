@@ -14,10 +14,21 @@ export const useShotEditStore = defineStore("ShotEditStore", {
       shot: undefined,
       roll: undefined,
       hydrated: true,
+      fieldValidation: {
+        emptyTitle: false,
+        emptyLens: false,
+      },
     };
   },
   getters: {
     title: (state) => state.shot?.title,
+    titleError: (state) => state.fieldValidation.emptyTitle,
+    lensError: (state) => state.fieldValidation.emptyLens,
+    areErrors: (state) => {
+      return Object.entries(state.fieldValidation)
+        .map(([error, status]) => status)
+        .some((status) => status);
+    },
   },
   actions: {
     async fetchShot(shotId: number, rollId: number) {
@@ -52,10 +63,23 @@ export const useShotEditStore = defineStore("ShotEditStore", {
       this.roll = roll;
     },
 
+    markTitleError() {
+      this.fieldValidation.emptyTitle = true;
+    },
+    markTitleValid() {
+      this.fieldValidation.emptyTitle = false;
+    },
+
+    markLensError() {
+      this.fieldValidation.emptyLens = true;
+    },
+    markLensValid() {
+      this.fieldValidation.emptyLens = false;
+    },
+
     markNeedsHydration() {
       this.hydrated = false;
     },
-
     markFullyHydrated() {
       this.hydrated = true;
     },
