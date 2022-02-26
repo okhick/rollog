@@ -3,8 +3,11 @@
     v-if="shotEditStore.shot"
     class="is-flex-grow-1 is-flex is-flex-direction-column mx-0 px-4"
   >
-    <form-frame class="mt-n2" :outlined="true">
-      <!-- backgroundColor="portraSlightlyOverexposed" -->
+    <form-frame
+      class="mt-n2"
+      :outlined="true"
+      backgroundColor="portraSlightlyOverexposed"
+    >
       <div class="is-flex is-flex-wrap-wrap is-flex-gap-1 mb-3">
         <div class="field is-flex-grow-2 mb-0" id="shot-title">
           <label class="label" for="title">Shot Title</label>

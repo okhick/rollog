@@ -1,31 +1,80 @@
 <template>
-  <div class="dropdown is-active">
+  <div ref="dropdownRef" :class="['dropdown', { 'is-active': isActive }]">
     <div class="dropdown-trigger">
-      <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
-        <span>Lens</span>
-        <span class="icon is-small">
-          <ion-icon name="chevron-down-outline"></ion-icon>
-        </span>
-      </button>
+      <slot
+        name="activator"
+        aria-haspopup="true"
+        aria-controls="dropdown-menu"
+      />
     </div>
-    <div class="dropdown-menu" id="dropdown-menu" role="menu">
+    <div
+      :class="[
+        'dropdown-menu',
+        { 'left-align': align === 'left' },
+        { 'right-align': align === 'right' },
+      ]"
+      id="dropdown-menu"
+      role="menu"
+    >
       <div class="dropdown-content">
-        <a class="dropdown-item" v-for="lens in lenses">{{ lens }}</a>
+        <slot name="items" _class="dropdown-item" />
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-  import { computed } from "vue";
+  import { ref } from "vue";
+  import { onClickOutside } from "@vueuse/core";
 
-  import { useAuthStore } from "@/modules/Auth/store";
-  import { useDisplayFormatters } from "../Composables/DisplayFormatters";
+  /*
+  |--------------------------------------------------------------------------
+  | Init
+  |--------------------------------------------------------------------------
+  */
 
-  const authStore = useAuthStore();
+  const props = defineProps({
+    align: {
+      type: String as () => "left" | "right",
+      default: "left",
+    },
+    isActive: {
+      type: Boolean as () => boolean,
+      default: false,
+    },
+  });
 
-  const { formatLens } = useDisplayFormatters();
-  const lenses = computed(() =>
-    authStore.user?.lenses.map((lens) => formatLens(lens))
-  );
+  /*
+  |--------------------------------------------------------------------------
+  | Handle click off events
+  |--------------------------------------------------------------------------
+  */
+
+  const dropdownRef = ref();
+  const emit = defineEmits(["dropdown:clickOutside"]);
+
+  onClickOutside(dropdownRef, () => emit("dropdown:clickOutside"));
 </script>
+
+<style lang="scss" scoped>
+  .left-align {
+    right: initial;
+    left: 0;
+
+    :slotted(a.dropdown-item) {
+      padding-right: 3rem;
+      padding-left: 1rem;
+      text-align: left;
+    }
+  }
+  .right-align {
+    right: 0;
+    left: initial;
+
+    :slotted(a.dropdown-item) {
+      padding-right: 1rem;
+      padding-left: 3rem;
+      text-align: right;
+    }
+  }
+</style>

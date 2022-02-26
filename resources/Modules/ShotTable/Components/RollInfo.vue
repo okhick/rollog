@@ -1,8 +1,33 @@
 <template>
   <div
     @click="shotTableStore.toggleRollInfoExpanded"
-    class="is-clickable border px-4 py-2 has-text-centered"
+    class="is-clickable border px-4 py-2 has-text-centered is-relative"
   >
+    <div class="roll-options">
+      <dropdown-menu
+        align="right"
+        :isActive="rollMenuIsActive"
+        @dropdown:clickOutside="deactivateRollMenu"
+      >
+        <template #activator>
+          <span class="icon settings" @click.stop="toggleRollMenu">
+            <ion-icon name="settings-outline"></ion-icon>
+          </span>
+        </template>
+        <template #items="{ _class }">
+          <a
+            @click.stop="[handleEditRoll, deactivateRollMenu()]"
+            :class="_class"
+            >Edit roll</a
+          >
+          <a
+            @click.stop="[handleRemoveRoll, deactivateRollMenu()]"
+            :class="_class"
+            >Remove roll</a
+          >
+        </template>
+      </dropdown-menu>
+    </div>
     <p v-show="shotTableStore.rollInfoExpanded">{{ camera }}</p>
     <div
       v-if="shotTableStore.roll"
@@ -30,9 +55,11 @@
 </template>
 
 <script setup lang="ts">
-  import { computed } from "vue";
+  import { computed, ref } from "vue";
   import { useShotTableStore } from "../store";
+  import DropdownMenu from "@/modules/Core/Components/DropdownMenu.vue";
   import { useDisplayFormatters } from "@/modules/Core/Composables/DisplayFormatters";
+  import { settings } from "nprogress";
 
   /*
   |--------------------------------------------------------------------------
@@ -55,4 +82,38 @@
   );
 
   const camera = computed(() => formatCamera(shotTableStore.roll?.camera));
+
+  /*
+  |--------------------------------------------------------------------------
+  | Handlers
+  |--------------------------------------------------------------------------
+  */
+
+  const rollMenuIsActive = ref(false);
+
+  function toggleRollMenu() {
+    rollMenuIsActive.value = !rollMenuIsActive.value;
+  }
+  function deactivateRollMenu() {
+    rollMenuIsActive.value = false;
+  }
+
+  function handleEditRoll() {}
+  function handleRemoveRoll() {}
 </script>
+
+<style lang="scss" scoped>
+  .icon.settings {
+    font-size: 2rem;
+    margin-right: 8px;
+    margin-top: 14px;
+  }
+  a.dropdown-item {
+    text-align: initial;
+  }
+  .roll-options {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+</style>
