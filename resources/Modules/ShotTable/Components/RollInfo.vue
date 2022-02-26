@@ -1,16 +1,12 @@
 <template>
   <div
     @click="shotTableStore.toggleRollInfoExpanded"
-    class="is-clickable table-border px-4 py-2 has-text-centered"
+    class="is-clickable border px-4 py-2 has-text-centered"
   >
     <p v-show="shotTableStore.rollInfoExpanded">{{ camera }}</p>
     <div
       v-if="shotTableStore.roll"
-      class="
-        is-flex is-justify-content-center
-        has-text-weight-semibold
-        is-size-4
-      "
+      class="is-flex is-justify-content-center has-text-weight-semibold is-size-4"
     >
       <span>ISO {{ shotTableStore.roll?.film_iso }}</span>
 

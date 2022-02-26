@@ -1,4 +1,4 @@
-@import "./colors.scss";
+@import "./colors.module.scss";
 
 /*
 |--------------------------------------------------------------------------
@@ -124,7 +124,7 @@ $button-static-background-color: $portra-blownout;
 | --------------------
 | Table Styles
 */
-.table-border {
+.border {
   border: solid 1px $portra-underexposed;
   border-radius: 4px;
 }

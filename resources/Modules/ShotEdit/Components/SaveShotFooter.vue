@@ -19,6 +19,12 @@
 
   const shotEditStore = useShotEditStore();
 
+  /*
+  |--------------------------------------------------------------------------
+  | Handlers
+  |--------------------------------------------------------------------------
+  */
+
   async function handleClick() {
     if (validateShot()) return;
 

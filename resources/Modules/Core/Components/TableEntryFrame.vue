@@ -17,7 +17,7 @@
 </script>
 
 <style scoped lang="scss">
-  @import "@/sass/colors.scss";
+  @import "@/sass/colors.module.scss";
   $border: solid 1px $portra-underexposed;
   .entry {
     min-height: 60px;

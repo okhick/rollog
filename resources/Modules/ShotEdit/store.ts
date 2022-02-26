@@ -25,6 +25,7 @@ export const useShotEditStore = defineStore("ShotEditStore", {
     titleError: (state) => state.fieldValidation.emptyTitle,
     lensError: (state) => state.fieldValidation.emptyLens,
     areErrors: (state) => {
+      // return true if anything in fieldValidation is true (is and error)
       return Object.entries(state.fieldValidation)
         .map(([error, status]) => status)
         .some((status) => status);

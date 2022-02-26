@@ -91,7 +91,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "@/sass/colors.scss";
+  @import "@/sass/colors.module.scss";
   .range-slider-wrapper {
     border: 1px solid $portra;
     background-color: $white;
@@ -101,12 +101,18 @@
 
     &.disabled {
       background-color: $portra-blownout;
+
+      .slider-value {
+        width: 8px;
+      }
     }
 
     .slider-value {
       /*
       * Manually set the width of these to be the width of the thumb slider.
       * This makkes sure they line up with each input step
+      * 
+      * When slider is disabled, width is set to 8px to avoid overflow (see '.disabled .slider-value')
       */
       width: 16px;
 
@@ -155,6 +161,10 @@
         padding: 0 2px;
         outline: 1px solid $portra-underexposed;
         border-radius: 2px;
+
+        .tick {
+          width: 16px;
+        }
       }
     }
 

@@ -1,0 +1,48 @@
+/*
+|--------------------------------------------------------------------------
+| Core Color Styles
+|--------------------------------------------------------------------------
+*/
+
+$fuji-underexposed: hsl(154, 52%, 35%);
+$fuji: hsl(157, 71%, 41%);
+$fuji-overexposed: hsl(156, 48%, 94%);
+
+$portra-underexposed: hsl(240, 30%, 34%);
+$portra: hsl(239, 30%, 66%);
+$portra-slightly-overexposed: hsl(237, 35%, 79%);
+$portra-overexposed: hsl(237, 31%, 88%);
+$portra-blownout: hsl(237, 31%, 96%);
+
+$kodak: hsl(43, 100%, 50%);
+$cinestill: hsl(1, 92%, 45%);
+
+$black: hsl(291, 54%, 3%);
+$white: hsl(0, 0%, 100%);
+
+/*
+|--------------------------------------------------------------------------
+| Export these to make available in Vue
+|--------------------------------------------------------------------------
+*/
+
+$COLOR_LIST: (
+  "fujiUnderexposed": $fuji-underexposed,
+  "fuji": $fuji,
+  "fujiOverexposed": $fuji-overexposed,
+  "portraUnderexposed": $portra-underexposed,
+  "portra": $portra,
+  "portraSlightlyOverexposed": $portra-slightly-overexposed,
+  "portraOverexposed": $portra-overexposed,
+  "portraBlownout": $portra-blownout,
+  "kodak": $kodak,
+  "cinestill": $cinestill,
+  "black": $black,
+  "white": $white,
+);
+
+@each $color, $value in $COLOR_LIST {
+  :export {
+    #{unquote($color)}: $value;
+  }
+}

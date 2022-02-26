@@ -1,17 +1,12 @@
 <template>
   <div id="table-header" class="is-flex">
-    <label class="table-label table-border has-background-white px-2">{{
+    <label class="table-label border has-background-white px-2">{{
       props.title
     }}</label>
     <label
       v-if="sort"
       @click="$emit('table:sort')"
-      class="
-        table-label table-border table-sort
-        is-flex is-align-items-center is-size-5 is-clickable
-        ml-2
-        has-background-white
-      "
+      class="table-label border table-sort is-flex is-align-items-center is-size-5 is-clickable ml-2 has-background-white"
     >
       <ion-icon
         v-show="sort === sortEnum.ASC"
@@ -25,10 +20,7 @@
   </div>
 
   <div
-    class="
-      table-border table-overflow
-      is-flex-grow-1 is-align-self-stretch is-flex is-flex-direction-column
-    "
+    class="border y-overflow-scroll is-flex-grow-1 is-align-self-stretch is-flex is-flex-direction-column"
   >
     <slot />
   </div>
@@ -55,7 +47,7 @@
 </script>
 
 <style scoped lang="scss">
-  @import "@/sass/colors.scss";
+  @import "@/sass/colors.module.scss";
 
   #table-header {
     margin-bottom: -16px;
@@ -74,12 +66,5 @@
         padding: 0 8px;
       }
     }
-  }
-
-  .table-overflow {
-    // handle overflow scrolling
-    height: 0px;
-    flex-basis: auto;
-    overflow-y: scroll;
   }
 </style>

@@ -76,7 +76,7 @@
 </script>
 
 <style scoped lang="scss">
-  @import "@/sass/colors.scss";
+  @import "@/sass/colors.module.scss";
 
   label {
     cursor: pointer;

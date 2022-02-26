@@ -67,7 +67,7 @@
 </script>
 
 <style scoped lang="scss">
-  @import "@/sass/colors.scss";
+  @import "@/sass/colors.module.scss";
 
   #super-header {
     // Override Bulma's min-height 6rem

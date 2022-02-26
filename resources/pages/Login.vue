@@ -1,18 +1,9 @@
 <template>
   <big-logo />
 
-  <section
-    id="login"
-    class="
-      container
-      form-section
-      is-flex is-flex-direction-column is-justify-content-flex-end
-      max-width-is-mobile
-      px-4
-    "
-  >
+  <form-frame class="max-width-is-mobile mx-auto">
     <div>
-      <label for="email">Email address</label>
+      <label class="label" for="email">Email address</label>
       <input
         id="email"
         class="input"
@@ -23,7 +14,7 @@
       />
     </div>
     <div>
-      <label for="password">Password</label>
+      <label class="label" for="password">Password</label>
       <input
         id="password"
         class="input"
@@ -33,15 +24,12 @@
         @keypress.enter="handleSignIn"
       />
     </div>
-  </section>
+  </form-frame>
+  <!-- </section> -->
 
   <section
     id="login-actions"
-    class="
-      is-flex-grow-0 is-flex is-flex-direction-column is-align-self-center
-      has-background-info
-      px-4
-    "
+    class="is-flex-grow-0 is-flex is-flex-direction-column is-align-self-center has-background-info px-4"
   >
     <button class="button is-primary" type="submit" @click="handleSignIn">
       Sign in
@@ -59,6 +47,7 @@
   import { api, progress, ziggy } from "@/modules/Api";
 
   import { useAuthStore } from "@/modules/Auth/store";
+  import FormFrame from "@/modules/Core/Components/FormFrame.vue";
 
   /*
   |--------------------------------------------------------------------------
@@ -103,20 +92,10 @@
 </script>
 
 <style scoped lang="scss">
-  // #login {
-  //   label {
-  //     margin-left: 4px;
-  //   }
-
-  //   input {
-  //     height: 48px;
-  //     margin-bottom: 12px;
-  //   }
-
-  //   div:last-of-type {
-  //     margin-bottom: 8px;
-  //   }
-  // }
+  .form-frame {
+    width: 100%;
+    padding: 0 40px 24px;
+  }
 
   #login-actions {
     height: 180px;
