@@ -11,8 +11,25 @@
       </span>
     </div>
 
-    <div class="is-flex is-flex-wrap-wrap is-flex-gap-1 mt-2 mb-3 isolate">
-      <div class="field is-flex-grow-10 mb-1" id="film-stock">
+    <div class="is-flex is-flex-wrap-wrap is-flex-gap-1 mt-2 mb-3">
+      <div class="field is-flex-grow-1 mb-0" id="camera">
+        <label class="label" for="camera">Camera</label>
+        <div class="control">
+          <div :class="['select', { 'is-danger': false }]">
+            <select v-model="shotTableStore.roll!.camera" name="camera">
+              <option value="" disabled selected hidden>Choose camera</option>
+              <option v-for="camera in cameras" :value="camera">
+                {{ `${camera.make} ${camera.model}` }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <p v-show="false" :class="['help', { 'is-danger': false }]">
+          Please choose a lens
+        </p>
+      </div>
+
+      <div class="field is-flex-grow-10 mb-0" id="film-stock">
         <label class="label" for="title">Film Stock</label>
         <div class="control">
           <input
@@ -26,8 +43,10 @@
           Title is required
         </p>
       </div>
+    </div>
 
-      <div class="field is-flex-grow-1 mb-1" id="film-iso">
+    <div class="is-flex is-flex-gap-1 mt-2 mb-3">
+      <div class="field is-flex-grow-1 mb-auto mt-0" id="film-iso">
         <label class="label" for="title">Film ISO</label>
         <div class="control">
           <input
@@ -41,12 +60,13 @@
           Title is required
         </p>
       </div>
-    </div>
 
-    <shot-push-pull
-      :value="shotTableStore.roll!.pushpull"
-      @update:pushpull="shotTableStore.roll!.pushpull = $event"
-    />
+      <shot-push-pull
+        class="is-flex-grow-1"
+        :value="shotTableStore.roll!.pushpull"
+        @update:pushpull="shotTableStore.roll!.pushpull = $event"
+      />
+    </div>
 
     <div id="roll-notes" class="field pb-2">
       <div class="control">
@@ -78,10 +98,14 @@
   import { cloneDeep } from "lodash";
   import { onMounted } from "vue";
   import { api, ziggy, progress } from "@/modules/Api";
+  import { useAuthStore } from "@/modules/Auth/store";
 
   const shotTableStore = useShotTableStore();
+  const authStore = useAuthStore();
 
   const rollBackup = cloneDeep(shotTableStore.roll);
+
+  const cameras = authStore.user?.cameras;
 
   onMounted(async () => {
     progress.start();
@@ -119,6 +143,18 @@
       ion-icon {
         font-size: 2rem;
       }
+    }
+  }
+
+  #film-iso {
+    flex-basis: 0;
+  }
+
+  #camera {
+    // max-width: 50%;
+    .select,
+    select {
+      width: 100% !important;
     }
   }
 </style>
