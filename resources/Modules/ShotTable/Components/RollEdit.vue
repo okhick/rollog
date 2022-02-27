@@ -43,8 +43,8 @@
     </div>
 
     <shot-push-pull
-      :value="shotTableStore.roll!.push_pull"
-      @update:pushpull="shotTableStore.roll!.push_pull = $event"
+      :value="shotTableStore.roll!.pushpull"
+      @update:pushpull="shotTableStore.roll!.pushpull = $event"
     />
 
     <div id="roll-notes" class="field pb-2">

@@ -83,7 +83,7 @@
   const { formatCamera, formatPushPull } = useDisplayFormatters();
 
   const pushPull = computed(() =>
-    formatPushPull(shotTableStore.roll?.push_pull)
+    formatPushPull(shotTableStore.roll?.pushpull)
   );
 
   const camera = computed(() => formatCamera(shotTableStore.roll?.camera));

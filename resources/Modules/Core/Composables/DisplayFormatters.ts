@@ -14,7 +14,7 @@ export function useDisplayFormatters() {
   }
 
   function formatPushPull(pushPull: number | undefined) {
-    // this covers push_pull = 0
+    // this covers pushpull = 0
     if (!pushPull) return undefined;
 
     const sign = pushPull > 0;

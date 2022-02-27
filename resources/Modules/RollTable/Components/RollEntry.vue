@@ -54,7 +54,7 @@
   */
   const { formatCamera, formatPushPull } = useDisplayFormatters();
 
-  const pushPull = computed(() => formatPushPull(props.roll.push_pull));
+  const pushPull = computed(() => formatPushPull(props.roll.pushpull));
   const camera = computed(() => formatCamera(props.roll.camera));
 
   const timeStamps = computed(() => {

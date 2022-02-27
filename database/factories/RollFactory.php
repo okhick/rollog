@@ -65,7 +65,7 @@ class RollFactory extends Factory
         return [
             'film_stock' => $randomOption['film_stock'],
             'film_iso' => $randomOption['film_iso'],
-            'push_pull' => random_int(-5, 5),
+            'pushpull' => random_int(-3, 3),
             'completed' => random_int(0, 1),
             'notes' => $this->faker->sentence(),
             'created_at' => $createdAt,

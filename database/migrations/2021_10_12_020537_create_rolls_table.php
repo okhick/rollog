@@ -19,7 +19,7 @@ class CreateRollsTable extends Migration
             $table->unsignedBigInteger('camera_id');
             $table->string('film_stock');
             $table->smallInteger('film_iso');
-            $table->tinyInteger('push_pull');
+            $table->tinyInteger('pushpull');
             $table->boolean('completed');
             $table->string('notes')->nullable();
             $table->timestamps();
