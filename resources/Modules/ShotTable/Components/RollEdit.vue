@@ -61,7 +61,7 @@
         </p>
       </div>
 
-      <shot-push-pull
+      <push-pull
         class="is-flex-grow-1"
         :value="shotTableStore.roll!.pushpull"
         @update:pushpull="shotTableStore.roll!.pushpull = $event"
@@ -92,7 +92,7 @@
   import FormFrame from "@/modules/Core/Components/FormFrame.vue";
 
   import ActionButton from "@/modules/Core/Components/ActionButton.vue";
-  import ShotPushPull from "@/modules/ShotEdit/Components/ShotPushPull.vue";
+  import PushPull from "@/modules/Core/Components/PushPull.vue";
 
   import { useShotTableStore } from "../store";
   import { cloneDeep } from "lodash";

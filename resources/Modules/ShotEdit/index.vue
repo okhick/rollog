@@ -58,7 +58,7 @@
         @update:exposure="shotEditStore.shot!.exposure = $event"
       />
 
-      <shot-push-pull
+      <push-pull
         :value="shotEditStore.shot.pushpull"
         @update:pushpull="shotEditStore.shot!.pushpull = $event"
       />
@@ -100,7 +100,7 @@
 
   import ShotExposure from "./Components/ShotExposure.vue";
   import ShotAperture from "./Components/ShotAperture.vue";
-  import ShotPushPull from "./Components/ShotPushPull.vue";
+  import PushPull from "../Core/Components/PushPull.vue";
   import FormFrame from "../Core/Components/FormFrame.vue";
 
   /*
