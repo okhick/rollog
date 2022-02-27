@@ -37,7 +37,7 @@ class Shot extends Model
     /**
      * Get a shot. Enforce that the shot belongs to a user and a roll.
      */
-    public static function getShot(int $userId, int $rollId, int $shotId)
+    public static function get(int $userId, int $rollId, int $shotId)
     {
         return self::whereRelation('roll', 'user_id', $userId)
             ->where('id', $shotId)

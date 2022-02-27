@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Camera;
 use App\Models\Roll;
-use App\Models\User;
 use Illuminate\Http\Request;
 
 class RollController extends Controller
@@ -67,9 +67,23 @@ class RollController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $roll = Roll::get($request->roll, $request->user()->id);
+
+        // Update the resource
+        $fillable = $roll->getFillable();
+        foreach ($fillable as $field) {
+            $roll[$field] = $request[$field];
+        }
+
+        $roll->camera()->associate(Camera::find($request->camera['id']));
+
+        // Save
+        $newRoll = tap($roll)->save();
+
+        // Return the new roll
+        return $newRoll->makeHidden(['camera_id']);
     }
 
     /**

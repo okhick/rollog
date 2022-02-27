@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-  import { defineProps, onMounted, onUnmounted } from "@vue/runtime-core";
+  import { defineProps, onMounted, ref } from "@vue/runtime-core";
   import { progress } from "../Api";
 
   import { useShotTableStore } from "./store";
@@ -35,10 +35,9 @@
   import TableFrame from "../Core/Components/TableFrame.vue";
   import RollInfo from "./Components/RollInfo.vue";
   import ShotEntry from "./Components/ShotEntry.vue";
-
-  import { Sort } from "@/modules/Core/@types";
   import RollEdit from "./Components/RollEdit.vue";
-  import { ref } from "vue";
+
+  import { Roll, Sort } from "@/modules/Core/@types";
 
   /*
   |--------------------------------------------------------------------------
@@ -73,18 +72,16 @@
 
   /*
   |--------------------------------------------------------------------------
-  | Hydrate Module
+  | Handle Edit Mode
   |--------------------------------------------------------------------------
   */
 
   function activateEditRoll() {
     shotTableStore.activateEditRoll();
   }
-  function saveEditRoll() {
-    // editRollActive.value = true;
-  }
-  function cancelEditRoll() {
-    shotTableStore.cancelEditRoll();
+
+  function cancelEditRoll(rollBackup: Roll) {
+    shotTableStore.cancelEditRoll(rollBackup);
   }
 
   /*

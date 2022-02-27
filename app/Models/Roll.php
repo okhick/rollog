@@ -17,6 +17,10 @@ class Roll extends Model
         'completed' => 'boolean'
     ];
 
+    protected $fillable = [
+        'film_stock', 'film_iso', 'pushpull', 'completed', 'notes'
+    ];
+
     protected $cascadeDeletes = ['shots'];
 
     public function user()

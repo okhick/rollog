@@ -66,7 +66,7 @@ class ShotController extends Controller
      */
     public function update(Request $request)
     {
-        $shot = Shot::getShot($request->user()->id, $request->roll, $request->shot);
+        $shot = Shot::get($request->user()->id, $request->roll, $request->shot);
 
         $fillable = $shot->getFillable();
         foreach ($fillable as $field) {

@@ -4,7 +4,7 @@
     <div
       id="cancel-edit"
       class="is-clickable"
-      @click="$emit('rollEdit:cancel'), resetRoll()"
+      @click="$emit('rollEdit:cancel', rollBackup)"
     >
       <span class="icon">
         <ion-icon name="close-circle-outline"></ion-icon>
@@ -101,7 +101,7 @@
   </form-frame>
 
   <div class="has-text-centered mb-n4">
-    <action-button class="mt-n3">
+    <action-button class="mt-n3" @actionButton:click="handleUpdateRoll">
       <span class="icon"> <ion-icon name="checkmark-outline" /> </span>
     </action-button>
   </div>
@@ -119,6 +119,13 @@
   import { api, ziggy, progress } from "@/modules/Api";
   import { useAuthStore } from "@/modules/Auth/store";
   import { onClickOutside } from "@vueuse/core";
+  import { Roll } from "@/modules/Core/@types";
+
+  /*
+  |--------------------------------------------------------------------------
+  | Init
+  |--------------------------------------------------------------------------
+  */
 
   const shotTableStore = useShotTableStore();
   const authStore = useAuthStore();
@@ -129,8 +136,19 @@
 
   defineEmits(["rollEdit:cancel"]);
 
-  const filmStocks = ref<string[]>([]);
+  /*
+  |--------------------------------------------------------------------------
+  | Handle Film Stocks
+  |--------------------------------------------------------------------------
+  */
 
+  const filmStocks = ref<string[]>([]);
+  const filmStockRef = ref();
+  const filmStockActive = ref(false);
+
+  /** --------------------
+   * Load up the users stocks on mount
+   */
   onMounted(async () => {
     progress.start();
 
@@ -145,9 +163,9 @@
     progress.done();
   });
 
-  const filmStockRef = ref();
-  const filmStockActive = ref(false);
-
+  /** --------------------
+   * Search the stocks
+   */
   const filteredStocks = computed(() => {
     const query = lowerCase(shotTableStore.roll?.film_stock);
 
@@ -157,6 +175,10 @@
 
     return matchedStocks;
   });
+
+  /** --------------------
+   * Handle the stock dropdown
+   */
 
   onClickOutside(filmStockRef, () => deactivateStockList());
 
@@ -173,8 +195,30 @@
     deactivateStockList();
   }
 
-  function resetRoll() {
-    shotTableStore.roll = rollBackup;
+  // TODO: Arrow key nav
+
+  /*
+  |--------------------------------------------------------------------------
+  | Update 
+  |--------------------------------------------------------------------------
+  */
+
+  async function handleUpdateRoll() {
+    progress.start();
+
+    try {
+      const newRollRes = await api.put<Roll>(
+        ziggy.route("roll.update", { roll: shotTableStore.roll?.id }),
+        shotTableStore.roll
+      );
+
+      shotTableStore.roll = newRollRes.data;
+      shotTableStore.deactivateEditRoll();
+    } catch {
+      // ...
+    }
+
+    progress.done();
   }
 </script>
 

@@ -4,7 +4,7 @@ import { api, ziggy } from "@/modules/Api";
 import { cloneDeep, omit } from "lodash";
 
 import { HydratedRoll, ShotTableState } from "./@types";
-import { Sort } from "../Core/@types";
+import { Roll, Sort } from "../Core/@types";
 
 export const useShotTableStore = defineStore("ShotTableStore", {
   state: (): ShotTableState => {
@@ -60,8 +60,12 @@ export const useShotTableStore = defineStore("ShotTableStore", {
     activateEditRoll() {
       this.editRollActive = true;
     },
-    cancelEditRoll() {
+    deactivateEditRoll() {
       this.editRollActive = false;
+    },
+    cancelEditRoll(rollBackup: Roll) {
+      this.roll = rollBackup;
+      this.deactivateEditRoll();
     },
 
     markNeedsHydration() {
