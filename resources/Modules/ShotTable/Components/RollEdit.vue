@@ -108,17 +108,19 @@
 </template>
 
 <script setup lang="ts">
-  import FormFrame from "@/modules/Core/Components/FormFrame.vue";
+  import { computed, onMounted, ref } from "vue";
+  import { onClickOutside } from "@vueuse/core";
+  import { cloneDeep, lowerCase } from "lodash";
 
+  import FormFrame from "@/modules/Core/Components/FormFrame.vue";
   import ActionButton from "@/modules/Core/Components/ActionButton.vue";
   import PushPull from "@/modules/Core/Components/PushPull.vue";
 
   import { useShotTableStore } from "../store";
-  import { cloneDeep, lowerCase } from "lodash";
-  import { computed, onMounted, ref } from "vue";
-  import { api, ziggy, progress } from "@/modules/Api";
   import { useAuthStore } from "@/modules/Auth/store";
-  import { onClickOutside } from "@vueuse/core";
+
+  import { api, ziggy, progress } from "@/modules/Api";
+
   import { Roll } from "@/modules/Core/@types";
 
   /*

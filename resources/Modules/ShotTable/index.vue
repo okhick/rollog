@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-  import { defineProps, onMounted, ref } from "@vue/runtime-core";
+  import { defineProps, onMounted } from "vue";
   import { progress } from "../Api";
 
   import { useShotTableStore } from "./store";
