@@ -29,19 +29,38 @@
         </p>
       </div>
 
-      <div class="field is-flex-grow-10 mb-0" id="film-stock">
+      <div
+        class="field is-flex-grow-10 mb-0"
+        id="film-stock"
+        ref="filmStockRef"
+      >
         <label class="label" for="title">Film Stock</label>
-        <div class="control">
-          <input
-            :class="['input', { 'is-danger': false }]"
-            type="text"
-            name="title"
-            v-model="shotTableStore.roll!.film_stock"
-          />
+
+        <div :class="['dropdown', { 'is-active': filmStockActive }]">
+          <div class="dropdown-trigger">
+            <input
+              :class="['input', { 'is-danger': false }]"
+              type="text"
+              name="title"
+              v-model="shotTableStore.roll!.film_stock"
+              @focus="activateStockList"
+            />
+          </div>
+          <p v-show="false" :class="['help', { 'is-danger': false }]">
+            Title is required
+          </p>
+          <div class="dropdown-menu" id="dropdown-menu" role="menu">
+            <div class="dropdown-content">
+              <a
+                v-for="stock in filteredStocks"
+                class="dropdown-item"
+                @click="handleChooseFilmStock(stock)"
+              >
+                {{ stock }}
+              </a>
+            </div>
+          </div>
         </div>
-        <p v-show="false" :class="['help', { 'is-danger': false }]">
-          Title is required
-        </p>
       </div>
     </div>
 
@@ -95,10 +114,11 @@
   import PushPull from "@/modules/Core/Components/PushPull.vue";
 
   import { useShotTableStore } from "../store";
-  import { cloneDeep } from "lodash";
-  import { onMounted } from "vue";
+  import { cloneDeep, lowerCase } from "lodash";
+  import { computed, onMounted, ref } from "vue";
   import { api, ziggy, progress } from "@/modules/Api";
   import { useAuthStore } from "@/modules/Auth/store";
+  import { onClickOutside } from "@vueuse/core";
 
   const shotTableStore = useShotTableStore();
   const authStore = useAuthStore();
@@ -107,12 +127,17 @@
 
   const cameras = authStore.user?.cameras;
 
+  defineEmits(["rollEdit:cancel"]);
+
+  const filmStocks = ref<string[]>([]);
+
   onMounted(async () => {
     progress.start();
 
     try {
-      const filmStocks = await api.get(ziggy.route("film-stocks"));
-      console.log(filmStocks);
+      const filmStocksRes = await api.get<string[]>(ziggy.route("film-stocks"));
+
+      filmStocks.value = filmStocksRes.data;
     } catch {
       // ...
     }
@@ -120,7 +145,33 @@
     progress.done();
   });
 
-  defineEmits(["rollEdit:cancel"]);
+  const filmStockRef = ref();
+  const filmStockActive = ref(false);
+
+  const filteredStocks = computed(() => {
+    const query = lowerCase(shotTableStore.roll?.film_stock);
+
+    const matchedStocks = filmStocks.value.filter(
+      (stock) => lowerCase(stock).search(query) > -1
+    );
+
+    return matchedStocks;
+  });
+
+  onClickOutside(filmStockRef, () => deactivateStockList());
+
+  function activateStockList() {
+    filmStockActive.value = true;
+  }
+  function deactivateStockList() {
+    filmStockActive.value = false;
+  }
+
+  function handleChooseFilmStock(stock: string) {
+    shotTableStore.roll!.film_stock = stock;
+
+    deactivateStockList();
+  }
 
   function resetRoll() {
     shotTableStore.roll = rollBackup;
@@ -155,6 +206,27 @@
     .select,
     select {
       width: 100% !important;
+    }
+  }
+
+  #film-stock {
+    .dropdown {
+      width: 100%;
+      .dropdown-trigger {
+        width: inherit;
+        input {
+          width: inherit;
+        }
+      }
+      /**
+      * `position: fixed` is really hacky here, but I can't figure out how else to get the 
+      * content to overflow from the form box
+      */
+      .dropdown-content {
+        position: fixed;
+        max-height: 148px;
+        overflow-y: scroll;
+      }
     }
   }
 </style>
