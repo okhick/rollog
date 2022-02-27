@@ -20,6 +20,7 @@ class CreateCamerasTable extends Migration
             $table->string('model');
             $table->string('notes')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('user_id')->references('id')->on('users');
         });

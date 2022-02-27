@@ -24,8 +24,9 @@ class CreateShotsTable extends Migration
             $table->string('title');
             $table->string('notes')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
-            $table->foreign('roll_id')->references('id')->on('rolls');
+            $table->foreign('roll_id')->references('id')->on('rolls')->onDelete('cascade');
             $table->foreign('lens_id')->references('id')->on('lenses');
         });
     }

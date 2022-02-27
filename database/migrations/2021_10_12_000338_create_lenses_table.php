@@ -22,6 +22,7 @@ class CreateLensesTable extends Migration
             $table->float('maximum_aperture');
             $table->string('notes')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('user_id')->references('id')->on('users');
         });

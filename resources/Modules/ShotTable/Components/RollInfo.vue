@@ -16,15 +16,14 @@
         </template>
         <template #items="{ _class }">
           <a
-            @click.stop="[handleEditRoll, deactivateRollMenu()]"
             :class="_class"
-            >Edit roll</a
-          >
-          <a
-            @click.stop="[handleRemoveRoll, deactivateRollMenu()]"
-            :class="_class"
-            >Remove roll</a
-          >
+            v-for="item in rollMenu"
+            @click.stop="[item.onClick(), deactivateRollMenu()]"
+            ><span
+              class="is-flex is-justify-content-end is-align-items-center is-flex-gap-3"
+            >
+              {{ item.label }} <ion-icon :name="item.icon" /></span
+          ></a>
         </template>
       </dropdown-menu>
     </div>
@@ -56,10 +55,14 @@
 
 <script setup lang="ts">
   import { computed, ref } from "vue";
+  import { useRouter } from "vue-router";
+
   import { useShotTableStore } from "../store";
+
   import DropdownMenu from "@/modules/Core/Components/DropdownMenu.vue";
+
   import { useDisplayFormatters } from "@/modules/Core/Composables/DisplayFormatters";
-  import { settings } from "nprogress";
+  import { api, progress, ziggy } from "@/modules/Api";
 
   /*
   |--------------------------------------------------------------------------
@@ -83,12 +86,30 @@
 
   const camera = computed(() => formatCamera(shotTableStore.roll?.camera));
 
+  const rollMenu = [
+    {
+      label: "Edit Roll",
+      icon: "create-outline",
+      onClick: handleEditRoll,
+    },
+    {
+      label: "Remove Roll",
+      icon: "trash-outline",
+      onClick: handleRemoveRoll,
+    },
+  ];
+
   /*
   |--------------------------------------------------------------------------
   | Handlers
   |--------------------------------------------------------------------------
   */
 
+  const router = useRouter();
+
+  /**
+   * Toggle Menu Active
+   */
   const rollMenuIsActive = ref(false);
 
   function toggleRollMenu() {
@@ -98,8 +119,27 @@
     rollMenuIsActive.value = false;
   }
 
+  /**
+   * Menu actions
+   */
   function handleEditRoll() {}
-  function handleRemoveRoll() {}
+
+  async function handleRemoveRoll() {
+    progress.start();
+
+    try {
+      await api.delete(
+        ziggy.route("roll.destroy", { roll: shotTableStore.roll?.id })
+      );
+
+      router.push({ name: "rolls" });
+      shotTableStore.$reset();
+    } catch {
+      // do nothing for now
+    }
+
+    progress.done();
+  }
 </script>
 
 <style lang="scss" scoped>
@@ -110,6 +150,10 @@
   }
   a.dropdown-item {
     text-align: initial;
+
+    ion-icon {
+      font-size: 1.1rem;
+    }
   }
   .roll-options {
     position: absolute;

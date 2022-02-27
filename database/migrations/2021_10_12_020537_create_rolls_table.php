@@ -23,6 +23,7 @@ class CreateRollsTable extends Migration
             $table->boolean('completed');
             $table->string('notes')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('camera_id')->references('id')->on('cameras');
