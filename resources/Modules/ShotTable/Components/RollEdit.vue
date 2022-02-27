@@ -1,5 +1,6 @@
 <template>
   <form-frame class="mt-n4 is-relative" :outlined="true">
+    <!-- backgroundColor="portraSlightlyOverexposed" -->
     <div
       id="cancel-edit"
       class="is-clickable"
@@ -75,10 +76,25 @@
 
   import { useShotTableStore } from "../store";
   import { cloneDeep } from "lodash";
+  import { onMounted } from "vue";
+  import { api, ziggy, progress } from "@/modules/Api";
 
   const shotTableStore = useShotTableStore();
 
   const rollBackup = cloneDeep(shotTableStore.roll);
+
+  onMounted(async () => {
+    progress.start();
+
+    try {
+      const filmStocks = await api.get(ziggy.route("film-stocks"));
+      console.log(filmStocks);
+    } catch {
+      // ...
+    }
+
+    progress.done();
+  });
 
   defineEmits(["rollEdit:cancel"]);
 

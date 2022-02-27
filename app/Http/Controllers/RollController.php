@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Roll;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class RollController extends Controller
@@ -25,16 +26,6 @@ class RollController extends Controller
         $roll->makeHidden(['camera_id']);
 
         return $roll;
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -67,17 +58,6 @@ class RollController extends Controller
         $roll->makeHidden(['camera_id']);
 
         return $roll;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**

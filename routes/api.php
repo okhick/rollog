@@ -4,6 +4,7 @@ use App\Http\Controllers\CameraController;
 use App\Http\Controllers\LensController;
 use App\Http\Controllers\RollController;
 use App\Http\Controllers\ShotController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Tightenco\Ziggy\Ziggy;
@@ -25,6 +26,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
+
+    Route::get('film-stocks', [UserController::class, 'getFilmStocks'])
+        ->name('film-stocks');
 
     Route::resource('roll', RollController::class);
     Route::resource('roll.shot', ShotController::class);

@@ -63,4 +63,18 @@ class User extends Authenticatable
     {
         return $this->hasMany(Lens::class);
     }
+
+    /**
+     * Get a list of all the filmstocks that user has entered.
+     */
+    public function scopeFilmStocks()
+    {
+        $stocks = Roll::select('film_stock')
+            ->where('user_id', $this->id)
+            ->orderBy('film_stock')
+            ->distinct()
+            ->get();
+
+        return $stocks->pluck('film_stock');
+    }
 }
