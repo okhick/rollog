@@ -80,6 +80,8 @@
 
   const rollBackup = cloneDeep(shotTableStore.roll);
 
+  defineEmits(["rollEdit:cancel"]);
+
   function resetRoll() {
     shotTableStore.roll = rollBackup;
   }

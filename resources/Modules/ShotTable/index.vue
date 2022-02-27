@@ -10,7 +10,6 @@
     <roll-edit
       @rollEdit:cancel="cancelEditRoll"
       v-if="shotTableStore.editRollActive"
-      :outlined="true"
     />
 
     <table-frame
