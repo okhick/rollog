@@ -100,7 +100,7 @@
 
   import ShotExposure from "./Components/ShotExposure.vue";
   import ShotAperture from "./Components/ShotAperture.vue";
-  import PushPull from "../Core/Components/PushPull.vue";
+  import PushPull from "@/modules/Core/Components/PushPull.vue";
   import FormFrame from "../Core/Components/FormFrame.vue";
 
   /*

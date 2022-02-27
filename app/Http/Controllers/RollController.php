@@ -69,7 +69,9 @@ class RollController extends Controller
      */
     public function update(Request $request)
     {
-        $roll = Roll::get($request->roll, $request->user()->id);
+        $user = $request->user();
+
+        $roll = Roll::get($request->roll, $user->id);
 
         // Update the resource
         $fillable = $roll->getFillable();

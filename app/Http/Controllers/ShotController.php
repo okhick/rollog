@@ -18,9 +18,11 @@ class ShotController extends Controller
     {
         $user = $request->user();
 
-        return Shot::whereRelation('roll', 'user_id', $user->id)
+        $shot = Shot::whereRelation('roll', 'user_id', $user->id)
             ->whereRelation('roll', 'id', $request->rollId)
             ->get();
+
+        return $shot;
     }
 
     /**
@@ -31,6 +33,8 @@ class ShotController extends Controller
      */
     public function store(Request $request)
     {
+        $user = $request->user();
+
         $shot = new Shot();
 
         $fillable = $shot->getFillable();
@@ -41,7 +45,7 @@ class ShotController extends Controller
         // Not sure which method is better...
         // $shot->lens_id = $request->lens['id'];
         $shot->lens()->associate(Lens::find($request->lens['id']));
-        $shot->roll()->associate(Roll::get($request->roll, $request->user()->id));
+        $shot->roll()->associate(Roll::get($request->roll, $user->id));
 
         return tap($shot)->save();
     }
@@ -54,7 +58,7 @@ class ShotController extends Controller
      */
     public function show(Request $request)
     {
-        return Shot::getShot($request->user()->id, $request->roll, $request->shot);
+        return Shot::get($request->user()->id, $request->roll, $request->shot);
     }
 
     /**
@@ -66,7 +70,9 @@ class ShotController extends Controller
      */
     public function update(Request $request)
     {
-        $shot = Shot::get($request->user()->id, $request->roll, $request->shot);
+        $user = $request->user();
+
+        $shot = Shot::get($user->id, $request->roll, $request->shot);
 
         $fillable = $shot->getFillable();
         foreach ($fillable as $field) {
