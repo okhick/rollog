@@ -1,7 +1,7 @@
 <template>
   <div
     @click="shotTableStore.toggleRollInfoExpanded"
-    class="is-clickable border px-4 py-2 has-text-centered is-relative"
+    class="is-clickable border mt-n4 mb-1 px-4 py-2 has-text-centered is-relative"
   >
     <div class="roll-options">
       <dropdown-menu
@@ -72,6 +72,8 @@
 
   const shotTableStore = useShotTableStore();
 
+  const emit = defineEmits(["rollInfo:edit"]);
+
   /*
   |--------------------------------------------------------------------------
   | Format for Display
@@ -122,7 +124,9 @@
   /**
    * Menu actions
    */
-  function handleEditRoll() {}
+  function handleEditRoll() {
+    emit("rollInfo:edit");
+  }
 
   async function handleRemoveRoll() {
     progress.start();
@@ -144,9 +148,12 @@
 
 <style lang="scss" scoped>
   .icon.settings {
-    font-size: 2rem;
     margin-right: 8px;
     margin-top: 14px;
+
+    ion-icon {
+      font-size: 2rem;
+    }
   }
   a.dropdown-item {
     text-align: initial;

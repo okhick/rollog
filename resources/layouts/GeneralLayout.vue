@@ -11,3 +11,9 @@
 <script setup lang="ts">
   import SuperHeader from "@/modules/Core/Components/SuperHeader.vue";
 </script>
+
+<style lang="scss" scoped>
+  footer.footer {
+    min-height: 40px;
+  }
+</style>

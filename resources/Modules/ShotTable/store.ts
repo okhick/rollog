@@ -11,6 +11,7 @@ export const useShotTableStore = defineStore("ShotTableStore", {
     return {
       roll: undefined,
       rollInfoExpanded: false,
+      editRollActive: false,
       shots: undefined,
       sort: Sort.DESC,
       hydrated: false,
@@ -54,6 +55,13 @@ export const useShotTableStore = defineStore("ShotTableStore", {
 
     toggleRollInfoExpanded() {
       this.rollInfoExpanded = !this.rollInfoExpanded;
+    },
+
+    activateEditRoll() {
+      this.editRollActive = true;
+    },
+    cancelEditRoll() {
+      this.editRollActive = false;
     },
 
     markNeedsHydration() {

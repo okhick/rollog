@@ -1,5 +1,5 @@
 <template>
-  <action-footer @actionFooter:click="handleClick">
+  <action-footer @actionButton:click="handleClick">
     <span class="icon">
       <ion-icon name="checkmark-outline"></ion-icon>
     </span>

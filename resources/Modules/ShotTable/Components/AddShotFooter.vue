@@ -1,5 +1,8 @@
 <template>
-  <action-footer @actionFooter:click="handleClick">
+  <action-footer
+    @actionButton:click="handleClick"
+    v-show="!shotTableStore.editRollActive"
+  >
     <span class="icon">
       <ion-icon name="add-outline"></ion-icon>
     </span>

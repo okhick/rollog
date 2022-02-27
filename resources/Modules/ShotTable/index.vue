@@ -2,7 +2,16 @@
   <section
     class="is-flex-grow-1 is-flex is-flex-direction-column is-flex-gap-1 px-4 py-2"
   >
-    <roll-info id="roll-info" />
+    <roll-info
+      v-show="!shotTableStore.editRollActive"
+      id="roll-info"
+      @rollInfo:edit="activateEditRoll"
+    />
+    <roll-edit
+      @rollEdit:cancel="cancelEditRoll"
+      v-if="shotTableStore.editRollActive"
+      :outlined="true"
+    />
 
     <table-frame
       title="Shots"
@@ -29,6 +38,8 @@
   import ShotEntry from "./Components/ShotEntry.vue";
 
   import { Sort } from "@/modules/Core/@types";
+  import RollEdit from "./Components/RollEdit.vue";
+  import { ref } from "vue";
 
   /*
   |--------------------------------------------------------------------------
@@ -63,6 +74,22 @@
 
   /*
   |--------------------------------------------------------------------------
+  | Hydrate Module
+  |--------------------------------------------------------------------------
+  */
+
+  function activateEditRoll() {
+    shotTableStore.activateEditRoll();
+  }
+  function saveEditRoll() {
+    // editRollActive.value = true;
+  }
+  function cancelEditRoll() {
+    shotTableStore.cancelEditRoll();
+  }
+
+  /*
+  |--------------------------------------------------------------------------
   | Helpers
   |--------------------------------------------------------------------------
   */
@@ -84,8 +111,4 @@
   // onUnmounted(() => shotTableStore.$reset());
 </script>
 
-<style lang="scss">
-  #roll-info {
-    margin-top: -16px;
-  }
-</style>
+<style lang="scss"></style>
