@@ -23,7 +23,7 @@ class RollController extends Controller
             ->with('camera')
             ->get();
 
-        $roll->hideCameraId();
+        $roll->makeHidden(['camera_id']);
 
         return $roll;
     }
@@ -55,7 +55,7 @@ class RollController extends Controller
             ->with('camera')
             ->firstOrFail();
 
-        $roll->hideCameraId();
+        $roll->makeHidden(['camera_id']);
 
         return $roll;
     }
@@ -83,9 +83,7 @@ class RollController extends Controller
         $newRoll = tap($roll)->save();
 
         // Return the new roll
-        $newRoll->hideCameraId();
-
-        return $newRoll;
+        return $newRoll->makeHidden(['camera_id']);
     }
 
     /**

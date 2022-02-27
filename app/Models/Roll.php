@@ -49,12 +49,4 @@ class Roll extends Model
             ->where('user_id', $userId)
             ->firstOrFail();
     }
-
-    /**
-     * Remove the camera_id when we want to.
-     */
-    public function hideCameraId()
-    {
-        $this->makeHidden(['camera_id']);
-    }
 }
