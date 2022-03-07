@@ -28,6 +28,8 @@
 
 <script setup lang="ts">
   import { defineProps, onMounted } from "vue";
+  import { useRoute } from "vue-router";
+
   import { progress } from "../Api";
 
   import { useShotTableStore } from "./store";
@@ -44,16 +46,21 @@
   | Init
   |--------------------------------------------------------------------------
   */
+  const route = useRoute();
 
   const props = defineProps({
     rollId: {
       type: String as () => string,
-      required: true,
     },
   });
 
   const shotTableStore = useShotTableStore();
 
+  if (route.name === "new-roll") {
+    shotTableStore.makeNewRoll();
+
+    shotTableStore.editRollActive = true;
+  }
   /*
   |--------------------------------------------------------------------------
   | Hydrate Module
@@ -61,13 +68,15 @@
   */
 
   onMounted(async () => {
-    shotTableStore.markNeedsHydration();
+    if (route.meta.requiresHydration) {
+      shotTableStore.markNeedsHydration();
 
-    await shotTableStore.fetchRoll(Number(props.rollId));
+      await shotTableStore.fetchRoll(Number(props.rollId));
 
-    shotTableStore.markFullyHydrated();
+      shotTableStore.markFullyHydrated();
 
-    if (shotTableStore.hydrated) progress.done();
+      if (shotTableStore.hydrated) progress.done();
+    }
   });
 
   /*

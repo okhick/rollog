@@ -7,6 +7,7 @@ import { useShotTableStore } from "../ShotTable/store";
 
 import { HydratedShot, ShotEditState } from "./@types";
 import { Roll } from "../Core/@types";
+import { NewRoll } from "../ShotTable/@types";
 
 export const useShotEditStore = defineStore("ShotEditStore", {
   state: (): ShotEditState => {
@@ -57,7 +58,7 @@ export const useShotEditStore = defineStore("ShotEditStore", {
       };
 
       const shotTableStore = useShotTableStore();
-      this.setRoll(shotTableStore.roll!);
+      this.setRoll(shotTableStore.roll as Roll);
     },
 
     setRoll(roll: Roll) {

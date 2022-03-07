@@ -7,9 +7,12 @@
 </template>
 
 <script setup lang="ts">
+  import { useRouter } from "vue-router";
   import ActionFooter from "@/pages/Dashboard/Components/ActionFooter.vue";
 
+  const router = useRouter();
+
   function handleClick() {
-    console.log("ADD ROLL");
+    router.push({ name: "new-roll" });
   }
 </script>

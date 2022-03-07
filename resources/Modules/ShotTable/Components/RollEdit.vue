@@ -101,7 +101,7 @@
   </form-frame>
 
   <div class="has-text-centered mb-n4">
-    <action-button class="mt-n3" @actionButton:click="handleUpdateRoll">
+    <action-button class="mt-n3" @actionButton:click="handleUpdateOrCreate">
       <span class="icon"> <ion-icon name="checkmark-outline" /> </span>
     </action-button>
   </div>
@@ -109,6 +109,7 @@
 
 <script setup lang="ts">
   import { computed, onMounted, ref } from "vue";
+  import { useRoute, useRouter } from "vue-router";
   import { onClickOutside } from "@vueuse/core";
   import { cloneDeep, lowerCase } from "lodash";
 
@@ -202,17 +203,22 @@
 
   /*
   |--------------------------------------------------------------------------
-  | Update 
+  | Create or Update
   |--------------------------------------------------------------------------
   */
+  const router = useRouter();
+  const route = useRoute();
 
-  async function handleUpdateRoll() {
+  const { updateRoll, createRoll } = useUpdateRoll();
+
+  async function handleUpdateOrCreate() {
     progress.start();
 
     try {
-      const { updateRoll } = useUpdateRoll();
-
-      const newRoll = await updateRoll();
+      const newRoll =
+        route.name === "new-roll"
+          ? await createAndRedirect()
+          : await updateRoll();
 
       shotTableStore.roll = newRoll;
       shotTableStore.deactivateEditRoll();
@@ -221,6 +227,17 @@
     }
 
     progress.done();
+  }
+
+  async function createAndRedirect() {
+    const newRoll = await createRoll();
+
+    router.push({
+      name: "shots",
+      params: { rollId: newRoll.id },
+    });
+
+    return newRoll;
   }
 </script>
 

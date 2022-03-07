@@ -11,12 +11,22 @@ export function useUpdateRoll() {
    */
   async function updateRoll() {
     const newRollRes = await api.put<Roll>(
-      ziggy.route("roll.update", { roll: shotTableStore.roll?.id }),
+      // Safe to cast as Roll for now because this won't be called without a full Roll
+      ziggy.route("roll.update", { roll: (shotTableStore.roll as Roll)?.id }),
       shotTableStore.roll
     );
 
     return newRollRes.data;
   }
 
-  return { updateRoll };
+  async function createRoll() {
+    const newRollRes = await api.post<Roll>(
+      ziggy.route("roll.store"),
+      shotTableStore.roll
+    );
+
+    return newRollRes.data;
+  }
+
+  return { updateRoll, createRoll };
 }

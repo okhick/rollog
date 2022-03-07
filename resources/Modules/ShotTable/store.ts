@@ -25,8 +25,8 @@ export const useShotTableStore = defineStore("ShotTableStore", {
      * @returns string
      */
     rollNameString(state): string | undefined {
-      const stockIncludesIso = state.roll?.film_stock.search(
-        state.roll.film_iso.toString()
+      const stockIncludesIso = state.roll?.film_stock?.search(
+        state.roll.film_iso?.toString() || ""
       );
 
       return stockIncludesIso === -1
@@ -55,6 +55,17 @@ export const useShotTableStore = defineStore("ShotTableStore", {
 
     toggleRollInfoExpanded() {
       this.rollInfoExpanded = !this.rollInfoExpanded;
+    },
+
+    makeNewRoll() {
+      this.roll = {
+        camera: undefined,
+        film_stock: undefined,
+        film_iso: undefined,
+        pushpull: undefined,
+        completed: false,
+        notes: undefined,
+      };
     },
 
     markRollAsCompleted() {

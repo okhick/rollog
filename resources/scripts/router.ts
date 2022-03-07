@@ -79,6 +79,27 @@ const routes = [
         },
       },
       {
+        path: "roll/new",
+        name: "new-roll",
+        props: true,
+        meta: {
+          requiresHydration: false,
+          breadcrumbs() {
+            return [
+              { to: { name: "rolls" }, label: "Rolls" },
+              { label: getRollName() || "" },
+            ];
+          },
+        },
+        components: {
+          header: async () =>
+            await import("@/modules/ShotTable/Components/ShotTableHeader.vue"),
+          main: async () => await import("@/modules/ShotTable/index.vue"),
+          footer: async () =>
+            await import("@/modules/ShotTable/Components/AddShotFooter.vue"),
+        },
+      },
+      {
         path: "roll/:rollId",
         name: "shots",
         props: true,

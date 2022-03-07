@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Camera;
 use App\Models\Roll;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class RollController extends Controller
@@ -36,7 +37,19 @@ class RollController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = $request->user();
+
+        $roll = new Roll();
+
+        $fillable = $roll->getFillable();
+        foreach ($fillable as $field) {
+            $roll[$field] = $request[$field];
+        }
+
+        $roll->camera()->associate(Camera::get($request->camera['id'], $user->id));
+        $roll->user()->associate(User::get($user->id));
+
+        return tap($roll)->save();
     }
 
     /**

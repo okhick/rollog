@@ -64,6 +64,12 @@ class User extends Authenticatable
         return $this->hasMany(Lens::class);
     }
 
+    public static function get(int $userId)
+    {
+        return self::where('id', $userId)
+            ->firstOrFail();
+    }
+
     /**
      * Get a list of all the filmstocks that user has entered.
      */
