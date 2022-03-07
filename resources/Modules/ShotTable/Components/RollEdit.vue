@@ -122,6 +122,7 @@
   import { api, ziggy, progress } from "@/modules/Api";
 
   import { Roll } from "@/modules/Core/@types";
+  import { useUpdateRoll } from "../Composables/UpdateRoll";
 
   /*
   |--------------------------------------------------------------------------
@@ -209,12 +210,11 @@
     progress.start();
 
     try {
-      const newRollRes = await api.put<Roll>(
-        ziggy.route("roll.update", { roll: shotTableStore.roll?.id }),
-        shotTableStore.roll
-      );
+      const { updateRoll } = useUpdateRoll();
 
-      shotTableStore.roll = newRollRes.data;
+      const newRoll = await updateRoll();
+
+      shotTableStore.roll = newRoll;
       shotTableStore.deactivateEditRoll();
     } catch {
       // ...

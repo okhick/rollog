@@ -59,10 +59,11 @@
 
   import { useShotTableStore } from "../store";
 
-  import DropdownMenu from "@/modules/Core/Components/DropdownMenu.vue";
-
+  import { useUpdateRoll } from "../Composables/UpdateRoll";
   import { useDisplayFormatters } from "@/modules/Core/Composables/DisplayFormatters";
   import { api, progress, ziggy } from "@/modules/Api";
+
+  import DropdownMenu from "@/modules/Core/Components/DropdownMenu.vue";
 
   /*
   |--------------------------------------------------------------------------
@@ -88,18 +89,37 @@
 
   const camera = computed(() => formatCamera(shotTableStore.roll?.camera));
 
-  const rollMenu = [
-    {
+  const rollMenu = computed(() => {
+    const menu = [];
+
+    menu.push({
       label: "Edit Roll",
       icon: "create-outline",
       onClick: handleEditRoll,
-    },
-    {
+    });
+
+    if (shotTableStore.roll?.completed) {
+      menu.push({
+        label: "Mark as Incomplete",
+        icon: "close-outline",
+        onClick: () => updateCompleteMenu(false),
+      });
+    } else {
+      menu.push({
+        label: "Mark as Complete",
+        icon: "checkmark-circle-outline",
+        onClick: () => updateCompleteMenu(true),
+      });
+    }
+
+    menu.push({
       label: "Remove Roll",
       icon: "trash-outline",
       onClick: handleRemoveRoll,
-    },
-  ];
+    });
+
+    return menu;
+  });
 
   /*
   |--------------------------------------------------------------------------
@@ -116,6 +136,24 @@
 
   function toggleRollMenu() {
     rollMenuIsActive.value = !rollMenuIsActive.value;
+  }
+  async function updateCompleteMenu(isComplete: boolean) {
+    progress.start();
+
+    if (isComplete) shotTableStore.markRollAsCompleted();
+    else shotTableStore.markRollAsIncompleted();
+
+    try {
+      const { updateRoll } = useUpdateRoll();
+
+      const newRoll = await updateRoll();
+
+      shotTableStore.roll = newRoll;
+    } catch {
+      // ...
+    }
+
+    progress.done();
   }
   function deactivateRollMenu() {
     rollMenuIsActive.value = false;

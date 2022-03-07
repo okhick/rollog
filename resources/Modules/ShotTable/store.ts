@@ -57,6 +57,13 @@ export const useShotTableStore = defineStore("ShotTableStore", {
       this.rollInfoExpanded = !this.rollInfoExpanded;
     },
 
+    markRollAsCompleted() {
+      if (this.roll) this.roll.completed = true;
+    },
+    markRollAsIncompleted() {
+      if (this.roll) this.roll.completed = false;
+    },
+
     activateEditRoll() {
       this.editRollActive = true;
     },
