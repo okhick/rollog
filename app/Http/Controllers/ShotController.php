@@ -16,13 +16,17 @@ class ShotController extends Controller
      */
     public function index(Request $request)
     {
-        $user = $request->user();
+        // $user = $request->user();
 
-        $shot = Shot::whereRelation('roll', 'user_id', $user->id)
-            ->whereRelation('roll', 'id', $request->rollId)
-            ->get();
+        // $shot = Shot::whereRelation('roll', 'id', $request->rollId);
 
-        return $shot;
+        // if ($user->cannot('view'))
+
+        // $shot = Shot::whereRelation('roll', 'user_id', $user->id)
+        //     ->whereRelation('roll', 'id', $request->rollId)
+        //     ->get();
+
+        // return $shot;
     }
 
     /**
@@ -34,6 +38,15 @@ class ShotController extends Controller
     public function store(Request $request)
     {
         $user = $request->user();
+        $roll = Roll::find($request->roll);
+        $lens = Lens::find($request->lens['id']);
+
+        // Make sure user owns roll and lens
+        if ($user->cannot('modifyRoll', $roll) ||
+            $user->cannot('useLens', $lens)
+        ) {
+            abort(403);
+        }
 
         $shot = new Shot();
 
@@ -42,10 +55,8 @@ class ShotController extends Controller
             $shot[$field] = $request[$field];
         }
 
-        // Not sure which method is better...
-        // $shot->lens_id = $request->lens['id'];
-        $shot->lens()->associate(Lens::find($request->lens['id']));
-        $shot->roll()->associate(Roll::get($request->roll, $user->id));
+        $shot->lens()->associate($lens);
+        $shot->roll()->associate($roll);
 
         return tap($shot)->save();
     }
@@ -58,7 +69,14 @@ class ShotController extends Controller
      */
     public function show(Request $request)
     {
-        return Shot::get($request->user()->id, $request->roll, $request->shot);
+        $roll = Roll::find($request->roll);
+
+        // Make sure user owns roll
+        if ($request->user()->cannot('modifyRoll', $roll)) {
+            abort(403);
+        }
+
+        return Shot::find($request->shot);
     }
 
     /**
@@ -71,17 +89,24 @@ class ShotController extends Controller
     public function update(Request $request)
     {
         $user = $request->user();
+        $roll = Roll::find($request->roll);
+        $lens = Lens::find($request->lens['id']);
 
-        $shot = Shot::get($user->id, $request->roll, $request->shot);
+        // Make sure user owns roll and lens
+        if ($user->cannot('modifyRoll', $roll) ||
+            $user->cannot('useLens', $lens)
+        ) {
+            abort(403);
+        }
+
+        $shot = Shot::get($roll->id, $request->shot);
 
         $fillable = $shot->getFillable();
         foreach ($fillable as $field) {
             $shot[$field] = $request[$field];
         }
 
-        // Not sure which method is better...
-        // $shot->lens_id = $request->lens['id'];
-        $shot->lens()->associate(Lens::find($request->lens['id']));
+        $shot->lens()->associate($lens);
 
         return tap($shot)->save();
     }

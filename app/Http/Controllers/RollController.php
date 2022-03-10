@@ -38,6 +38,12 @@ class RollController extends Controller
     public function store(Request $request)
     {
         $user = $request->user();
+        $camera = Camera::find($request->camera['id']);
+
+        // Make sure user owns camera
+        if ($user->cannot('useCamera', $camera)) {
+            abort(403);
+        }
 
         $roll = new Roll();
 
@@ -46,8 +52,8 @@ class RollController extends Controller
             $roll[$field] = $request[$field];
         }
 
-        $roll->camera()->associate(Camera::get($request->camera['id'], $user->id));
-        $roll->user()->associate(User::get($user->id));
+        $roll->camera()->associate($camera);
+        $roll->user()->associate($user);
 
         return tap($roll)->save();
     }
@@ -60,13 +66,15 @@ class RollController extends Controller
      */
     public function show(Request $request)
     {
-        $user = $request->user();
-
-        $roll = Roll::where('user_id', $user->id)
-            ->where('id', $request->roll)
+        $roll = Roll::where('id', $request->roll)
             ->with('shots')
             ->with('camera')
             ->firstOrFail();
+
+        // Ensure user owns roll
+        if ($request->user()->cannot('modifyRoll', $roll)) {
+            abort(403);
+        }
 
         $roll->makeHidden(['camera_id']);
 
@@ -83,8 +91,14 @@ class RollController extends Controller
     public function update(Request $request)
     {
         $user = $request->user();
+        $roll = Roll::find($request->roll);
+        $camera = Camera::find($request->camera['id']);
 
-        $roll = Roll::get($request->roll, $user->id);
+        // Ensure user owns roll and camera
+        if ($user->cannot('modifyRoll', $roll) ||
+            $user->cannot('useCamera', $camera)) {
+            abort(403);
+        }
 
         // Update the resource
         $fillable = $roll->getFillable();
@@ -92,7 +106,7 @@ class RollController extends Controller
             $roll[$field] = $request[$field];
         }
 
-        $roll->camera()->associate(Camera::find($request->camera['id']));
+        $roll->camera()->associate($camera);
 
         // Save
         $newRoll = tap($roll)->save();
@@ -109,11 +123,13 @@ class RollController extends Controller
      */
     public function destroy(Request $request)
     {
-        $user = $request->user();
-
-        $roll = Roll::where('user_id', $user->id)
-            ->where('id', $request->roll)
+        $roll = Roll::where('id', $request->roll)
             ->firstOrFail();
+
+        // Ensure user owns roll
+        if ($request->user()->cannot('modifyRoll', $roll)) {
+            abort(403);
+        }
 
         $roll->delete();
     }
