@@ -27,10 +27,11 @@
 </template>
 
 <script setup lang="ts">
-  import { defineProps, onMounted } from "vue";
+  import { computed, defineProps, onMounted } from "vue";
   import { useRoute, onBeforeRouteLeave } from "vue-router";
 
   import { progress } from "../Api";
+  import { useFieldValidationStore } from "@/modules/Core/Stores/FieldValidation";
 
   import { useShotTableStore } from "./store";
 
@@ -46,6 +47,7 @@
   | Init
   |--------------------------------------------------------------------------
   */
+
   const route = useRoute();
 
   const props = defineProps({
@@ -55,12 +57,14 @@
   });
 
   const shotTableStore = useShotTableStore();
+  const fieldValidationStore = useFieldValidationStore();
 
   if (route.name === "new-roll") {
     shotTableStore.makeNewRoll();
 
     shotTableStore.editRollActive = true;
   }
+
   /*
   |--------------------------------------------------------------------------
   | Hydrate Module

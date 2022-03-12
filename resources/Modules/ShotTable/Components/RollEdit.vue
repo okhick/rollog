@@ -12,10 +12,10 @@
     </div>
 
     <div class="is-flex is-flex-wrap-wrap is-flex-gap-1 mt-2 mb-3">
-      <div class="field is-flex-grow-1 mb-0" id="camera">
+      <div class="field is-flex-grow-1 my-0" id="camera">
         <label class="label" for="camera">Camera</label>
         <div class="control">
-          <div :class="['select', { 'is-danger': false }]">
+          <div :class="['select', { 'is-danger': emptyCamera }]">
             <select v-model="shotTableStore.roll!.camera" name="camera">
               <option value="" disabled selected hidden>Choose camera</option>
               <option v-for="camera in cameras" :value="camera">
@@ -24,8 +24,8 @@
             </select>
           </div>
         </div>
-        <p v-show="false" :class="['help', { 'is-danger': false }]">
-          Please choose a lens
+        <p v-show="emptyCamera" :class="['help', { 'is-danger': emptyCamera }]">
+          Please choose a camera
         </p>
       </div>
 
@@ -39,16 +39,13 @@
         <div :class="['dropdown', { 'is-active': filmStockActive }]">
           <div class="dropdown-trigger">
             <input
-              :class="['input', { 'is-danger': false }]"
+              :class="['input', { 'is-danger': emptyFilmStock }]"
               type="text"
               name="title"
               v-model="shotTableStore.roll!.film_stock"
               @focus="activateStockList"
             />
           </div>
-          <p v-show="false" :class="['help', { 'is-danger': false }]">
-            Title is required
-          </p>
           <div class="dropdown-menu" id="dropdown-menu" role="menu">
             <div class="dropdown-content">
               <a
@@ -61,6 +58,12 @@
             </div>
           </div>
         </div>
+        <p
+          v-show="emptyFilmStock"
+          :class="['help', { 'is-danger': emptyFilmStock }]"
+        >
+          Film Stock is required
+        </p>
       </div>
     </div>
 
@@ -69,14 +72,14 @@
         <label class="label" for="title">Film ISO</label>
         <div class="control">
           <input
-            :class="['input', { 'is-danger': false }]"
+            :class="['input', { 'is-danger': emptyISO }]"
             type="number"
             name="title"
             v-model="shotTableStore.roll!.film_iso"
           />
         </div>
-        <p v-show="false" :class="['help', { 'is-danger': false }]">
-          Title is required
+        <p v-show="emptyISO" :class="['help', { 'is-danger': emptyISO }]">
+          Film ISO is required
         </p>
       </div>
 
@@ -119,11 +122,17 @@
 
   import { useShotTableStore } from "../store";
   import { useAuthStore } from "@/modules/Auth/store";
+  import { useFieldValidationStore } from "@/modules/Core/Stores/FieldValidation";
 
   import { api, ziggy, progress } from "@/modules/Api";
+  import {
+    EMPTY_CAMERA,
+    EMPTY_FILM_STOCK,
+    EMPTY_ISO,
+  } from "../Composables/Validation";
 
-  import { Roll } from "@/modules/Core/@types";
   import { useUpdateRoll } from "../Composables/UpdateRoll";
+  import { useRollValidation } from "../Composables/Validation";
 
   /*
   |--------------------------------------------------------------------------
@@ -133,12 +142,33 @@
 
   const shotTableStore = useShotTableStore();
   const authStore = useAuthStore();
+  const fieldValidationStore = useFieldValidationStore();
 
   const rollBackup = cloneDeep(shotTableStore.roll);
 
   const cameras = authStore.user?.cameras;
 
   defineEmits(["rollEdit:cancel"]);
+
+  /*
+  |--------------------------------------------------------------------------
+  | Init Validation
+  |--------------------------------------------------------------------------
+  */
+
+  fieldValidationStore.initValidaton([
+    EMPTY_CAMERA,
+    EMPTY_FILM_STOCK,
+    EMPTY_ISO,
+  ]);
+
+  const emptyCamera = computed(
+    () => fieldValidationStore.validations[EMPTY_CAMERA]
+  );
+  const emptyFilmStock = computed(
+    () => fieldValidationStore.validations[EMPTY_FILM_STOCK]
+  );
+  const emptyISO = computed(() => fieldValidationStore.validations[EMPTY_ISO]);
 
   /*
   |--------------------------------------------------------------------------
@@ -212,6 +242,8 @@
   const { updateRoll, createRoll } = useUpdateRoll();
 
   async function handleUpdateOrCreate() {
+    if (useRollValidation().validateRoll()) return;
+
     progress.start();
 
     try {

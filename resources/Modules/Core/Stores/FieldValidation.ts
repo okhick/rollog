@@ -11,7 +11,7 @@ export const useFieldValidationStore = defineStore("FieldValidationStore", {
   getters: {
     areErrors: (state) => {
       // return true if anything in fieldValidation is true (is and error)
-      return Object.entries(state)
+      return Object.entries(state.validations)
         .map(([error, status]) => status)
         .some((status) => status);
     },
