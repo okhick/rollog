@@ -7,7 +7,6 @@ import { useShotTableStore } from "../ShotTable/store";
 
 import { HydratedShot, ShotEditState } from "./@types";
 import { Roll } from "../Core/@types";
-import { NewRoll } from "../ShotTable/@types";
 
 export const useShotEditStore = defineStore("ShotEditStore", {
   state: (): ShotEditState => {
@@ -15,22 +14,10 @@ export const useShotEditStore = defineStore("ShotEditStore", {
       shot: undefined,
       roll: undefined,
       hydrated: true,
-      fieldValidation: {
-        emptyTitle: false,
-        emptyLens: false,
-      },
     };
   },
   getters: {
     title: (state) => state.shot?.title,
-    titleError: (state) => state.fieldValidation.emptyTitle,
-    lensError: (state) => state.fieldValidation.emptyLens,
-    areErrors: (state) => {
-      // return true if anything in fieldValidation is true (is and error)
-      return Object.entries(state.fieldValidation)
-        .map(([error, status]) => status)
-        .some((status) => status);
-    },
   },
   actions: {
     async fetchShot(shotId: number, rollId: number) {
@@ -63,20 +50,6 @@ export const useShotEditStore = defineStore("ShotEditStore", {
 
     setRoll(roll: Roll) {
       this.roll = roll;
-    },
-
-    markTitleError() {
-      this.fieldValidation.emptyTitle = true;
-    },
-    markTitleValid() {
-      this.fieldValidation.emptyTitle = false;
-    },
-
-    markLensError() {
-      this.fieldValidation.emptyLens = true;
-    },
-    markLensValid() {
-      this.fieldValidation.emptyLens = false;
     },
 
     markNeedsHydration() {

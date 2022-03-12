@@ -13,16 +13,13 @@
           <label class="label" for="title">Shot Title</label>
           <div class="control">
             <input
-              :class="['input', { 'is-danger': shotEditStore.titleError }]"
+              :class="['input', { 'is-danger': emptyTitle }]"
               type="text"
               name="title"
               v-model="shotEditStore.shot.title"
             />
           </div>
-          <p
-            v-show="shotEditStore.titleError"
-            :class="['help', { 'is-danger': shotEditStore.titleError }]"
-          >
+          <p v-show="emptyTitle" :class="['help', { 'is-danger': emptyTitle }]">
             Title is required
           </p>
         </div>
@@ -30,7 +27,7 @@
         <div class="field is-flex-grow-1 mb-0" id="lens">
           <label class="label" for="lens">Lens</label>
           <div class="control">
-            <div :class="['select', { 'is-danger': shotEditStore.lensError }]">
+            <div :class="['select', { 'is-danger': emptyLens }]">
               <select v-model="shotEditStore.shot.lens" name="lens">
                 <option value="" disabled selected hidden>Choose lens</option>
                 <option v-for="lens in lenses" :value="lens">
@@ -39,10 +36,7 @@
               </select>
             </div>
           </div>
-          <p
-            v-show="shotEditStore.lensError"
-            :class="['help', { 'is-danger': shotEditStore.lensError }]"
-          >
+          <p v-show="emptyLens" :class="['help', { 'is-danger': emptyLens }]">
             Please choose a lens
           </p>
         </div>
@@ -94,9 +88,12 @@
   import { useShotEditStore } from "./store";
   import { useAuthStore } from "@/modules/Auth/store";
 
+  import { useFieldValidationStore } from "../Core/Stores/FieldValidation";
+
   import { progress } from "@/modules/Api";
 
   import { useDisplayFormatters } from "../Core/Composables/DisplayFormatters";
+  import { EMPTY_TITLE, EMPTY_LENS } from "./Composables/Validation";
 
   import ShotExposure from "./Components/ShotExposure.vue";
   import ShotAperture from "./Components/ShotAperture.vue";
@@ -121,6 +118,22 @@
 
   const shotEditStore = useShotEditStore();
   const authStore = useAuthStore();
+  const fieldValidationStore = useFieldValidationStore();
+
+  /*
+  |--------------------------------------------------------------------------
+  | Init Validation
+  |--------------------------------------------------------------------------
+  */
+
+  fieldValidationStore.initValidaton([EMPTY_TITLE, EMPTY_LENS]);
+
+  const emptyLens = computed(
+    () => fieldValidationStore.validations[EMPTY_LENS]
+  );
+  const emptyTitle = computed(
+    () => fieldValidationStore.validations[EMPTY_TITLE]
+  );
 
   /*
   |--------------------------------------------------------------------------

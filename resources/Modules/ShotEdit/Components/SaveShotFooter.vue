@@ -17,6 +17,13 @@
   import { isShot, NewShot } from "../@types";
   import { Shot } from "@/modules/Core/@types";
 
+  import { useShotValidation } from "../Composables/Validation";
+
+  /*
+  |--------------------------------------------------------------------------
+  | Init
+  |--------------------------------------------------------------------------
+  */
   const shotEditStore = useShotEditStore();
 
   /*
@@ -26,7 +33,7 @@
   */
 
   async function handleClick() {
-    if (validateShot()) return;
+    if (useShotValidation().validateShot()) return;
 
     try {
       if (shotEditStore.shot && isShot(shotEditStore.shot)) {
@@ -39,22 +46,6 @@
     } catch {
       // show error?
     }
-  }
-
-  function validateShot() {
-    if (!shotEditStore.shot?.title) {
-      shotEditStore.markTitleError();
-    } else {
-      shotEditStore.markTitleValid();
-    }
-
-    if (!shotEditStore.shot?.lens) {
-      shotEditStore.markLensError();
-    } else {
-      shotEditStore.markLensValid();
-    }
-
-    return shotEditStore.areErrors;
   }
 
   async function saveShot(shot: Shot) {

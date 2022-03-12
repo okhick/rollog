@@ -4,9 +4,6 @@ export interface ShotEditState {
   shot?: Shot | NewShot;
   roll?: Roll;
   hydrated: boolean;
-  fieldValidation: {
-    [key: string]: boolean;
-  };
 }
 
 export interface HydratedShot extends Shot {
