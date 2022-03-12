@@ -28,7 +28,7 @@
 
 <script setup lang="ts">
   import { defineProps, onMounted } from "vue";
-  import { useRoute } from "vue-router";
+  import { useRoute, onBeforeRouteLeave } from "vue-router";
 
   import { progress } from "../Api";
 
@@ -113,7 +113,12 @@
   |--------------------------------------------------------------------------
   */
 
-  // onUnmounted(() => shotTableStore.$reset());
+  // Reset the store only if we're going back to rolls. Persist if moving to a shot
+  onBeforeRouteLeave((to) => {
+    if (to.name === "rolls") {
+      shotTableStore.$reset();
+    }
+  });
 </script>
 
 <style lang="scss"></style>
