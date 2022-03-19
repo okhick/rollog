@@ -48,7 +48,8 @@
       return getApertureSliderValues(shotEditStore.shot.lens);
   });
 
-  onMounted(() => setSliderValue());
+  setSliderValue();
+
   watch(apertureSliderValues, () => setSliderValue());
 
   function setSliderValue() {
@@ -56,8 +57,7 @@
       ({ value }) => value === (props.value || DEFAULT_APERTURE)
     );
 
-    // slider needs to be rendered before we set it. set on next tick
-    nextTick(() => (apertureSlider.value = sliderValue));
+    apertureSlider.value = sliderValue;
   }
 
   /*

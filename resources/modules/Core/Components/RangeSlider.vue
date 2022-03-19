@@ -40,15 +40,15 @@
         step="1"
         min="0"
         :max="(computedSliderValue?.length || 1) - 1"
-        v-model="value"
-        @input="$emit('update:value', Number(value))"
+        v-model="input"
+        @input="$emit('update:value', Number(input))"
       />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-  import { computed } from "vue";
+  import { computed, onMounted, ref } from "vue";
   import { RangeSliderValue } from "../@types";
 
   /*
@@ -70,6 +70,8 @@
     },
   });
 
+  const input = ref();
+  onMounted(() => (input.value = props.value));
   /*
   |--------------------------------------------------------------------------
   | Handle Disable

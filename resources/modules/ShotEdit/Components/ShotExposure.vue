@@ -85,7 +85,15 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, defineEmits, onMounted, PropType, ref, watch } from "vue";
+  import {
+    computed,
+    defineEmits,
+    onBeforeMount,
+    onMounted,
+    PropType,
+    ref,
+    watch,
+  } from "vue";
 
   import RangeSlider from "@/modules/Core/Components/RangeSlider.vue";
 
@@ -128,7 +136,7 @@
   |--------------------------------------------------------------------------
   */
 
-  onMounted(() => {
+  onBeforeMount(() => {
     if (!props.value) {
       exposureSlider.value = EXPOSURE_TIMES.indexOf(DEFAULT_EXPOSURE);
       return;
