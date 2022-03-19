@@ -159,7 +159,7 @@
         background-color: $white;
         font-weight: 750;
         padding: 0 2px;
-        outline: 1px solid $portra-underexposed;
+        border: 1px solid $portra-underexposed;
         border-radius: 2px;
 
         .tick {

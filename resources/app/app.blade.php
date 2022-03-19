@@ -13,7 +13,7 @@
   @vite
 </head>
 <body class="antialiased">
-  <div id="app" class="is-flex is-flex-direction-column" style="height: 100vh;"></div>
+  <div id="app" class="is-flex is-flex-direction-column" style="min-height: 100vh; min-height: -webkit-fill-available; "></div>
 </body>
 </html>
 
