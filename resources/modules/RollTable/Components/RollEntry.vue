@@ -1,13 +1,13 @@
 <template>
   <table-entry-frame :to="{ name: 'shots', params: { rollId: roll.id } }">
     <label class="is-align-self-flex-end is-flex"
-      >{{ roll.film_stock
-      }}<ion-icon
+      >{{ roll.film_stock }}
+      <icon
         v-if="roll.completed"
         name="checkmark-circle-outline"
         class="is-align-self-center ml-1 roll-complete"
-      ></ion-icon
-    ></label>
+      />
+    </label>
     <div class="roll-details ml-auto mr-2 mt-1 has-text-right">
       <div>
         <span class="has-text-weight-bold">{{ camera }}</span>
@@ -31,6 +31,7 @@
   import { useDisplayFormatters } from "@/modules/Core/Composables/DisplayFormatters";
 
   import TableEntryFrame from "@/modules/Core/Components/TableEntryFrame.vue";
+  import Icon from "@/modules/Core/Components/Icon.vue";
 
   import { Roll } from "@/modules/Core/@types";
 

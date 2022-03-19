@@ -18,11 +18,7 @@
           &fnof;{{ shot.aperture }} &bull;
           <span class="mr-1" v-html="formatExposureTime(shot.exposure)" />
           <span class="is-size-7" v-if="pushPull">({{ pushPull }})</span>
-          <ion-icon
-            v-if="shot.flash"
-            class="is-size-7"
-            name="flash-outline"
-          ></ion-icon>
+          <icon v-if="shot.flash" class="is-size-7" name="flash-outline"></icon>
         </p>
         <p class="is-size-7 has-text-right">{{ lens }}</p>
         <p class="is-size-7 has-text-right">
@@ -43,6 +39,7 @@
   import { useDisplayFormatters } from "@/modules/Core/Composables/DisplayFormatters";
 
   import TableEntryFrame from "@/modules/Core/Components/TableEntryFrame.vue";
+  import Icon from "@/modules/Core/Components/Icon.vue";
 
   import { Shot } from "@/modules/Core/@types";
   import { useShotTableStore } from "@/modules/ShotTable/store";

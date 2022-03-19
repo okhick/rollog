@@ -7,7 +7,7 @@
       @click="$emit('rollEdit:cancel', rollBackup)"
     >
       <span class="icon">
-        <ion-icon name="close-circle-outline"></ion-icon>
+        <icon name="close-circle-outline" />
       </span>
     </div>
 
@@ -105,7 +105,9 @@
 
   <div class="has-text-centered mb-n4">
     <action-button class="mt-n3" @actionButton:click="handleUpdateOrCreate">
-      <span class="icon"> <ion-icon name="checkmark-outline" /> </span>
+      <span class="icon">
+        <icon name="checkmark-outline" />
+      </span>
     </action-button>
   </div>
 </template>
@@ -119,6 +121,7 @@
   import FormFrame from "@/modules/Core/Components/FormFrame.vue";
   import ActionButton from "@/modules/Core/Components/ActionButton.vue";
   import PushPull from "@/modules/Core/Components/PushPull.vue";
+  import Icon from "@/modules/Core/Components/Icon.vue";
 
   import { useShotTableStore } from "../store";
   import { useAuthStore } from "@/modules/Auth/store";

@@ -11,7 +11,7 @@
       >
         <template #activator>
           <span class="icon settings" @click.stop="toggleRollMenu">
-            <ion-icon name="settings-outline"></ion-icon>
+            <icon name="settings-outline" />
           </span>
         </template>
         <template #items="{ _class }">
@@ -22,7 +22,7 @@
             ><span
               class="is-flex is-justify-content-end is-align-items-center is-flex-gap-3"
             >
-              {{ item.label }} <ion-icon :name="item.icon" /></span
+              {{ item.label }} <icon :name="item.icon" /></span
           ></a>
         </template>
       </dropdown-menu>
@@ -41,10 +41,10 @@
 
       <span class="is-flex" v-if="shotTableStore.roll.completed">
         <span class="mx-1 has-text-weight-light">&vert;</span>
-        <ion-icon
+        <icon
           name="checkmark-circle-outline"
           class="is-align-self-center mt-1"
-        ></ion-icon>
+        />
       </span>
     </div>
     <p class="is-italic" v-show="shotTableStore.rollInfoExpanded">
@@ -54,7 +54,7 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, ref } from "vue";
+  import { computed, nextTick, onMounted, ref } from "vue";
   import { useRouter } from "vue-router";
 
   import { useShotTableStore } from "../store";
@@ -64,6 +64,7 @@
   import { api, progress, ziggy } from "@/modules/Api";
 
   import DropdownMenu from "@/modules/Core/Components/DropdownMenu.vue";
+  import Icon from "@/modules/Core/Components/Icon.vue";
 
   /*
   |--------------------------------------------------------------------------

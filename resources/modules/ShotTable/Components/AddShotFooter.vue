@@ -4,14 +4,17 @@
     v-show="!shotTableStore.editRollActive"
   >
     <span class="icon">
-      <ion-icon name="add-outline"></ion-icon>
+      <icon name="add-outline" />
     </span>
   </action-footer>
 </template>
 
 <script setup lang="ts">
-  import ActionFooter from "@/pages/Dashboard/Components/ActionFooter.vue";
   import router from "@/scripts/router";
+
+  import ActionFooter from "@/pages/Dashboard/Components/ActionFooter.vue";
+  import Icon from "@/modules/Core/Components/Icon.vue";
+
   import { useRollValidation } from "../Composables/Validation";
   import { useShotTableStore } from "../store";
 

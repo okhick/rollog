@@ -1,23 +1,23 @@
 <template>
   <action-footer @actionButton:click="handleClick">
     <span class="icon">
-      <ion-icon name="checkmark-outline"></ion-icon>
+      <icon name="checkmark-outline" />
     </span>
   </action-footer>
 </template>
 
 <script setup lang="ts">
+  import router from "@/scripts/router";
   import ActionFooter from "@/pages/Dashboard/Components/ActionFooter.vue";
+  import Icon from "@/modules/Core/Components/Icon.vue";
 
   import { useShotEditStore } from "../store";
-  import router from "@/scripts/router";
 
   import { api, ziggy } from "@/modules/Api";
+  import { useShotValidation } from "../Composables/Validation";
 
   import { isShot, NewShot } from "../@types";
   import { Shot } from "@/modules/Core/@types";
-
-  import { useShotValidation } from "../Composables/Validation";
 
   /*
   |--------------------------------------------------------------------------

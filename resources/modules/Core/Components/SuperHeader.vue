@@ -7,7 +7,7 @@
       @click="$router.push({ name: 'home' })"
     >
       <span class="icon">
-        <ion-icon name="home-outline"></ion-icon>
+        <icon name="home-outline" />
       </span>
     </button>
 
@@ -43,20 +43,21 @@
 
 <script lang="ts" setup>
   import { useRouter } from "vue-router";
-  const router = useRouter();
 
   import { api, ziggy } from "@/modules/Api";
 
   import { useAuthStore } from "@/modules/Auth/store";
-  const authStore = useAuthStore();
 
   import Breadcrumbs from "./Breadcrumbs.vue";
+  import Icon from "./Icon.vue";
 
+  const authStore = useAuthStore();
+  const router = useRouter();
   /*
-    |--------------------------------------------------------------------------
-    | Handle Logout
-    |--------------------------------------------------------------------------
-    */
+  |--------------------------------------------------------------------------
+  | Handle Logout
+  |--------------------------------------------------------------------------
+  */
 
   async function handleLogout() {
     await api.post(ziggy.route("logout"));

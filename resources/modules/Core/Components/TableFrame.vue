@@ -8,14 +8,8 @@
       @click="$emit('table:sort')"
       class="table-label border table-sort is-flex is-align-items-center is-size-5 is-clickable ml-2 has-background-white"
     >
-      <ion-icon
-        v-show="sort === sortEnum.ASC"
-        name="caret-up-outline"
-      ></ion-icon>
-      <ion-icon
-        v-show="sort === sortEnum.DESC"
-        name="caret-down-outline"
-      ></ion-icon>
+      <icon v-show="sort === sortEnum.ASC" name="caret-up-outline" />
+      <icon v-show="sort === sortEnum.DESC" name="caret-down-outline" />
     </label>
   </div>
 
@@ -27,8 +21,8 @@
 </template>
 
 <script setup lang="ts">
-  import { defineProps } from "@vue/runtime-core";
-  import { computed } from "vue";
+  import { computed, defineProps } from "vue";
+  import Icon from "./Icon.vue";
   import { Sort } from "../@types";
 
   const props = defineProps({

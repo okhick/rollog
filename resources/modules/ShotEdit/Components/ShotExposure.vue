@@ -16,7 +16,7 @@
               [(longExposure = undefined), (longExposureUnit = undefined)]
             "
           >
-            <ion-icon name="close-outline"></ion-icon>
+            <icon name="close-outline" />
           </span>
         </p>
         <p class="control">
@@ -54,7 +54,7 @@
             class="icon is-right is-clickable"
             @click="customExposure = undefined"
           >
-            <ion-icon name="close-outline"></ion-icon>
+            <icon name="close-outline"></icon>
           </span>
         </p>
       </div>
@@ -66,9 +66,9 @@
         class="is-flex is-align-items-center is-clickable"
         @click="showLongExposure = !showLongExposure"
       >
-        <ion-icon v-show="!showLongExposure" name="arrow-back-outline" />
+        <icon v-show="!showLongExposure" name="arrow-back-outline" />
         {{ showLongExposure ? "Hide" : "Enter" }} long exposure
-        <ion-icon v-show="showLongExposure" name="arrow-forward-outline" />
+        <icon v-show="showLongExposure" name="arrow-forward-outline" />
       </span>
       <!--  -->
       <span
@@ -76,9 +76,9 @@
         class="ml-auto is-flex is-align-items-center is-clickable"
         @click="showCustomExposure = !showCustomExposure"
       >
-        <ion-icon v-show="showCustomExposure" name="arrow-back-outline" />
+        <icon v-show="showCustomExposure" name="arrow-back-outline" />
         {{ showCustomExposure ? "Hide" : "Enter" }} custom time
-        <ion-icon v-show="!showCustomExposure" name="arrow-forward-outline" />
+        <icon v-show="!showCustomExposure" name="arrow-forward-outline" />
       </span>
     </p>
   </div>
@@ -89,13 +89,13 @@
     computed,
     defineEmits,
     onBeforeMount,
-    onMounted,
     PropType,
     ref,
     watch,
   } from "vue";
 
   import RangeSlider from "@/modules/Core/Components/RangeSlider.vue";
+  import Icon from "@/modules/Core/Components/Icon.vue";
 
   import { useExposureTime } from "../Composables/Exposure";
   import { indexOf } from "lodash";
