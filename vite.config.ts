@@ -11,4 +11,4 @@ export default defineConfig()
       },
     })
   )
-  .merge({});
+  .merge({ build: { target: "esnext" } });

@@ -15,7 +15,7 @@ import App from "../app/Index.vue";
 import { createPinia } from "pinia";
 import router from "./router";
 
-import { useApiStore } from "@/Modules/Api/store";
+import { useApiStore } from "@/modules/Api/store";
 
 /*
 |--------------------------------------------------------------------------
