@@ -1,6 +1,7 @@
 <template>
   <div
     @click="shotTableStore.toggleRollInfoExpanded"
+    id="roll-info"
     class="is-clickable border mt-n4 mb-1 px-4 py-2 has-text-centered is-relative"
   >
     <div class="roll-options">
@@ -28,25 +29,29 @@
       </dropdown-menu>
     </div>
     <p v-show="shotTableStore.rollInfoExpanded">{{ camera }}</p>
-    <div
-      v-if="shotTableStore.roll"
-      class="is-flex is-justify-content-center has-text-weight-semibold is-size-4"
-    >
-      <span>ISO {{ shotTableStore.roll?.film_iso }}</span>
 
-      <span v-if="pushPull"
-        ><span class="mx-1 has-text-weight-light">&vert;</span
-        >{{ pushPull }}</span
+    <transition>
+      <div
+        v-if="shotTableStore.roll"
+        class="is-flex is-justify-content-center has-text-weight-semibold is-size-4"
       >
+        <span>ISO {{ shotTableStore.roll?.film_iso }}</span>
 
-      <span class="is-flex" v-if="shotTableStore.roll.completed">
-        <span class="mx-1 has-text-weight-light">&vert;</span>
-        <icon
-          name="checkmark-circle-outline"
-          class="is-align-self-center mt-1"
-        />
-      </span>
-    </div>
+        <span v-if="pushPull"
+          ><span class="mx-1 has-text-weight-light">&vert;</span
+          >{{ pushPull }}</span
+        >
+
+        <span class="is-flex" v-if="shotTableStore.roll.completed">
+          <span class="mx-1 has-text-weight-light">&vert;</span>
+          <icon
+            name="checkmark-circle-outline"
+            class="is-align-self-center mt-1"
+          />
+        </span>
+      </div>
+    </transition>
+
     <p class="is-italic" v-show="shotTableStore.rollInfoExpanded">
       {{ shotTableStore.roll?.notes }}
     </p>
@@ -186,6 +191,9 @@
 </script>
 
 <style lang="scss" scoped>
+  #roll-info {
+    min-height: 56px;
+  }
   .icon.settings {
     margin-right: 8px;
     margin-top: 14px;

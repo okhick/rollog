@@ -4,9 +4,9 @@
   >
     <roll-info
       v-show="!shotTableStore.editRollActive"
-      id="roll-info"
       @rollInfo:edit="activateEditRoll"
     />
+
     <roll-edit
       @rollEdit:cancel="cancelEditRoll"
       v-if="shotTableStore.editRollActive"
@@ -17,11 +17,14 @@
       :sort="shotTableStore.sort"
       @table:sort="shotTableStore.reverseSort"
     >
-      <shot-entry
-        v-for="(shot, index) in shotTableStore.shots"
-        :number="calculateShotNumber(index)"
-        :shot="shot"
-      />
+      <transition-group>
+        <shot-entry
+          v-for="(shot, index) in shotTableStore.shots"
+          :key="shot.id"
+          :number="calculateShotNumber(index)"
+          :shot="shot"
+        />
+      </transition-group>
     </table-frame>
   </section>
 </template>
@@ -125,4 +128,4 @@
   });
 </script>
 
-<style lang="scss"></style>
+<style scoped lang="scss"></style>

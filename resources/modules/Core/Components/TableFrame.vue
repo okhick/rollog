@@ -46,6 +46,7 @@
   #table-header {
     margin-bottom: -16px;
     isolation: isolate;
+    z-index: 1;
     line-height: initial;
 
     .table-label {
