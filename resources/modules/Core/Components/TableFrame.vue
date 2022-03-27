@@ -14,6 +14,7 @@
   </div>
 
   <div
+    id="table-frame"
     class="border y-overflow-scroll is-flex-grow-1 is-align-self-stretch is-flex is-flex-direction-column"
   >
     <slot />

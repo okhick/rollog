@@ -5,12 +5,11 @@
 </template>
 
 <script setup lang="ts">
+  import { RouteLocationRaw } from "vue-router";
+
   const props = defineProps({
     to: {
-      type: Object as () => {
-        name: string;
-        params?: any;
-      },
+      type: Object as () => RouteLocationRaw,
       required: true,
     },
   });
@@ -26,10 +25,8 @@
     margin: -1px 0 4px 0;
     background: $portra-slightly-overexposed;
     color: $black;
-
-    &:first-child {
-      border-radius: 4px 4px 0 0;
-    }
+    position: relative;
+    z-index: 1;
 
     &:hover {
       background: $portra;
