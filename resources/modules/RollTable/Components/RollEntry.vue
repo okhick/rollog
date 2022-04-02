@@ -1,42 +1,47 @@
 <template>
-  <table-entry-frame :to="shotLink">
-    <label class="is-align-self-flex-end is-flex"
-      >{{ roll.film_stock }}
-      <icon
-        v-if="roll.completed"
-        name="checkmark-circle-outline"
-        class="is-align-self-center ml-1 roll-complete"
-      />
-    </label>
-    <div class="roll-details ml-auto mr-2 mt-1 has-text-right">
-      <div>
-        <span class="has-text-weight-bold">{{ camera }}</span>
-        &bull;
-        <span>ISO {{ roll.film_iso }} {{ pushPull }}</span>
+  <table-entry-frame :to="{ name: 'shots', params: { rollId: props.roll.id } }">
+    <template #entry>
+      <label class="is-align-self-flex-end is-flex"
+        >{{ roll.film_stock }}
+        <icon
+          v-if="roll.completed"
+          name="checkmark-circle-outline"
+          class="is-align-self-center ml-1 roll-complete"
+        />
+      </label>
+      <div class="roll-details ml-auto mr-2 mt-1 has-text-right">
+        <div>
+          <span class="has-text-weight-bold">{{ camera }}</span>
+          &bull;
+          <span>ISO {{ roll.film_iso }} {{ pushPull }}</span>
+        </div>
+        <div class="is-hidden-mobile">
+          {{ timeStamps.createdAt }} &ndash; {{ timeStamps.updatedAt }}
+        </div>
+        <div class="is-hidden-tablet">
+          {{ timeStamps.createdAtShort }} &ndash;
+          {{ timeStamps.updatedAtShort }}
+        </div>
       </div>
-      <div class="is-hidden-mobile">
-        {{ timeStamps.createdAt }} &ndash; {{ timeStamps.updatedAt }}
-      </div>
-      <div class="is-hidden-tablet">
-        {{ timeStamps.createdAtShort }} &ndash;
-        {{ timeStamps.updatedAtShort }}
-      </div>
-    </div>
+    </template>
+
+    <template #behind>
+      <swipe-remove />
+    </template>
   </table-entry-frame>
 </template>
 
 <script lang="ts" setup>
-  import { computed, onMounted, ref, watch } from "vue";
+  import { computed } from "vue";
   import { DateTime } from "luxon";
-  import { usePointerSwipe, VueInstance } from "@vueuse/core";
 
   import { useDisplayFormatters } from "@/modules/Core/Composables/DisplayFormatters";
 
   import TableEntryFrame from "@/modules/Core/Components/TableEntryFrame.vue";
+  import SwipeRemove from "@/modules/Core/Components/SwipeRemove.vue";
   import Icon from "@/modules/Core/Components/Icon.vue";
 
   import { Roll } from "@/modules/Core/@types";
-  import { RouteLocationRaw } from "vue-router";
 
   /*
   |--------------------------------------------------------------------------
@@ -49,10 +54,6 @@
       type: Object as () => Roll,
       required: true,
     },
-  });
-
-  const shotLink = computed(() => {
-    return { name: "shots", params: { rollId: props.roll.id } };
   });
 
   /*
@@ -81,41 +82,6 @@
       ),
     };
   });
-
-  // /*
-  // |--------------------------------------------------------------------------
-  // | Click Handlers
-  // |--------------------------------------------------------------------------
-  // | Not really a handler, but this deactivates the shot link while user is
-  // | swiping. Maybe a little hacky?
-  // */
-
-  // const SHOT_LINK = { name: "shots", params: { rollId: props.roll.id } };
-
-  // /**
-  //  * Time to wait after isSwipe is false to reset the link. nextTick is not enough
-  //  */
-  // const LINK_SET_DELAY = 100;
-
-  // /**
-  //  * empty if we are swiping, real route if not
-  //  */
-  // const to = ref<RouteLocationRaw>(SHOT_LINK);
-
-  // /**
-  //  * Track is entry is swiping
-  //  */
-  // const isSwipe = ref(false);
-
-  // watch(isSwipe, () => {
-  //   if (isSwipe.value) {
-  //     to.value = {};
-  //   } else {
-  //     setTimeout(() => {
-  //       to.value = SHOT_LINK;
-  //     }, LINK_SET_DELAY);
-  //   }
-  // });
 </script>
 
 <style scoped lang="scss">

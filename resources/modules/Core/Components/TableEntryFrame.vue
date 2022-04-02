@@ -7,13 +7,10 @@
       :to="frameLink"
       ref="entryRef"
     >
-      <slot />
+      <slot name="entry" />
     </router-link>
-    <div
-      class="entry-behind is-flex is-align-items-center is-justify-content-center"
-      :style="{ height: `${entryHeight}px` }"
-    >
-      <icon name="trash-outline"></icon>
+    <div class="entry-behind" :style="{ height: `${entryHeight}px` }">
+      <slot name="behind" />
     </div>
   </span>
 </template>
@@ -189,6 +186,5 @@
 
     border-top: $border;
     border-bottom: $border;
-    background-color: $cinestill;
   }
 </style>
