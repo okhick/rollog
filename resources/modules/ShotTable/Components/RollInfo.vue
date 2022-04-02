@@ -70,6 +70,7 @@
 
   import DropdownMenu from "@/modules/Core/Components/DropdownMenu.vue";
   import Icon from "@/modules/Core/Components/Icon.vue";
+  import { isExistingRoll } from "../@types";
 
   /*
   |--------------------------------------------------------------------------
@@ -173,11 +174,14 @@
   }
 
   async function handleRemoveRoll() {
+    if (!shotTableStore.roll) return;
+    if (!isExistingRoll(shotTableStore.roll)) return;
+
     progress.start();
 
     try {
       await api.delete(
-        ziggy.route("roll.destroy", { roll: shotTableStore.roll?.id })
+        ziggy.route("roll.destroy", { roll: shotTableStore.roll.id })
       );
 
       router.push({ name: "rolls" });

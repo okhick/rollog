@@ -1,10 +1,7 @@
 <template>
   <table-entry-frame
     class="is-flex is-flex-direction-column full-width"
-    :to="{
-      name: 'shot',
-      params: { rollId: shotTableStore.roll?.id, shotId: shot.id },
-    }"
+    :to="shotLink"
   >
     <template #entry>
       <div class="is-flex is-flex-direction-column full-width">
@@ -60,6 +57,7 @@
   import { Shot } from "@/modules/Core/@types";
   import { useShotTableStore } from "@/modules/ShotTable/store";
   import { api, progress, ziggy } from "@/modules/Api";
+  import { isExistingRoll } from "../@types";
 
   /*
   |--------------------------------------------------------------------------
@@ -81,6 +79,16 @@
       type: Number as () => number | undefined,
       required: true,
     },
+  });
+
+  const shotLink = computed(() => {
+    if (!shotTableStore.roll) return {};
+    if (!isExistingRoll(shotTableStore.roll)) return {};
+
+    return {
+      name: "shot",
+      params: { rollId: shotTableStore.roll.id, shotId: props.shot.id },
+    };
   });
 
   /*
@@ -106,19 +114,21 @@
   */
 
   async function handleShotRemove() {
+    if (!shotTableStore.roll) return;
+    if (!isExistingRoll(shotTableStore.roll)) return;
+
     progress.start();
 
     try {
       await api.delete(
         ziggy.route("roll.shot.destroy", {
           shot: props.shot.id,
-          roll: shotTableStore.roll?.id,
+          roll: shotTableStore.roll.id,
         })
       );
 
-      await shotTableStore.fetchRoll(Number(shotTableStore.roll?.id));
-    } catch (e) {
-      console.log(e);
+      await shotTableStore.fetchRoll(Number(shotTableStore.roll.id));
+    } catch {
       // ...
     }
 

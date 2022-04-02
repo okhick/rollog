@@ -17,15 +17,19 @@
 
   import { useRollValidation } from "../Composables/Validation";
   import { useShotTableStore } from "../store";
+  import { isExistingRoll } from "../@types";
 
   const shotTableStore = useShotTableStore();
 
   function handleClick() {
     if (useRollValidation().validateRoll()) return;
 
+    if (!shotTableStore.roll) return;
+    if (!isExistingRoll(shotTableStore.roll)) return;
+
     router.push({
       name: "new-shot",
-      params: { rollId: shotTableStore.roll?.id },
+      params: { rollId: shotTableStore.roll.id },
     });
   }
 </script>

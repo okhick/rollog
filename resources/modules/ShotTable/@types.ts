@@ -17,3 +17,7 @@ export type NewRoll = Omit<
   Partial<Roll>,
   "id" | "user_id" | "created_at" | "updated_at"
 >;
+
+export function isExistingRoll(roll: Roll | NewRoll): roll is Roll {
+  return (roll as Roll).id !== undefined;
+}
