@@ -42,7 +42,7 @@
     </template>
 
     <template #behind>
-      <swipe-remove />
+      <swipe-remove @click="handleShotRemove" />
     </template>
   </table-entry-frame>
 </template>
@@ -59,6 +59,7 @@
 
   import { Shot } from "@/modules/Core/@types";
   import { useShotTableStore } from "@/modules/ShotTable/store";
+  import { api, progress, ziggy } from "@/modules/Api";
 
   /*
   |--------------------------------------------------------------------------
@@ -97,6 +98,32 @@
   const pushPull = computed(() => formatPushPull(props.shot.pushpull));
 
   const lens = computed(() => formatLens(props.shot.lens));
+
+  /*
+  |--------------------------------------------------------------------------
+  | Handlers
+  |--------------------------------------------------------------------------
+  */
+
+  async function handleShotRemove() {
+    progress.start();
+
+    try {
+      await api.delete(
+        ziggy.route("roll.shot.destroy", {
+          shot: props.shot.id,
+          roll: shotTableStore.roll?.id,
+        })
+      );
+
+      await shotTableStore.fetchRoll(Number(shotTableStore.roll?.id));
+    } catch (e) {
+      console.log(e);
+      // ...
+    }
+
+    progress.done();
+  }
 </script>
 
 <style lang="scss">

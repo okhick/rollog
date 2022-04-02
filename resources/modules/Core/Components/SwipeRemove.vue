@@ -1,6 +1,6 @@
 <template>
   <div
-    class="swipe-remove is-flex is-align-items-center is-justify-content-center"
+    class="swipe-remove is-flex is-align-items-center is-justify-content-center is-clickable"
   >
     <icon name="trash-outline"></icon>
   </div>

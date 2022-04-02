@@ -117,8 +117,19 @@ class ShotController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $roll = Roll::where('id', $request->roll)
+            ->firstOrFail();
+
+        // Ensure user owns roll
+        if ($request->user()->cannot('modifyRoll', $roll)) {
+            abort(403);
+        }
+
+        $shot = Shot::where('id', $request->shot)
+            ->firstOrFail();
+
+        $shot->delete();
     }
 }

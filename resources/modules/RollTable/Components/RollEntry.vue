@@ -26,13 +26,14 @@
     </template>
 
     <template #behind>
-      <swipe-remove />
+      <swipe-remove @click="handleRollRemove" />
     </template>
   </table-entry-frame>
 </template>
 
 <script lang="ts" setup>
   import { computed } from "vue";
+  import { useRouter } from "vue-router";
   import { DateTime } from "luxon";
 
   import { useDisplayFormatters } from "@/modules/Core/Composables/DisplayFormatters";
@@ -42,6 +43,8 @@
   import Icon from "@/modules/Core/Components/Icon.vue";
 
   import { Roll } from "@/modules/Core/@types";
+  import { api, progress, ziggy } from "@/modules/Api";
+  import { useRollTableStore } from "../store";
 
   /*
   |--------------------------------------------------------------------------
@@ -61,6 +64,7 @@
   | Format for Display
   |--------------------------------------------------------------------------
   */
+
   const { formatCamera, formatPushPull } = useDisplayFormatters();
 
   const pushPull = computed(() => formatPushPull(props.roll.pushpull));
@@ -82,6 +86,28 @@
       ),
     };
   });
+
+  /*
+  |--------------------------------------------------------------------------
+  | Handlers
+  |--------------------------------------------------------------------------
+  */
+
+  const rollTableStore = useRollTableStore();
+
+  async function handleRollRemove() {
+    progress.start();
+
+    try {
+      await api.delete(ziggy.route("roll.destroy", { roll: props.roll.id }));
+
+      await rollTableStore.fetchRolls();
+    } catch {
+      // ...
+    }
+
+    progress.done();
+  }
 </script>
 
 <style scoped lang="scss">

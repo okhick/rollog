@@ -9,6 +9,7 @@
     >
       <slot name="entry" />
     </router-link>
+
     <div class="entry-behind" :style="{ height: `${entryHeight}px` }">
       <slot name="behind" />
     </div>
@@ -19,7 +20,12 @@
   import { computed, onMounted, ref, watch } from "vue";
   import { RouteLocationRaw } from "vue-router";
   import { usePointerSwipe, VueInstance } from "@vueuse/core";
-  import Icon from "./Icon.vue";
+
+  /*
+  |--------------------------------------------------------------------------
+  | Init
+  |--------------------------------------------------------------------------
+  */
 
   const props = defineProps({
     to: {
@@ -154,11 +160,6 @@
   .entry-wrapper {
     position: relative;
     isolation: isolate;
-
-    ion-icon {
-      font-size: 1.6rem;
-      color: $white;
-    }
   }
   .entry {
     min-height: 60px;
