@@ -1,36 +1,28 @@
 <template>
-  <span class="entry-wrapper">
-    <table-entry-frame
-      draggable="false"
-      ref="entryRef"
-      :to="to"
-      :style="[{ 'margin-right': `${margin}px` }]"
-    >
-      <label class="is-align-self-flex-end is-flex"
-        >{{ roll.film_stock }}
-        <icon
-          v-if="roll.completed"
-          name="checkmark-circle-outline"
-          class="is-align-self-center ml-1 roll-complete"
-        />
-      </label>
-      <div class="roll-details ml-auto mr-2 mt-1 has-text-right">
-        <div>
-          <span class="has-text-weight-bold">{{ camera }}</span>
-          &bull;
-          <span>ISO {{ roll.film_iso }} {{ pushPull }}</span>
-        </div>
-        <div class="is-hidden-mobile">
-          {{ timeStamps.createdAt }} &ndash; {{ timeStamps.updatedAt }}
-        </div>
-        <div class="is-hidden-tablet">
-          {{ timeStamps.createdAtShort }} &ndash;
-          {{ timeStamps.updatedAtShort }}
-        </div>
+  <table-entry-frame :to="shotLink">
+    <label class="is-align-self-flex-end is-flex"
+      >{{ roll.film_stock }}
+      <icon
+        v-if="roll.completed"
+        name="checkmark-circle-outline"
+        class="is-align-self-center ml-1 roll-complete"
+      />
+    </label>
+    <div class="roll-details ml-auto mr-2 mt-1 has-text-right">
+      <div>
+        <span class="has-text-weight-bold">{{ camera }}</span>
+        &bull;
+        <span>ISO {{ roll.film_iso }} {{ pushPull }}</span>
       </div>
-    </table-entry-frame>
-    <div class="behind">DOPE</div>
-  </span>
+      <div class="is-hidden-mobile">
+        {{ timeStamps.createdAt }} &ndash; {{ timeStamps.updatedAt }}
+      </div>
+      <div class="is-hidden-tablet">
+        {{ timeStamps.createdAtShort }} &ndash;
+        {{ timeStamps.updatedAtShort }}
+      </div>
+    </div>
+  </table-entry-frame>
 </template>
 
 <script lang="ts" setup>
@@ -57,6 +49,10 @@
       type: Object as () => Roll,
       required: true,
     },
+  });
+
+  const shotLink = computed(() => {
+    return { name: "shots", params: { rollId: props.roll.id } };
   });
 
   /*
@@ -86,109 +82,44 @@
     };
   });
 
-  /*
-  |--------------------------------------------------------------------------
-  | Swipe Handlers
-  |--------------------------------------------------------------------------
-  */
+  // /*
+  // |--------------------------------------------------------------------------
+  // | Click Handlers
+  // |--------------------------------------------------------------------------
+  // | Not really a handler, but this deactivates the shot link while user is
+  // | swiping. Maybe a little hacky?
+  // */
 
-  const entryRef = ref<VueInstance>();
-  const entryEl = computed(() => entryRef.value?.$el);
+  // const SHOT_LINK = { name: "shots", params: { rollId: props.roll.id } };
 
-  const isSwipe = ref(false);
+  // /**
+  //  * Time to wait after isSwipe is false to reset the link. nextTick is not enough
+  //  */
+  // const LINK_SET_DELAY = 100;
 
-  const margin = ref<number>();
+  // /**
+  //  * empty if we are swiping, real route if not
+  //  */
+  // const to = ref<RouteLocationRaw>(SHOT_LINK);
 
-  onMounted(() => {
-    const SWIPE_MIN = 0;
-    const MAX_RIGHT = 0;
-    const MAX_LEFT = 54;
+  // /**
+  //  * Track is entry is swiping
+  //  */
+  // const isSwipe = ref(false);
 
-    /**
-     * Keep a record of the amount right we last were so we can calculate how far we've travelled.
-     */
-    let lastRight = 0;
-
-    /**
-     * Init the listener
-     */
-    const { direction, distanceX } = usePointerSwipe(entryEl.value, {
-      threshold: SWIPE_MIN,
-
-      onSwipe() {
-        isSwipe.value = true;
-
-        if (direction.value === "LEFT") {
-          margin.value = distanceX.value;
-          margin.value = margin.value <= MAX_LEFT ? margin.value : MAX_LEFT;
-
-          lastRight = 0;
-        }
-
-        if (direction.value === "RIGHT") {
-          const rightABS = Math.abs(distanceX.value);
-
-          // How far we've gone since the last RIGHT
-          const rightDelta = rightABS - lastRight;
-
-          // Adjust the margin. Keep >= 0
-          margin.value = (margin.value || 0) - rightDelta;
-          margin.value = margin.value >= MAX_RIGHT ? margin.value : MAX_RIGHT;
-
-          lastRight = rightABS;
-        }
-      },
-
-      onSwipeEnd() {
-        isSwipe.value = false;
-      },
-    });
-  });
-
-  /*
-  |--------------------------------------------------------------------------
-  | Click Handlers
-  |--------------------------------------------------------------------------
-  | Not really a handler, but this deactivates the shot link while user is
-  | swiping. Maybe a little hacky?
-  */
-
-  const SHOT_LINK = { name: "shots", params: { rollId: props.roll.id } };
-
-  /**
-   * Time to wait after isSwipe is false to reset the link. nextTick is not enough
-   */
-  const LINK_SET_DELAY = 100;
-
-  /**
-   * empty if we are swiping, real route if not
-   */
-  const to = ref<RouteLocationRaw>(SHOT_LINK);
-
-  watch(isSwipe, () => {
-    if (isSwipe.value) {
-      to.value = {};
-    } else {
-      setTimeout(() => {
-        to.value = SHOT_LINK;
-      }, LINK_SET_DELAY);
-    }
-  });
+  // watch(isSwipe, () => {
+  //   if (isSwipe.value) {
+  //     to.value = {};
+  //   } else {
+  //     setTimeout(() => {
+  //       to.value = SHOT_LINK;
+  //     }, LINK_SET_DELAY);
+  //   }
+  // });
 </script>
 
 <style scoped lang="scss">
   @import "@/sass/colors.module.scss";
-
-  .entry-wrapper {
-    position: relative;
-    isolation: isolate;
-  }
-
-  .behind {
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
 
   label {
     cursor: pointer;

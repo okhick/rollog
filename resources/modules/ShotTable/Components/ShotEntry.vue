@@ -1,34 +1,40 @@
 <template>
   <table-entry-frame
-    class="is-flex-wrap-wrap"
+    class="is-flex is-flex-direction-column full-width"
     :to="{
       name: 'shot',
       params: { rollId: shotTableStore.roll?.id, shotId: shot.id },
     }"
   >
-    <div class="is-flex full-width">
-      <div class="label-wrapper overflow-ellipsis">
-        <label
-          ><span class="has-text-weight-light">{{ props.number }}.</span>
-          {{ shot.title }}</label
-        >
+    <div class="is-flex is-flex-direction-column full-width">
+      <div class="is-flex-grow-1 is-flex full-width">
+        <div class="label-wrapper overflow-ellipsis">
+          <label
+            ><span class="has-text-weight-light">{{ props.number }}.</span>
+            {{ shot.title }}</label
+          >
+        </div>
+        <div class="shot-info">
+          <p class="is-size-6 has-text-right mb-n1">
+            &fnof;{{ shot.aperture }} &bull;
+            <span class="mr-1" v-html="formatExposureTime(shot.exposure)" />
+            <span class="is-size-7" v-if="pushPull">({{ pushPull }})</span>
+            <icon
+              v-if="shot.flash"
+              class="is-size-7"
+              name="flash-outline"
+            ></icon>
+          </p>
+          <p class="is-size-7 has-text-right">{{ lens }}</p>
+          <p class="is-size-7 has-text-right">
+            {{ dateCreated }}
+          </p>
+        </div>
       </div>
-      <div class="shot-info">
-        <p class="is-size-6 has-text-right mb-n1">
-          &fnof;{{ shot.aperture }} &bull;
-          <span class="mr-1" v-html="formatExposureTime(shot.exposure)" />
-          <span class="is-size-7" v-if="pushPull">({{ pushPull }})</span>
-          <icon v-if="shot.flash" class="is-size-7" name="flash-outline"></icon>
-        </p>
-        <p class="is-size-7 has-text-right">{{ lens }}</p>
-        <p class="is-size-7 has-text-right">
-          {{ dateCreated }}
-        </p>
-      </div>
+      <p v-if="shot.notes" class="is-size-7 is-italic overflow-ellipsis notes">
+        {{ shot.notes }}
+      </p>
     </div>
-    <p class="is-size-7 is-italic overflow-ellipsis notes">
-      {{ shot.notes }}
-    </p>
   </table-entry-frame>
 </template>
 
