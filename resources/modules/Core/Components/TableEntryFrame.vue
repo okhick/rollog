@@ -40,14 +40,21 @@
   const entryRef = ref<VueInstance>();
   const entryEl = computed(() => entryRef.value?.$el);
 
-  // calculate height liek this to get decimal accurate height
-  const entryHeight = computed(
-    () => entryRef.value?.$el.getBoundingClientRect().height
-  );
-
   const isSwipe = ref(false);
 
   const margin = ref<number>(0);
+
+  /**
+   * The entry height can change WHILE swiping is happening.
+   * Call getEntryHeight on every swipe event to keep the height up to date.
+   */
+  const entryHeight = ref(60);
+
+  onMounted(() => (entryHeight.value = getEntryHeight()));
+
+  function getEntryHeight() {
+    return entryRef.value?.$el.getBoundingClientRect().height;
+  }
 
   onMounted(() => {
     const SWIPE_MIN = 0;
@@ -98,6 +105,8 @@
 
           lastRight = rightABS;
         }
+
+        entryHeight.value = getEntryHeight();
       },
 
       onSwipeEnd() {
